@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' show json;
 
 import 'package:http/http.dart';
+import 'package:whoosh/Group.dart';
 
 class QueueScreen extends StatelessWidget {
   @override
@@ -115,14 +116,20 @@ class QueueCard extends StatefulWidget {
 }
 
 class _QueueCardState extends State<QueueCard> {
-  List<int> groups = [];
+  List<Group> groups = [];
 
   void fetchQueue() async {
+    // TODO:
+    // Take current queue, exclude me
+    // remove all groups later than me (identify by id)
+    // sort all groups from last to join to first to join (reversed)
+    // add me to the front of the list (back of the queue)
     Response response = await http.get('https://whoosh-server.herokuapp.com/queue');
     Map<String, dynamic> data = json.decode(response.body);
     List<dynamic> allGroups = data['results'];
-    List<int> result = allGroups
+    List<Group> result = allGroups
         .map((e) => e['status'] as int)
+        .map((groupSize) => new Group('salmon', groupSize, DateTime.parse("1969-07-20 20:18:04Z")))
         .toList();
     setState(() {
       groups = result;
@@ -141,7 +148,7 @@ class _QueueCardState extends State<QueueCard> {
                   border: Border.all(color: Colors.blueAccent)
                 ),
                 alignment: Alignment.center,
-                child: Text(e.toString() + ' person')
+                child: Text(e.groupSize.toString() + ' person')
               )
             ).toList()
     );

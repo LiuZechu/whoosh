@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c1f81ac-826b-49bf-9593-5af477d08237" name="Default Changelist" comment="" />
+    <list default="true" id="2c1f81ac-826b-49bf-9593-5af477d08237" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/Group.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/QueueScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/QueueScreen.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -15,6 +50,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1h6CAsmhChiELvJY1grcqbWNVsU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
     <option name="STATE" value="1" />
   </component>
@@ -79,11 +115,25 @@
       <workItem from="1599626715327" duration="213000" />
       <workItem from="1599626945272" duration="116000" />
       <workItem from="1599627212240" duration="262000" />
+      <workItem from="1599627819535" duration="1774000" />
+      <workItem from="1599703828210" duration="422000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="448" y="93" key="#Project_Structure" timestamp="1599626735957">
@@ -102,33 +152,33 @@
       <screen x="0" y="23" width="1920" height="991" />
     </state>
     <state x="722" y="395" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599407618040" />
-    <state width="1878" height="264" key="GridCell.Tab.0.bottom" timestamp="1599627474117">
+    <state width="1878" height="264" key="GridCell.Tab.0.bottom" timestamp="1599663202318">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1878" height="268" key="GridCell.Tab.0.bottom/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858905" />
     <state width="1878" height="146" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1599548552686" />
-    <state width="1878" height="264" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599627474117" />
+    <state width="1878" height="264" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599663202318" />
     <state width="1878" height="308" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714980" />
-    <state width="1878" height="264" key="GridCell.Tab.0.center" timestamp="1599627474117">
+    <state width="1878" height="264" key="GridCell.Tab.0.center" timestamp="1599663202317">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1878" height="268" key="GridCell.Tab.0.center/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="146" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1599548552685" />
-    <state width="1878" height="264" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599627474117" />
+    <state width="1878" height="264" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599663202317" />
     <state width="1878" height="308" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714978" />
-    <state width="1878" height="264" key="GridCell.Tab.0.left" timestamp="1599627474116">
+    <state width="1878" height="264" key="GridCell.Tab.0.left" timestamp="1599663202317">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1878" height="268" key="GridCell.Tab.0.left/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858903" />
     <state width="1878" height="146" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1599548552684" />
-    <state width="1878" height="264" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599627474116" />
+    <state width="1878" height="264" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599663202317" />
     <state width="1878" height="308" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714977" />
-    <state width="1878" height="264" key="GridCell.Tab.0.right" timestamp="1599627474117">
+    <state width="1878" height="264" key="GridCell.Tab.0.right" timestamp="1599663202318">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1878" height="268" key="GridCell.Tab.0.right/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="146" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1599548552685" />
-    <state width="1878" height="264" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599627474117" />
+    <state width="1878" height="264" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599663202318" />
     <state width="1878" height="308" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714979" />
     <state x="448" y="98" key="SettingsEditor" timestamp="1599627404134">
       <screen x="0" y="23" width="1920" height="977" />
