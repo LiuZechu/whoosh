@@ -62,7 +62,7 @@ class QueueScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/restaurant-icon.png'),
+                Image(image: AssetImage('images/restaurant_icon.png'),
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
@@ -117,6 +117,7 @@ class QueueCard extends StatefulWidget {
 
 class _QueueCardState extends State<QueueCard> {
   List<Group> groups = [];
+  int currentGroupId = 1;
 
   void fetchQueue() async {
     // TODO:
@@ -124,12 +125,13 @@ class _QueueCardState extends State<QueueCard> {
     // remove all groups later than me (identify by id)
     // sort all groups from last to join to first to join (reversed)
     // add me to the front of the list (back of the queue)
-    Response response = await http.get('https://whoosh-server.herokuapp.com/queue');
-    Map<String, dynamic> data = json.decode(response.body);
-    List<dynamic> allGroups = data['results'];
+    // Response response = await http.get('https://whoosh-server.herokuapp.com/queue');
+    // Map<String, dynamic> data = json.decode(response.body);
+    // List<dynamic> allGroups = data['results'];
+    List<int> allGroups = [0, 1, 2, 3, 4, 5];
     List<Group> result = allGroups
-        .map((e) => e['status'] as int)
-        .map((groupSize) => new Group('salmon', groupSize, DateTime.parse("1969-07-20 20:18:04Z")))
+        //.map((e) => e['status'] as int)
+        .map((groupSize) => new Group(1, 'salmon', groupSize, DateTime.parse("1969-07-20 20:18:04Z")))
         .toList();
     setState(() {
       groups = result;
@@ -137,20 +139,9 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Widget generateQueue() {
-    var allGroups = fetchQueue();
+    fetchQueue();
     return Column(
-        children: groups
-            .map((e) =>
-              Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent)
-                ),
-                alignment: Alignment.center,
-                child: Text(e.groupSize.toString() + ' person')
-              )
-            ).toList()
+        children: groups.map((e) => e.createGroupImage(e.id == currentGroupId)).toList()
     );
   }
 

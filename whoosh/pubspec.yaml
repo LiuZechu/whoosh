@@ -46,9 +46,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/logo.png
-    - images/landing.png
-    - images/restaurant-icon.png
+    - images/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
