@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'QueueScreen.dart';
+import 'Router.dart' as router;
 
-void main() => runApp(SignUpApp());
+void main() => runApp(WhooshApp());
 
-class SignUpApp extends StatelessWidget {
+class WhooshApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        '/': (context) => WelcomeScreen(),
-        '/queue': (context) => QueueScreen(),
-      },
+      onGenerateRoute: router.generateRoute
     );
   }
 }
