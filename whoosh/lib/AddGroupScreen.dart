@@ -3,9 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:whoosh/Group.dart';
+
+import 'RequestBuilder.dart';
 
 // http://localhost:${port}/#/joinQueue?restaurant_id=1
 class AddGroupScreen extends StatelessWidget {
@@ -94,9 +95,10 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   }
 
   void fetchRestaurantDetails() async {
-    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
-        + restaurantId.toString();
-    Response response = await http.get(url);
+    Response response = await RequestBuilder()
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .sendRequest();
     List<dynamic> data = json.decode(response.body);
     String currentRestaurantName = data[0]['restaurant_name'];
     setState(() {

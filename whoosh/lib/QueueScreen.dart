@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'dart:convert' show json;
 
@@ -98,11 +97,6 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void fetchQueue() async {
-    // TODO:
-    // Take current queue, exclude me
-    // remove all groups later than me (identify by id)
-    // sort all groups from last to join to first to join (reversed)
-    // add me to the front of the list (back of the queue)
     Response response = await RequestBuilder()
         .addPath('restaurants')
         .addPath(restaurantId.toString())
@@ -110,7 +104,7 @@ class _QueueCardState extends State<QueueCard> {
         .addParams('status', '0')
         .sendRequest();
     List<dynamic> data = json.decode(response.body);
-    List<Group> result = data
+    List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
         .toList()
         .map((group) => new Group(
@@ -120,16 +114,24 @@ class _QueueCardState extends State<QueueCard> {
           DateTime.parse(group['arrival_time']))
         ).toList();
     bool currentGroupIsInside =
-        result.where((group) => group.id == currentGroupId).length == 1;
+        allGroups.where((group) => group.id == currentGroupId).length == 1;
     if (!currentGroupIsInside && context != null) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
       return;
     }
+    Group currentGroup =
+        allGroups.where((group) => group.id == currentGroupId).single;
+    DateTime currentGroupArrivalTime = currentGroup.timeOfArrival;
+    List<Group> groupsInFront = allGroups.where(
+            (group) => group.timeOfArrival.isBefore(currentGroupArrivalTime)
+    ).toList();
+    groupsInFront.add(currentGroup);
+    groupsInFront.sort((a, b) => b.timeOfArrival.compareTo(a.timeOfArrival));
     if (this.mounted) {
       setState(() {
-        groups = result;
-        estimatedWait = generateEstimatedWaitTime(result.length, unitQueueTime);
+        groups = groupsInFront;
+        estimatedWait = generateEstimatedWaitTime(groupsInFront.length - 1, unitQueueTime);
       });
     }
   }

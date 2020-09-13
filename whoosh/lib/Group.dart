@@ -157,7 +157,9 @@ class Group {
               Align(
                 alignment: Alignment(0, 0.4),
                 child: Text(
-                  noOfGroupsAhead.toString() + ' groups ahead',
+                  noOfGroupsAhead == 0
+                      ? 'you\'re next!'
+                      : noOfGroupsAhead.toString() + ' groups ahead',
                   style: TextStyle(
                     fontSize: 36,
                     fontFamily: "VisbyCF",
