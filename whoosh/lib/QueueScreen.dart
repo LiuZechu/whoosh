@@ -2,21 +2,28 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:convert' show json;
 
-import 'package:http/http.dart';
+import 'package:whoosh/Group.dart';
+import 'package:whoosh/route_names.dart';
 
+// http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
 class QueueScreen extends StatelessWidget {
+  final int restaurantId;
+  final int groupId;
+  QueueScreen(this.restaurantId, this.groupId);
+
   @override
   Widget build(BuildContext context) {
+    log(restaurantId.toString());
+    log(groupId.toString());
     return Scaffold(
       backgroundColor: Color(0xFFD1E6F2),
       body: ListView(
         children: [
           generateHeader(),
-          generateRestaurantName(),
-          generateWaitTime(),
-          QueueCard(),
+          QueueCard(restaurantId, groupId),
         ],
       ),
     );
@@ -45,6 +52,103 @@ class QueueScreen extends StatelessWidget {
    );
   }
 
+}
+
+class QueueCard extends StatefulWidget {
+  final int restaurantId;
+  final int currentGroupId;
+
+  QueueCard(this.restaurantId, this.currentGroupId);
+
+  @override
+  _QueueCardState createState() => _QueueCardState(restaurantId, currentGroupId);
+}
+
+class _QueueCardState extends State<QueueCard> {
+  final int restaurantId;
+  final int currentGroupId;
+  List<Group> groups = [];
+  String restaurantName = 'Loading...';
+  int unitQueueTime = 0;
+  String estimatedWait = "-";
+  bool screenIsPresent = true;
+
+  _QueueCardState(this.restaurantId, this.currentGroupId);
+
+  @override void initState() {
+    super.initState();
+    fetchRestaurantDetails();
+  }
+
+  void fetchRestaurantDetails() async {
+    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
+        + restaurantId.toString();
+    Response response = await http.get(url);
+    List<dynamic> data = json.decode(response.body);
+    String currentRestaurantName = data[0]['restaurant_name'];
+    int currentUnitQueueTime = data[0]['unit_queue_time'];
+    if (this.mounted) {
+      setState(() {
+        restaurantName = currentRestaurantName;
+        unitQueueTime = currentUnitQueueTime;
+      });
+    }
+  }
+
+  void fetchQueue() async {
+    // TODO:
+    // Take current queue, exclude me
+    // remove all groups later than me (identify by id)
+    // sort all groups from last to join to first to join (reversed)
+    // add me to the front of the list (back of the queue)
+    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
+        + restaurantId.toString()
+        +'/groups?status=0';
+    Response response = await http.get(url);
+    List<dynamic> data = json.decode(response.body);
+    List<Group> result = data
+        .where((group) => group['group_size'] <= 5)
+        .toList()
+        .map((group) => new Group(
+          group['group_id'],
+          group['group_name'],
+          group['group_size'],
+          DateTime.parse(group['arrival_time']))
+        ).toList();
+    bool currentGroupIsInside =
+        result.where((group) => group.id == currentGroupId).length == 1;
+    if (!currentGroupIsInside && context != null) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
+      return;
+    }
+    if (this.mounted) {
+      setState(() {
+        groups = result;
+        estimatedWait = generateEstimatedWaitTime(result.length, unitQueueTime);
+      });
+    }
+  }
+
+  String generateEstimatedWaitTime(int numberOfGroups, int unitQueueTime) {
+    int timeToWait = numberOfGroups * unitQueueTime;
+    return timeToWait.toString()
+            + '-'
+            + (timeToWait + unitQueueTime).toString()
+            + ' min';
+  }
+
+  Widget generateQueue() {
+    fetchQueue();
+    return Column(
+        children: groups.map(
+                (e) => e.id == currentGroupId
+                    ? e.createCurrentGroupImage(groups.length - 1)
+                    : e.createOtherGroupImage()
+        ).toList()
+    );
+  }
+
   Widget generateRestaurantName() {
     return Container(
       child: Column(
@@ -53,28 +157,36 @@ class QueueScreen extends StatelessWidget {
           Text(
             'you\'re queueing for',
             style: TextStyle(
-              fontSize: 16,
-              fontFamily: "VisbyCF"
+                fontSize: 18,
+                fontFamily: "VisbyCF"
             ),
           ),
           Container(
+            width: 400,
+            height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/restaurant-icon.png'),
+                Image(image: AssetImage('images/restaurant_icon.png'),
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(width: 10),
-                Text(
-                  'Genki Sushi',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                Container(
+                    height: 50,
+                    constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+                    child: FittedBox(
+                      child: Text(
+                        restaurantName,
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontFamily: "VisbyCF",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    )
+                )
               ],
             ),
           ),
@@ -91,14 +203,14 @@ class QueueScreen extends StatelessWidget {
           Text(
             'estimated wait:',
             style: TextStyle(
-              fontSize: 16,
-              fontFamily: "VisbyCF"
+                fontSize: 18,
+                fontFamily: "VisbyCF"
             ),
           ),
           Text(
-            '10 - 15 min',
+            estimatedWait,
             style: TextStyle(
-              fontSize: 42,
+              fontSize: 64,
               fontFamily: "VisbyCF",
               fontWeight: FontWeight.w700,
             ),
@@ -107,52 +219,18 @@ class QueueScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class QueueCard extends StatefulWidget {
-  @override
-  _QueueCardState createState() => _QueueCardState();
-}
-
-class _QueueCardState extends State<QueueCard> {
-  List<int> groups = [];
-
-  void fetchQueue() async {
-    Response response = await http.get('https://whoosh-server.herokuapp.com/queue');
-    Map<String, dynamic> data = json.decode(response.body);
-    List<dynamic> allGroups = data['results'];
-    List<int> result = allGroups
-        .map((e) => e['status'] as int)
-        .toList();
-    setState(() {
-      groups = result;
-    });
-  }
-
-  Widget generateQueue() {
-    var allGroups = fetchQueue();
-    return Column(
-        children: groups
-            .map((e) =>
-              Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent)
-                ),
-                alignment: Alignment.center,
-                child: Text(e.toString() + ' person')
-              )
-            ).toList()
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: generateQueue(),
+      child: Column(
+        children: [
+          generateRestaurantName(),
+          generateWaitTime(),
+          generateQueue(),
+        ]
+      )
     );
   }
-
 }
 
