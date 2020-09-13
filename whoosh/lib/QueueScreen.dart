@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'dart:convert' show json;
 
 import 'package:whoosh/Group.dart';
+import 'package:whoosh/RequestBuilder.dart';
 import 'package:whoosh/route_names.dart';
 
 // http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
@@ -81,9 +82,10 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void fetchRestaurantDetails() async {
-    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
-        + restaurantId.toString();
-    Response response = await http.get(url);
+    Response response = await RequestBuilder()
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .sendRequest();
     List<dynamic> data = json.decode(response.body);
     String currentRestaurantName = data[0]['restaurant_name'];
     int currentUnitQueueTime = data[0]['unit_queue_time'];
@@ -101,10 +103,12 @@ class _QueueCardState extends State<QueueCard> {
     // remove all groups later than me (identify by id)
     // sort all groups from last to join to first to join (reversed)
     // add me to the front of the list (back of the queue)
-    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
-        + restaurantId.toString()
-        +'/groups?status=0';
-    Response response = await http.get(url);
+    Response response = await RequestBuilder()
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .addPath('groups')
+        .addParams('status', '0')
+        .sendRequest();
     List<dynamic> data = json.decode(response.body);
     List<Group> result = data
         .where((group) => group['group_size'] <= 5)
