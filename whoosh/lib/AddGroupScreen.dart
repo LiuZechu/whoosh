@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:whoosh/Group.dart';
 
+// http://localhost:${port}/#/joinQueue?restaurant_id=1
 class AddGroupScreen extends StatelessWidget {
   final int restaurantId;
 
@@ -61,20 +63,25 @@ class JoinQueueCard extends StatefulWidget {
 class _JoinQueueCardState extends State<JoinQueueCard> {
   final int restaurantId;
   String restaurantName = 'Loading...';
-  int newGroupSize = 1;
+  double newGroupSize = 1;
   String emailAddress = '';
+  double buttonOpacity = 1.0;
 
   _JoinQueueCardState(this.restaurantId);
 
   @override
   Widget build(BuildContext context) {
-    Group newGroup = Group.fromSize(newGroupSize);
+    Group newGroup = Group.fromSize(newGroupSize.round());
     return Container(
       child: Column(
         children: [
           generateRestaurantName(),
           newGroup.createJoinQueueGroupImage(),
           generateEmailAddressField(),
+          SizedBox(height: 20),
+          generateGroupSizeSlider(),
+          SizedBox(height: 20),
+          generateEnterQueueButton(),
         ],
       ),
     );
@@ -99,7 +106,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
 
   Widget generateEmailAddressField() {
     return Container(
-      width: 400,
+      width: 350,
       child: Column(
         children: [
           Align(
@@ -133,6 +140,85 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           )
         ],
       ),
+    );
+  }
+
+  Widget generateGroupSizeSlider() {
+    return Container(
+      width: 350,
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'group size',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFF2B3148),
+                  fontFamily: "VisbyCF"
+              ),
+            ),
+          ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              activeTrackColor: Color(0xFFEDF6F6),
+              inactiveTrackColor: Color(0xFFEDF6F6),
+              inactiveTickMarkColor: Color(0xFFEDF6F6),
+            ),
+            child: Slider(
+              value: newGroupSize,
+              min: 1,
+              max: 5,
+              divisions: 4,
+              onChanged: (double value) {
+                setState(() {
+                  newGroupSize = value;
+                });
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              newGroupSize.round().toString(),
+              style: TextStyle(
+                  fontSize: 36,
+                  color: Color(0xFF2B3148),
+                  fontFamily: "VisbyCF",
+                  fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  void setButtonOpacityTo(double opacity) {
+    setState(() {
+      buttonOpacity = opacity;
+    });
+  }
+
+  Widget generateEnterQueueButton() {
+    return GestureDetector(
+      onTapDown: (TapDownDetails details) {
+        setButtonOpacityTo(0.5);
+      },
+      onTapCancel: () {
+        setButtonOpacityTo(1.0);
+      },
+      onTapUp: (TapUpDetails details) {
+        setButtonOpacityTo(1.0);
+      },
+      onTap: () {
+        //add group to queue
+        log('adding group of size ' + newGroupSize.toString() + ' to queue');
+      },
+      child: Opacity(
+        opacity: buttonOpacity,
+        child: Image(image: AssetImage('images/enter_queue_button.png')),
+      )
     );
   }
 

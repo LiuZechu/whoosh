@@ -32,9 +32,6 @@ class Group {
     return Container(
         height: height,
         width: 400,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.blueAccent)
-        ),
         alignment: Alignment.center,
         child: Stack(
             children: stack

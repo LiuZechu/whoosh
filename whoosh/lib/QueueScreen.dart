@@ -6,11 +6,12 @@ import 'package:http/http.dart';
 import 'dart:convert' show json;
 
 import 'package:whoosh/Group.dart';
+import 'package:whoosh/route_names.dart';
 
+// http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
 class QueueScreen extends StatelessWidget {
   final int restaurantId;
   final int groupId;
-  // http://localhost:54138/#/queue?restaurant_id=&group_id=1
   QueueScreen(this.restaurantId, this.groupId);
 
   @override
@@ -64,15 +65,34 @@ class QueueCard extends StatefulWidget {
 }
 
 class _QueueCardState extends State<QueueCard> {
-  List<Group> groups = [];
   final int restaurantId;
   final int currentGroupId;
+  List<Group> groups = [];
+  String restaurantName = 'Loading...';
+  int unitQueueTime = 0;
+  String estimatedWait = "-";
+  bool screenIsPresent = true;
 
   _QueueCardState(this.restaurantId, this.currentGroupId);
 
   @override void initState() {
-    // TODO: implement initState
     super.initState();
+    fetchRestaurantDetails();
+  }
+
+  void fetchRestaurantDetails() async {
+    String url = 'https://whoosh-server.herokuapp.com/restaurants/'
+        + restaurantId.toString();
+    Response response = await http.get(url);
+    List<dynamic> data = json.decode(response.body);
+    String currentRestaurantName = data[0]['restaurant_name'];
+    int currentUnitQueueTime = data[0]['unit_queue_time'];
+    if (this.mounted) {
+      setState(() {
+        restaurantName = currentRestaurantName;
+        unitQueueTime = currentUnitQueueTime;
+      });
+    }
   }
 
   void fetchQueue() async {
@@ -83,22 +103,39 @@ class _QueueCardState extends State<QueueCard> {
     // add me to the front of the list (back of the queue)
     String url = 'https://whoosh-server.herokuapp.com/restaurants/'
         + restaurantId.toString()
-        +'/groups';
+        +'/groups?status=0';
     Response response = await http.get(url);
     List<dynamic> data = json.decode(response.body);
     List<Group> result = data
-        .where((group) => group['group_size'] <= 5 && group['queue_status'] == 0)
+        .where((group) => group['group_size'] <= 5)
         .toList()
         .map((group) => new Group(
           group['group_id'],
           group['group_name'],
           group['group_size'],
-          //DateTime.parse("1969-07-20 20:18:04Z")))
           DateTime.parse(group['arrival_time']))
         ).toList();
-    setState(() {
-      groups = result;
-    });
+    bool currentGroupIsInside =
+        result.where((group) => group.id == currentGroupId).length == 1;
+    if (!currentGroupIsInside && context != null) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
+      return;
+    }
+    if (this.mounted) {
+      setState(() {
+        groups = result;
+        estimatedWait = generateEstimatedWaitTime(result.length, unitQueueTime);
+      });
+    }
+  }
+
+  String generateEstimatedWaitTime(int numberOfGroups, int unitQueueTime) {
+    int timeToWait = numberOfGroups * unitQueueTime;
+    return timeToWait.toString()
+            + '-'
+            + (timeToWait + unitQueueTime).toString()
+            + ' min';
   }
 
   Widget generateQueue() {
@@ -125,6 +162,8 @@ class _QueueCardState extends State<QueueCard> {
             ),
           ),
           Container(
+            width: 400,
+            height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -134,14 +173,20 @@ class _QueueCardState extends State<QueueCard> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(width: 10),
-                Text(
-                  'Genki Sushi',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                Container(
+                    height: 50,
+                    constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+                    child: FittedBox(
+                      child: Text(
+                        restaurantName,
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontFamily: "VisbyCF",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    )
+                )
               ],
             ),
           ),
@@ -163,7 +208,7 @@ class _QueueCardState extends State<QueueCard> {
             ),
           ),
           Text(
-            '10-15 min',
+            estimatedWait,
             style: TextStyle(
               fontSize: 64,
               fontFamily: "VisbyCF",

@@ -13,8 +13,8 @@ class MonsterFactory {
 
   static List<Alignment> allMonsterAlignments = [
     Alignment.center,
-    Alignment.bottomLeft,
-    Alignment.bottomRight,
+    Alignment(-0.5, 1.0),
+    Alignment(0.6, 1.0),
     Alignment.topLeft,
     Alignment.topRight,
   ];
