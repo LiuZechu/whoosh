@@ -1,0 +1,3 @@
+[submodule "whoosh-server"]
+	path = whoosh-server
+	url = https://github.com/LiuZechu/whoosh-server.git
