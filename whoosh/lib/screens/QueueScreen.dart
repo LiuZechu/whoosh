@@ -3,6 +3,8 @@ import 'package:http/http.dart';
 import 'dart:convert' show json;
 
 import 'package:whoosh/entity/Group.dart';
+import 'package:whoosh/entity/MonsterType.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
 
 import '../requests/GetRequestBuilder.dart';
@@ -33,7 +35,7 @@ class QueueScreen extends StatelessWidget {
        alignment: Alignment.centerLeft,
        child: IconButton(
          icon: new Image.asset(
-           'images/logo.png',
+           'images/static/logo.png',
          ),
          tooltip: 'return to homepage',
          onPressed: () {},
@@ -78,13 +80,9 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void fetchRestaurantDetails() async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
-    String currentRestaurantName = data.single['restaurant_name'];
-    int currentUnitQueueTime = data.single['unit_queue_time'];
+    dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+    String currentRestaurantName = data['restaurant_name'];
+    int currentUnitQueueTime = data['unit_queue_time'];
     if (this.mounted) {
       setState(() {
         restaurantName = currentRestaurantName;
@@ -94,13 +92,7 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void fetchQueue() async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .addPath('groups')
-        .addParams('status', '0')
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
+    List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
         .toList()
@@ -108,7 +100,8 @@ class _QueueCardState extends State<QueueCard> {
           group['group_id'],
           group['group_name'],
           group['group_size'],
-          DateTime.parse(group['arrival_time']))
+          DateTime.parse(group['arrival_time']),
+          MonsterType.generateMonsterTypes(group['monster_type']))
         ).toList();
     bool currentGroupIsInside =
         allGroups.where((group) => group.id == currentGroupId).length == 1;
@@ -153,6 +146,25 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Widget generateRestaurantName() {
+    Widget restaurantIcon = Image(image: AssetImage('images/static/restaurant_icon.png'),
+      width: 50,
+      height: 50,
+      fit: BoxFit.cover,
+    );
+    Widget restaurantNameContainer = Container(
+        height: 50,
+        constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+        child: FittedBox(
+          child: Text(
+            restaurantName,
+            style: TextStyle(
+              fontSize: 36,
+              fontFamily: "VisbyCF",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        )
+    );
     return Container(
       child: Column(
         children: [
@@ -170,26 +182,9 @@ class _QueueCardState extends State<QueueCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/restaurant_icon.png'),
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
+                restaurantIcon,
                 SizedBox(width: 10),
-                Container(
-                    height: 50,
-                    constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
-                    child: FittedBox(
-                      child: Text(
-                        restaurantName,
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontFamily: "VisbyCF",
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    )
-                )
+                restaurantNameContainer
               ],
             ),
           ),

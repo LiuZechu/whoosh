@@ -2,15 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
 
+import 'MonsterType.dart';
+
 class Group {
   int id;
   String name;
   int groupSize;
   DateTime timeOfArrival;
+  List<MonsterType> types;
 
-  Group(this.id, this.name, this.groupSize, this.timeOfArrival);
+  Group(this.id, this.name, this.groupSize, this.timeOfArrival, this.types);
 
-  Group.fromSize(this.groupSize);
+  Group.fromSize(this.groupSize, this.types) {
+    this.id = -1;
+    this.name = '';
+    this.timeOfArrival = DateTime.now();
+  }
 
   Widget createJoinQueueGroupImage() {
     return generateContainerWithStack(createNewGroupStackElements(), 300);
@@ -45,7 +52,7 @@ class Group {
     List<Widget> monsterWidgets = [];
     List<Monster> monsters = [];
     for (int i = 0; i < groupSize; i++) {
-      monsters.add(MonsterFactory.getMonsterById(i));
+      monsters.add(MonsterFactory.getMonsterById(i, types[i]));
     }
     while (monsters.isNotEmpty && monsters.last.id > 2) {
       Monster last = monsters.removeLast();
@@ -57,9 +64,9 @@ class Group {
       monsterWidgets.add(
           Align(
               alignment: monster.alignment,
-              child: Image(
+              child: Align(
                 alignment: monster.alignment,
-                image: monster.asset,
+                child: monster.actor,
               )
           )
       );
@@ -88,7 +95,7 @@ class Group {
           alignment: Alignment.bottomCenter,
           child: Image(
             alignment: Alignment.bottomCenter,
-            image: AssetImage('images/queue_line.png'),
+            image: AssetImage('images/static/queue_line.png'),
             width: 13,
             height: 400,
           ),
@@ -110,7 +117,7 @@ class Group {
               Align(
                 alignment: Alignment.topRight,
                 child: Image(
-                  image: AssetImage('images/name_bubble.png')
+                  image: AssetImage('images/static/name_bubble.png')
                 ),
               ),
               Align(
@@ -149,7 +156,7 @@ class Group {
                 alignment: Alignment.topCenter,
                 child: Image(
                   alignment: Alignment.topCenter,
-                  image: AssetImage('images/randomize_button.png'),
+                  image: AssetImage('images/static/randomize_button.png'),
                 ),
               ),
               Align(
@@ -180,13 +187,12 @@ class Group {
           alignment: Alignment.bottomCenter,
           child: Image(
             alignment: Alignment.bottomCenter,
-            image: AssetImage('images/queue_line.png'),
+            image: AssetImage('images/static/queue_line.png'),
             width: 13,
             height: 400,
           ),
         )
     );
-    List<Widget> monsterWidgets = [];
     return addMonsterStackTo(stackElements);
   }
 
@@ -194,7 +200,7 @@ class Group {
     return Align(
       alignment: align,
       child: Image(
-        image: AssetImage('images/queue_line_mask.png'),
+        image: AssetImage('images/static/queue_line_mask.png'),
         width: width,
         height: height,
       ),
