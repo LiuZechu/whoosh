@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:whoosh/entity/Group.dart';
+import 'package:whoosh/entity/MonsterType.dart';
+import 'package:whoosh/entity/WordFactory.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/screens/QueueScreen.dart';
 
 import '../requests/GetRequestBuilder.dart';
@@ -35,7 +38,7 @@ class AddGroupScreen extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: new Image.asset(
-            'images/logo.png',
+            'images/static/logo.png',
           ),
           tooltip: 'return to homepage',
           onPressed: () {},
@@ -65,15 +68,16 @@ class JoinQueueCard extends StatefulWidget {
 class _JoinQueueCardState extends State<JoinQueueCard> {
   final int restaurantId;
   String restaurantName = 'Loading...';
-  double newGroupSize = 1;
+  int newGroupSize = 1;
   String emailAddress = '';
   double buttonOpacity = 1.0;
+  List<MonsterType> monsterTypes = [MonsterType.generateRandomType()];
 
   _JoinQueueCardState(this.restaurantId);
 
   @override
   Widget build(BuildContext context) {
-    Group newGroup = Group.fromSize(newGroupSize.round());
+    Group newGroup = Group.fromSize(newGroupSize.round(), monsterTypes);
     return Container(
       child: Column(
         children: [
@@ -96,12 +100,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   }
 
   void fetchRestaurantDetails() async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
-    String currentRestaurantName = data.single['restaurant_name'];
+    dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+    String currentRestaurantName = data['restaurant_name'];
     setState(() {
       restaurantName = currentRestaurantName;
     });
@@ -169,13 +169,23 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
               inactiveTickMarkColor: Color(0xFFEDF6F6),
             ),
             child: Slider(
-              value: newGroupSize,
+              value: newGroupSize.roundToDouble(),
               min: 1,
               max: 5,
               divisions: 4,
               onChanged: (double value) {
+                if (value.round() > newGroupSize && value.round() - 1 != monsterTypes.length) {
+                  return;
+                }
+                if (value.round() < newGroupSize && value.round() + 1 != monsterTypes.length) {
+                  return;
+                }
+                if (value.round() == newGroupSize) {
+                  return;
+                }
                 setState(() {
-                  newGroupSize = value;
+                  monsterTypes = getUpdatedMonsterType(value.round() > newGroupSize, monsterTypes);
+                  newGroupSize = value.round();
                 });
               },
             ),
@@ -196,7 +206,18 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       ),
     );
   }
-  
+
+  List<MonsterType> getUpdatedMonsterType(bool didAddMonster, List<MonsterType> monsterTypes) {
+    if (didAddMonster) {
+      // added a new monster
+      monsterTypes.add(MonsterType.generateRandomType());
+    } else {
+      // monster is removed
+      monsterTypes.removeLast();
+    }
+    return monsterTypes;
+  }
+
   void setButtonOpacityTo(double opacity) {
     setState(() {
       buttonOpacity = opacity;
@@ -219,25 +240,31 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       },
       child: Opacity(
         opacity: buttonOpacity,
-        child: Image(image: AssetImage('images/enter_queue_button.png')),
+        child: Image(image: AssetImage('images/static/enter_queue_button.png')),
       )
     );
   }
   
   void joinQueue() async {
-    Response response = await PostRequestBuilder()
-        .addBody(<String, String>{
-          "group_name": "Sushi", // need to add word bank
-          "group_size": newGroupSize.toString(),
-          "monster_type": "1, 2, 3, 4, 5", // randomize
-          "queue_status": "0",
-          "email": emailAddress,
-        })
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .addPath('groups')
-        .sendRequest();
-    dynamic data = jsonDecode(response.body);
+    String monsterTypesString = '';
+    monsterTypes.forEach((element) {
+      monsterTypesString += element.toString();
+    });
+    List<dynamic> allGroups = await WhooshService.getAllGroupsInQueue(restaurantId);
+    List<String> allGroupNames = allGroups
+        .map((group) => group['group_name'].toString())
+        .toList();
+    String groupName = WordFactory.getRandomWord();
+    while (allGroupNames.contains(groupName)) {
+      groupName = WordFactory.getRandomWord();
+    }
+    dynamic data = await WhooshService.joinQueue(
+      restaurantId,
+      groupName,
+      newGroupSize,
+      monsterTypesString,
+      emailAddress
+    );
     int groupId = data['group_id'];
     Navigator.pushReplacement(
         context,
@@ -265,7 +292,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/restaurant_icon.png'),
+                Image(image: AssetImage('images/static/restaurant_icon.png'),
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,

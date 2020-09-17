@@ -49,7 +49,7 @@ class _WelcomeCardState extends State<WelcomeCard> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image(
-              image: AssetImage('images/landing.png'),
+              image: AssetImage('images/static/landing.png'),
               width: 400.0,
               height: 400.0,
               fit: BoxFit.cover,
