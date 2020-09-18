@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 class RestaurantWelcomeScreen extends StatelessWidget {
-  void showRestaurantSettingsScreen() {
-    //Navigator.of(context).pushNamed('/queue');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +11,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
           child: Column(
                   children: [
                     generateWhooshHeading(),
-                    generateStartButton(),
+                    generateStartButton(context),
                     generateTopTextBox(),
                     generateBottomTextBox(),
                     generateBottomImage(),
@@ -47,14 +43,16 @@ class RestaurantWelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget generateStartButton() {
+  Widget generateStartButton(BuildContext context) {
     return ButtonTheme(
       minWidth: 350,
       height: 40,
       child: FlatButton(
         color: Color(0xFF376ADB),
         textColor: Color(0xFFEDF6F6),
-        onPressed: showRestaurantSettingsScreen,
+        onPressed: () => {
+          Navigator.of(context).pushNamed('/restaurant/settings')
+        },
         child: Text(
             'get started',
             style: TextStyle(
@@ -141,7 +139,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
             ),
           ]
       ),
-      margin: const EdgeInsets.only(top: 30.0),
+      margin: const EdgeInsets.symmetric(vertical: 30.0),
     );
   }
 

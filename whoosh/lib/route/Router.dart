@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whoosh/screens/AddGroupScreen.dart';
 import 'package:whoosh/screens/QueueScreen.dart';
 import 'package:whoosh/screens/RestaurantWelcomeScreen.dart';
+import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/main.dart';
 import 'package:whoosh/route/route_names.dart';
 import '../util/string_extensions.dart';
@@ -20,6 +21,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(AddGroupScreen(restaurantId), settings);
     case restaurantWelcomeRoute:
       return _getPageRoute(RestaurantWelcomeScreen(), settings);
+    case restaurantSettingsRoute:
+      return _getPageRoute(RestaurantSettingsScreen(), settings);
+//    case restaurantQrCodeRoute:
+//      return _getPageRoute(QRCodeScreen(routingData['restaurantName']), settings);
     default:
       return _getPageRoute(WelcomeScreen(), settings);
   }

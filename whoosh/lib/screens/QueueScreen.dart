@@ -86,10 +86,10 @@ class _QueueCardState extends State<QueueCard> {
     String currentRestaurantName = data.single['restaurant_name'];
     int currentUnitQueueTime = data.single['unit_queue_time'];
     if (this.mounted) {
-      setState(() {
-        restaurantName = currentRestaurantName;
-        unitQueueTime = currentUnitQueueTime;
-      });
+        setState(() {
+          restaurantName = currentRestaurantName;
+          unitQueueTime = currentUnitQueueTime;
+        });
     }
   }
 
