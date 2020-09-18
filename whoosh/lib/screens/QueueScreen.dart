@@ -153,7 +153,7 @@ class _QueueCardState extends State<QueueCard> {
     );
     Widget restaurantNameContainer = Container(
         height: 50,
-        constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+        constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
         child: FittedBox(
           child: Text(
             restaurantName,
@@ -177,7 +177,6 @@ class _QueueCardState extends State<QueueCard> {
             ),
           ),
           Container(
-            width: 400,
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

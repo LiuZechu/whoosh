@@ -21,6 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2c1f81ac-826b-49bf-9593-5af477d08237" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../whoosh-server" beforeDir="false" afterPath="$PROJECT_DIR$/../whoosh-server" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/QueueScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/QueueScreen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +120,7 @@
       <workItem from="1600341362587" duration="1814000" />
       <workItem from="1600408094375" duration="587000" />
       <workItem from="1600408930833" duration="714000" />
+      <workItem from="1600410219525" duration="955000" />
     </task>
     <servers />
   </component>
