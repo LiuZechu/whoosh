@@ -77,6 +77,7 @@ class _QueueCardState extends State<QueueCard> {
   @override void initState() {
     super.initState();
     fetchRestaurantDetails();
+    fetchQueue();
   }
 
   void fetchRestaurantDetails() async {
@@ -135,7 +136,9 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Widget generateQueue() {
-    fetchQueue();
+    if (groups.isEmpty || unitQueueTime == 0) {
+      fetchQueue();
+    }
     return Column(
         children: groups.map(
                 (e) => e.id == currentGroupId
