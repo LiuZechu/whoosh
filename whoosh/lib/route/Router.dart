@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/screens/AddGroupScreen.dart';
 import 'package:whoosh/screens/QueueScreen.dart';
-import 'package:whoosh/screens/main.dart';
+import 'package:whoosh/main.dart';
 import 'package:whoosh/route/route_names.dart';
 import '../util/string_extensions.dart';
 

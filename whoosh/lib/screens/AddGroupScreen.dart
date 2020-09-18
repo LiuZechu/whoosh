@@ -1,16 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/WordFactory.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/screens/QueueScreen.dart';
-
-import '../requests/GetRequestBuilder.dart';
-import '../requests/PostRequestBuilder.dart';
 
 // http://localhost:${port}/#/joinQueue?restaurant_id=1
 class AddGroupScreen extends StatelessWidget {
