@@ -20,61 +20,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c1f81ac-826b-49bf-9593-5af477d08237" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/actors/accessories.flr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/actors/bodies.flr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/actors/eyes.flr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/actors/mouths.flr" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/requests/WhooshService.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../whoosh-server" beforeDir="false" afterPath="$PROJECT_DIR$/../whoosh-server" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/MonsterType.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/CURRENT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOCK" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/WordFactory.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/LOG.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/Local Storage/leveldb/MANIFEST-000001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/AssetManifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/flutter_assets/AssetManifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/build/flutter_assets/NOTICES" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/enter_queue_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/landing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/monster_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/monster_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/monster_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/monster_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/monster_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/name_bubble.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/queue_line.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/queue_line_mask.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/randomize_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/restaurant_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/enter_queue_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/enter_queue_button.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/landing.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/landing.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/monster_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/monster_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/monster_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/monster_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/monster_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/monster_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/monster_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/monster_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/monster_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/monster_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/name_bubble.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/name_bubble.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/queue_line.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/queue_line.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/queue_line_mask.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/queue_line_mask.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/randomize_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/randomize_button.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/restaurant_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/static/restaurant_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/entity/Group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/Group.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/entity/MonsterFactory.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/entity/MonsterFactory.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/AddGroupScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/AddGroupScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/QueueScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/QueueScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/c97c90b07327171bcfaecce55c1e68b6/gen_localizations.stamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/cache.dill.track.dill" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/AssetManifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/FontManifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/NOTICES" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/MaterialIcons-Regular.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/VisbyCF-ExtraBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/VisbyCF-Light.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/accessories.flr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/bodies.flr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/eyes.flr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/mouths.flr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/enter_queue_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/landing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/name_bubble.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/queue_line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/queue_line_mask.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/randomize_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/restaurant_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/last_build_run.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/main.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,21 +118,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/lib/screens/main.dart" />
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
       <method v="2" />
     </configuration>
   </component>
@@ -181,6 +148,10 @@
       <workItem from="1599703828210" duration="42529000" />
       <workItem from="1600241269711" duration="12858000" />
       <workItem from="1600303812358" duration="3035000" />
+      <workItem from="1600325825951" duration="17000" />
+      <workItem from="1600341362587" duration="1814000" />
+      <workItem from="1600408094375" duration="587000" />
+      <workItem from="1600408930833" duration="23000" />
     </task>
     <servers />
   </component>
@@ -204,10 +175,10 @@
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state x="448" y="93" key="#Project_Structure/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599626735957" />
-    <state x="424" y="173" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599627405581">
+    <state x="424" y="173" width="1071" height="754" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600408952823">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state x="424" y="173" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1599627405581" />
+    <state x="424" y="173" width="1071" height="754" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600408952823" />
     <state x="704" y="320" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600244737639">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
@@ -221,45 +192,45 @@
       <screen x="0" y="23" width="1920" height="991" />
     </state>
     <state x="722" y="395" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599407618040" />
-    <state width="1878" height="189" key="GridCell.Tab.0.bottom" timestamp="1600272826058">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1878" height="189" key="GridCell.Tab.0.bottom" timestamp="1600308502260">
+      <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1600089616584" />
     <state width="1878" height="133" key="GridCell.Tab.0.bottom/1920.1103.1440.797/0.23.1920.1057@0.23.1920.1057" timestamp="1600244850887" />
     <state width="1878" height="189" key="GridCell.Tab.0.bottom/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826058" />
     <state width="1878" height="268" key="GridCell.Tab.0.bottom/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858905" />
     <state width="1878" height="237" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727700" />
-    <state width="1878" height="237" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600248507439" />
+    <state width="1878" height="189" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
     <state width="1878" height="308" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714980" />
-    <state width="1878" height="189" key="GridCell.Tab.0.center" timestamp="1600272826057">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1878" height="189" key="GridCell.Tab.0.center" timestamp="1600308502260">
+      <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
     <state width="1878" height="133" key="GridCell.Tab.0.center/1920.1103.1440.797/0.23.1920.1057@0.23.1920.1057" timestamp="1600244850886" />
     <state width="1878" height="189" key="GridCell.Tab.0.center/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.center/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="237" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727699" />
-    <state width="1878" height="237" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600248507439" />
+    <state width="1878" height="189" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
     <state width="1878" height="308" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714978" />
-    <state width="1878" height="189" key="GridCell.Tab.0.left" timestamp="1600272826057">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1878" height="189" key="GridCell.Tab.0.left" timestamp="1600308502259">
+      <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
     <state width="1878" height="133" key="GridCell.Tab.0.left/1920.1103.1440.797/0.23.1920.1057@0.23.1920.1057" timestamp="1600244850886" />
     <state width="1878" height="189" key="GridCell.Tab.0.left/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.left/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858903" />
     <state width="1878" height="237" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727699" />
-    <state width="1878" height="237" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600248507438" />
+    <state width="1878" height="189" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502259" />
     <state width="1878" height="308" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714977" />
-    <state width="1878" height="189" key="GridCell.Tab.0.right" timestamp="1600272826057">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1878" height="189" key="GridCell.Tab.0.right" timestamp="1600308502260">
+      <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
     <state width="1878" height="133" key="GridCell.Tab.0.right/1920.1103.1440.797/0.23.1920.1057@0.23.1920.1057" timestamp="1600244850887" />
     <state width="1878" height="189" key="GridCell.Tab.0.right/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.right/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="237" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727700" />
-    <state width="1878" height="237" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600248507439" />
+    <state width="1878" height="189" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
     <state width="1878" height="308" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714979" />
     <state x="448" y="98" key="SettingsEditor" timestamp="1599627404134">
       <screen x="0" y="23" width="1920" height="977" />
