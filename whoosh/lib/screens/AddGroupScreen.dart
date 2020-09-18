@@ -294,7 +294,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 SizedBox(width: 10),
                 Container(
                   height: 50,
-                  constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+                  constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
                   child: FittedBox(
                     child: Text(
                       restaurantName,
