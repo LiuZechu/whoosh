@@ -23,8 +23,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(RestaurantWelcomeScreen(), settings);
     case restaurantSettingsRoute:
       return _getPageRoute(RestaurantSettingsScreen(), settings);
-//    case restaurantQrCodeRoute:
-//      return _getPageRoute(QRCodeScreen(routingData['restaurantName']), settings);
     default:
       return _getPageRoute(WelcomeScreen(), settings);
   }

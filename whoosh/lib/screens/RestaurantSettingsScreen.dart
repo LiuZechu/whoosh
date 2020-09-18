@@ -3,7 +3,19 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 
-class RestaurantSettingsScreen extends StatelessWidget {
+class RestaurantSettingsScreen extends StatefulWidget {
+  var restaurantName;
+  var estimatedWaitingTime;
+
+  @override
+  _RestaurantSettingsState createState() => _RestaurantSettingsState(restaurantName, estimatedWaitingTime);
+}
+
+class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
+  var restaurantName;
+  var estimatedWaitingTime;
+
+  _RestaurantSettingsState(this.restaurantName, this.estimatedWaitingTime);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +29,7 @@ class RestaurantSettingsScreen extends StatelessWidget {
               generateSettingsHeading(),
               generateRestaurantPhotoCard(),
               generateRestaurantNameField(),
+              generateEstimatedWaitTimeField(),
               //generateRestaurantMenuField(),
               generateQRCodeButton(context),
             ]
@@ -25,6 +38,7 @@ class RestaurantSettingsScreen extends StatelessWidget {
       ),
     );
   }
+
 
   Widget generateHeader() {
     return AppBar(
@@ -76,7 +90,6 @@ class RestaurantSettingsScreen extends StatelessWidget {
 
   Widget generateRestaurantNameField() {
     return Container(
-      //margin: const EdgeInsets.symmetric(vertical: 50.0),
       decoration: BoxDecoration(
         border: new Border(
           top: new BorderSide(
@@ -98,14 +111,29 @@ class RestaurantSettingsScreen extends StatelessWidget {
             children: [
               Container(
                 width: 350,
-                child: Text(
-                  "Genki Sushi",
+                child: TextField(
+                  decoration: new InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(bottom: 10, top: 10),
+                    hintText: 'please enter restaurant name...',
+                    hintStyle: TextStyle(
+                      color: Color(0x55EDF6F6),
+                      fontSize: 20,
+                      fontFamily: "VisbyCF",
+                    )
+                  ),
                   style: TextStyle(
                     fontFamily: "VisbyCF",
-                    fontSize: 40,
+                    fontSize: 35,
                     color: Color(0xFFEDF6F6)
                   ),
-                  textAlign: TextAlign.left,
+                  onChanged: (text) {
+                    restaurantName = text;
+                  },
                 ),
               ),
               Container(
@@ -132,6 +160,78 @@ class RestaurantSettingsScreen extends StatelessWidget {
     );
   }
 
+  Widget generateEstimatedWaitTimeField() {
+    return Container(
+        decoration: BoxDecoration(
+            border: new Border(
+              top: new BorderSide(
+                  color: Color(0xFF376ADB),
+                  width: 1.0,
+                  style: BorderStyle.solid
+              ),
+              bottom: new BorderSide(
+                  color: Color(0xFF376ADB),
+                  width: 1.0,
+                  style: BorderStyle.solid
+              ),
+            )
+        ),
+        child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
+                  children: [
+                    Container(
+                      width: 350,
+                      child: TextField(
+                        decoration: new InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(bottom: 10, top: 10),
+                            hintText: 'please enter est. wait time...',
+                            hintStyle: TextStyle(
+                              color: Color(0x55EDF6F6),
+                              fontSize: 20,
+                              fontFamily: "VisbyCF",
+                            )
+                        ),
+                        style: TextStyle(
+                            fontFamily: "VisbyCF",
+                            fontSize: 35,
+                            color: Color(0xFFEDF6F6)
+                        ),
+                        onChanged: (text) {
+                          estimatedWaitingTime = int.parse(text);
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 350,
+                      child: Text(
+                        "Estimated waiting time per group (min)",
+                        style: TextStyle(
+                            fontFamily: "VisbyCF",
+                            fontSize: 20,
+                            color: Color(0xFFEDF6F6)
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ]
+              ),
+              IconButton(
+                icon: Image.asset('images/edit_button.png'),
+                iconSize: 50,
+                onPressed: () => {}, // to implement
+              )
+            ]
+        )
+    );
+  }
+
 //  Widget generateRestaurantMenuField() {
 //
 //  }
@@ -149,7 +249,7 @@ class RestaurantSettingsScreen extends StatelessWidget {
             Navigator.pushReplacement(
                 context,
                 new MaterialPageRoute(
-                    builder: (context) => QRCodeScreen("placeholder")
+                    builder: (context) => QRCodeScreen(restaurantName, estimatedWaitingTime)
                 )
             );
           },

@@ -5,8 +5,9 @@ import 'package:http/http.dart';
 
 class QRCodeScreen extends StatelessWidget {
   String restaurantName;
+  int estimatedWaitingTime;
 
-  QRCodeScreen(this.restaurantName);
+  QRCodeScreen(this.restaurantName, this.estimatedWaitingTime);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class QRCodeScreen extends StatelessWidget {
           generateHeader(),
           Column(
               children: [
-                QRCodeCard(restaurantName),
+                QRCodeCard(restaurantName, estimatedWaitingTime),
               ]
           )
         ],
@@ -53,18 +54,20 @@ class QRCodeScreen extends StatelessWidget {
 
 class QRCodeCard extends StatefulWidget {
   final String restaurantName;
+  final int estimatedWaitingTime;
 
-  QRCodeCard(this.restaurantName);
+  QRCodeCard(this.restaurantName, this.estimatedWaitingTime);
 
   @override
-  _QRCodeCardState createState() => _QRCodeCardState(restaurantName);
+  _QRCodeCardState createState() => _QRCodeCardState(restaurantName, estimatedWaitingTime);
 }
 
 class _QRCodeCardState extends State<QRCodeCard> {
   final String restaurantName;
+  final int estimatedWaitingTime;
   var restaurantId = -1;
 
-  _QRCodeCardState(this.restaurantName);
+  _QRCodeCardState(this.restaurantName, this.estimatedWaitingTime);
 
   @override void initState() {
     super.initState();
@@ -86,7 +89,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
       "restaurant_name": restaurantName,
-      "unit_queue_time": '5', // hardcoded; to change later
+      "unit_queue_time": estimatedWaitingTime.toString(),
       "icon_url":  "www.example.com" // hardcoded; to change later
     })
         .addPath('restaurants')
