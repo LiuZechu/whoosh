@@ -21,40 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2c1f81ac-826b-49bf-9593-5af477d08237" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../whoosh-server" beforeDir="false" afterPath="$PROJECT_DIR$/../whoosh-server" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/chrome-device/Default/preferences" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/c97c90b07327171bcfaecce55c1e68b6/gen_localizations.stamp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/cache.dill.track.dill" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/AssetManifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/FontManifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/NOTICES" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/MaterialIcons-Regular.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/VisbyCF-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/fonts/VisbyCF-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/accessories.flr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/bodies.flr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/eyes.flr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/actors/mouths.flr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/enter_queue_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/landing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/monster_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/name_bubble.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/queue_line.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/queue_line_mask.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/randomize_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/images/static/restaurant_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/last_build_run.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +117,7 @@
       <workItem from="1600325825951" duration="17000" />
       <workItem from="1600341362587" duration="1814000" />
       <workItem from="1600408094375" duration="587000" />
-      <workItem from="1600408930833" duration="23000" />
+      <workItem from="1600408930833" duration="714000" />
     </task>
     <servers />
   </component>
@@ -192,7 +158,7 @@
       <screen x="0" y="23" width="1920" height="991" />
     </state>
     <state x="722" y="395" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599407618040" />
-    <state width="1878" height="189" key="GridCell.Tab.0.bottom" timestamp="1600308502260">
+    <state width="1876" height="188" key="GridCell.Tab.0.bottom" timestamp="1600410006924">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1600089616584" />
@@ -200,9 +166,9 @@
     <state width="1878" height="189" key="GridCell.Tab.0.bottom/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826058" />
     <state width="1878" height="268" key="GridCell.Tab.0.bottom/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858905" />
     <state width="1878" height="237" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727700" />
-    <state width="1878" height="189" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
+    <state width="1876" height="188" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600410006924" />
     <state width="1878" height="308" key="GridCell.Tab.0.bottom/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714980" />
-    <state width="1878" height="189" key="GridCell.Tab.0.center" timestamp="1600308502260">
+    <state width="1876" height="188" key="GridCell.Tab.0.center" timestamp="1600410006923">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
@@ -210,9 +176,9 @@
     <state width="1878" height="189" key="GridCell.Tab.0.center/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.center/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="237" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727699" />
-    <state width="1878" height="189" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
+    <state width="1876" height="188" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600410006923" />
     <state width="1878" height="308" key="GridCell.Tab.0.center/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714978" />
-    <state width="1878" height="189" key="GridCell.Tab.0.left" timestamp="1600308502259">
+    <state width="1876" height="188" key="GridCell.Tab.0.left" timestamp="1600410006922">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
@@ -220,9 +186,9 @@
     <state width="1878" height="189" key="GridCell.Tab.0.left/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.left/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858903" />
     <state width="1878" height="237" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727699" />
-    <state width="1878" height="189" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502259" />
+    <state width="1876" height="188" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600410006922" />
     <state width="1878" height="308" key="GridCell.Tab.0.left/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714977" />
-    <state width="1878" height="189" key="GridCell.Tab.0.right" timestamp="1600308502260">
+    <state width="1876" height="188" key="GridCell.Tab.0.right" timestamp="1600410006924">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state width="1398" height="133" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1600089616583" />
@@ -230,7 +196,7 @@
     <state width="1878" height="189" key="GridCell.Tab.0.right/1920.1103.1440.798/0.23.1920.1057@0.23.1920.1057" timestamp="1600272826057" />
     <state width="1878" height="268" key="GridCell.Tab.0.right/1920.1103.1440.811/0.23.1920.1057@0.23.1920.1057" timestamp="1599399858904" />
     <state width="1878" height="237" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.1057@0.23.1920.1057" timestamp="1600268727700" />
-    <state width="1878" height="189" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600308502260" />
+    <state width="1876" height="188" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.977@0.23.1920.977" timestamp="1600410006924" />
     <state width="1878" height="308" key="GridCell.Tab.0.right/1920.1103.1440.877/0.23.1920.991@0.23.1920.991" timestamp="1599606714979" />
     <state x="448" y="98" key="SettingsEditor" timestamp="1599627404134">
       <screen x="0" y="23" width="1920" height="977" />
