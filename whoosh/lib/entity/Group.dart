@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
@@ -157,8 +158,8 @@ class Group {
               Align(
                 alignment: Alignment.topCenter,
                 child: GestureDetector(
-                  onTap: () {
-                    randomizeMonsterTypes(restaurantId);
+                  onTap: () async {
+                    await randomizeMonsterTypes(restaurantId);
                     refresh();
                   },
                   child: Image(
@@ -188,17 +189,18 @@ class Group {
     return stackElements;
   }
 
-  void randomizeMonsterTypes(int restaurantId) {
-    types.map((e) => MonsterType.generateRandomType());
-    updateGroup(restaurantId);
+  dynamic randomizeMonsterTypes(int restaurantId) async {
+    types = types.map((e) => MonsterType.generateRandomType()).toList();
+    return await updateGroup(restaurantId);
   }
 
-  void updateGroup(int restaurantId) {
+  dynamic updateGroup(int restaurantId) async {
     String monsterTypesString = '';
     types.forEach((element) {
       monsterTypesString += element.toString();
     });
-    WhooshService.updateGroupTypes(id, restaurantId, monsterTypesString);
+    dynamic response = await WhooshService.updateGroupTypes(id, restaurantId, monsterTypesString);
+    return response;
   }
 
   List<Widget> createOtherGroupStackElements() {
