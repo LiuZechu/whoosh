@@ -44,6 +44,19 @@ class WhooshService {
     return data;
   }
 
+  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime) async {
+    Response response = await PostRequestBuilder()
+        .addBody(<String, String>{
+          "restaurant_name": restaurantName,
+          "unit_queue_time": estimatedWaitingTime.toString(),
+          "icon_url":  "www.example.com" // hardcoded; to change later
+        })
+        .addPath('restaurants')
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
   static Future<dynamic> updateGroupTypes(int groupId, int restaurantId, String monsterType) async {
     Response response = await PutRequestBuilder()
         .addBody(<String, String>{
