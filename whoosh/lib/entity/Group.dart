@@ -1,26 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:whoosh/requests/WhooshService.dart';
+
+import 'MonsterType.dart';
 
 class Group {
   int id;
   String name;
   int groupSize;
   DateTime timeOfArrival;
+  List<MonsterType> types;
 
-  Group(this.id, this.name, this.groupSize, this.timeOfArrival);
+  Group(this.id, this.name, this.groupSize, this.timeOfArrival, this.types);
 
-  Group.fromSize(this.groupSize);
+  Group.fromSize(this.groupSize, this.types) {
+    this.id = -1;
+    this.name = '';
+    this.timeOfArrival = DateTime.now();
+  }
 
   Widget createJoinQueueGroupImage() {
     return generateContainerWithStack(createNewGroupStackElements(), 300);
   }
 
-  Widget createCurrentGroupImage(int noOfGroupsAhead) {
+  Widget createCurrentGroupImage(int noOfGroupsAhead, void Function() refresh, int restaurantId) {
     return generateContainerWithStack(
-        createCurrentGroupStackElements(noOfGroupsAhead), 400
+        createCurrentGroupStackElements(noOfGroupsAhead, refresh, restaurantId), 400
     );
   }
 
@@ -163,7 +172,7 @@ class Group {
     List<Widget> monsterWidgets = [];
     List<Monster> monsters = [];
     for (int i = 0; i < groupSize; i++) {
-      monsters.add(MonsterFactory.getMonsterById(i));
+      monsters.add(MonsterFactory.getMonsterById(i, types[i]));
     }
     while (monsters.isNotEmpty && monsters.last.id > 2) {
       Monster last = monsters.removeLast();
@@ -175,9 +184,9 @@ class Group {
       monsterWidgets.add(
           Align(
               alignment: monster.alignment,
-              child: Image(
+              child: Align(
                 alignment: monster.alignment,
-                image: monster.asset,
+                child: monster.actor,
               )
           )
       );
@@ -198,7 +207,8 @@ class Group {
     return currentStack;
   }
 
-  List<Widget> createCurrentGroupStackElements(int noOfGroupsAhead) {
+  List<Widget> createCurrentGroupStackElements(
+      int noOfGroupsAhead, void Function() refresh, int restaurantId) {
     List<Widget> stackElements = [];
     // Add Queue line
     stackElements.add(
@@ -206,7 +216,7 @@ class Group {
           alignment: Alignment.bottomCenter,
           child: Image(
             alignment: Alignment.bottomCenter,
-            image: AssetImage('images/queue_line.png'),
+            image: AssetImage('images/static/queue_line.png'),
             width: 13,
             height: 400,
           ),
@@ -228,7 +238,7 @@ class Group {
               Align(
                 alignment: Alignment.topRight,
                 child: Image(
-                  image: AssetImage('images/name_bubble.png')
+                  image: AssetImage('images/static/name_bubble.png')
                 ),
               ),
               Align(
@@ -265,10 +275,16 @@ class Group {
               generateMask(400, 50, Alignment(0, 0.4)),
               Align(
                 alignment: Alignment.topCenter,
-                child: Image(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage('images/randomize_button.png'),
-                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    await randomizeMonsterTypes(restaurantId);
+                    refresh();
+                  },
+                  child: Image(
+                    alignment: Alignment.topCenter,
+                    image: AssetImage('images/static/randomize_button.png'),
+                  ),
+                )
               ),
               Align(
                 alignment: Alignment(0, 0.4),
@@ -291,6 +307,20 @@ class Group {
     return stackElements;
   }
 
+  dynamic randomizeMonsterTypes(int restaurantId) async {
+    types = types.map((e) => MonsterType.generateRandomType()).toList();
+    return await updateGroup(restaurantId);
+  }
+
+  dynamic updateGroup(int restaurantId) async {
+    String monsterTypesString = '';
+    types.forEach((element) {
+      monsterTypesString += element.toString();
+    });
+    dynamic response = await WhooshService.updateGroupTypes(id, restaurantId, monsterTypesString);
+    return response;
+  }
+
   List<Widget> createOtherGroupStackElements() {
     List<Widget> stackElements = [];
     stackElements.add(
@@ -298,13 +328,12 @@ class Group {
           alignment: Alignment.bottomCenter,
           child: Image(
             alignment: Alignment.bottomCenter,
-            image: AssetImage('images/queue_line.png'),
+            image: AssetImage('images/static/queue_line.png'),
             width: 13,
             height: 400,
           ),
         )
     );
-    List<Widget> monsterWidgets = [];
     return addMonsterStackTo(stackElements);
   }
 
@@ -312,7 +341,7 @@ class Group {
     return Align(
       alignment: align,
       child: Image(
-        image: AssetImage('images/queue_line_mask.png'),
+        image: AssetImage('images/static/queue_line_mask.png'),
         width: width,
         height: height,
       ),

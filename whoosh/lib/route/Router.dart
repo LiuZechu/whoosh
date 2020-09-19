@@ -4,7 +4,7 @@ import 'package:whoosh/screens/QueueScreen.dart';
 import 'package:whoosh/screens/RestaurantWelcomeScreen.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
-import 'package:whoosh/screens/main.dart';
+import 'package:whoosh/main.dart';
 import 'package:whoosh/route/route_names.dart';
 import '../util/string_extensions.dart';
 
