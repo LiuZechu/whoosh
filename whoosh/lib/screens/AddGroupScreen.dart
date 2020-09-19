@@ -260,12 +260,17 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       emailAddress
     );
     int groupId = data['group_id'];
-    Navigator.pushReplacement(
+    Navigator.pushNamed(
         context,
-        new MaterialPageRoute(
-          builder: (context) => QueueScreen(restaurantId, groupId)
-        )
+        generateQueuePageUrl(groupId)
     );
+  }
+
+  String generateQueuePageUrl(int groupId) {
+    return '/queue?restaurant_id='
+        + restaurantId.toString()
+        + '&group_id='
+        + groupId.toString();
   }
 
   Widget generateRestaurantName() {

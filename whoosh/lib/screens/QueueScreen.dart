@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert' show json;
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
-
-import '../requests/GetRequestBuilder.dart';
 
 // http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
 class QueueScreen extends StatelessWidget {
@@ -142,7 +138,7 @@ class _QueueCardState extends State<QueueCard> {
     return Column(
         children: groups.map(
                 (e) => e.id == currentGroupId
-                    ? e.createCurrentGroupImage(groups.length - 1)
+                    ? e.createCurrentGroupImage(groups.length - 1, refresh, restaurantId)
                     : e.createOtherGroupImage()
         ).toList()
     );
@@ -231,6 +227,11 @@ class _QueueCardState extends State<QueueCard> {
         ]
       )
     );
+  }
+
+  void refresh() {
+    print('refreshing');
+    fetchQueue();
   }
 }
 

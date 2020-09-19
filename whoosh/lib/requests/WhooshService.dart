@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:whoosh/requests/PutRequestBuilder.dart';
 import 'GetRequestBuilder.dart';
 import 'PostRequestBuilder.dart';
 
@@ -38,6 +39,20 @@ class WhooshService {
         .addPath('restaurants')
         .addPath(restaurantId.toString())
         .addPath('groups')
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
+  static Future<dynamic> updateGroupTypes(int groupId, int restaurantId, String monsterType) async {
+    Response response = await PutRequestBuilder()
+        .addBody(<String, String>{
+          "monster_type": monsterType
+        })
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .addPath('groups')
+        .addPath(groupId.toString())
         .sendRequest();
     dynamic data = jsonDecode(response.body);
     return data;

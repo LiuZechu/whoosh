@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 
 import 'MonsterType.dart';
 
@@ -23,9 +24,9 @@ class Group {
     return generateContainerWithStack(createNewGroupStackElements(), 300);
   }
 
-  Widget createCurrentGroupImage(int noOfGroupsAhead) {
+  Widget createCurrentGroupImage(int noOfGroupsAhead, void Function() refresh, int restaurantId) {
     return generateContainerWithStack(
-        createCurrentGroupStackElements(noOfGroupsAhead), 400
+        createCurrentGroupStackElements(noOfGroupsAhead, refresh, restaurantId), 400
     );
   }
 
@@ -87,7 +88,8 @@ class Group {
     return currentStack;
   }
 
-  List<Widget> createCurrentGroupStackElements(int noOfGroupsAhead) {
+  List<Widget> createCurrentGroupStackElements(
+      int noOfGroupsAhead, void Function() refresh, int restaurantId) {
     List<Widget> stackElements = [];
     // Add Queue line
     stackElements.add(
@@ -154,10 +156,16 @@ class Group {
               generateMask(400, 50, Alignment(0, 0.4)),
               Align(
                 alignment: Alignment.topCenter,
-                child: Image(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage('images/static/randomize_button.png'),
-                ),
+                child: GestureDetector(
+                  onTap: () {
+                    randomizeMonsterTypes(restaurantId);
+                    refresh();
+                  },
+                  child: Image(
+                    alignment: Alignment.topCenter,
+                    image: AssetImage('images/static/randomize_button.png'),
+                  ),
+                )
               ),
               Align(
                 alignment: Alignment(0, 0.4),
@@ -178,6 +186,19 @@ class Group {
       )
     );
     return stackElements;
+  }
+
+  void randomizeMonsterTypes(int restaurantId) {
+    types.map((e) => MonsterType.generateRandomType());
+    updateGroup(restaurantId);
+  }
+
+  void updateGroup(int restaurantId) {
+    String monsterTypesString = '';
+    types.forEach((element) {
+      monsterTypesString += element.toString();
+    });
+    WhooshService.updateGroupTypes(id, restaurantId, monsterTypesString);
   }
 
   List<Widget> createOtherGroupStackElements() {

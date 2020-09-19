@@ -45,4 +45,5 @@ class MonsterType {
     }
     return types;
   }
+
 }
