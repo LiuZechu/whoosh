@@ -27,14 +27,14 @@ class WhooshService {
   }
 
   static Future<dynamic> joinQueue(int restaurantId, String groupName, int groupSize,
-      String monsterTypes, String emailAddress) async {
+      String monsterTypes, String phoneNumber) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
           "group_name": groupName, // need to add word bank
           "group_size": groupSize.toString(),
           "monster_type": monsterTypes,
           "queue_status": "0",
-          "email": emailAddress,
+          "phone_number": phoneNumber,
         })
         .addPath('restaurants')
         .addPath(restaurantId.toString())
