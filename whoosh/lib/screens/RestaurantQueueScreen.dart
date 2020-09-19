@@ -180,8 +180,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         group['group_name'],
         group['group_size'],
         DateTime.parse(group['arrival_time']),
-        group['monster_type']
-    )
+        []) //TODO: change this
     ).toList();
     allGroups.sort((a, b) => a.timeOfArrival.compareTo(b.timeOfArrival));
     if (this.mounted) {
