@@ -230,7 +230,6 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void refresh() {
-    print('refreshing');
     fetchQueue();
   }
 }

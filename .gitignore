@@ -1,2 +1,6 @@
 whoosh/set_flutter_path.sh
 whoosh/push_to_deploy.sh
+whoosh/.dart_tool
+whoosh/.idea
+whoosh/.packages
+whoosh/.DS_Store
