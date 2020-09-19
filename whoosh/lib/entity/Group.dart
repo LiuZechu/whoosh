@@ -31,10 +31,10 @@ class Group {
   Widget createGroupRestaurantView() {
     return Container(
       margin: EdgeInsets.all(6.0),
-      child: Container( // with rounded corners
+      child: Container(
         width: 400,
         height: 75,
-        decoration: BoxDecoration(
+        decoration: BoxDecoration( // with rounded corners
             color: Color(0xFFEDF6F6),
             borderRadius: BorderRadius.all(Radius.circular(15.0))
         ),
@@ -42,11 +42,42 @@ class Group {
           onPressed: () {
             // do something
           },
-          menuWidth: 200,
+          menuWidth: 250,
+          blurSize: 4,
+          blurBackgroundColor: Color(0xFF2B3148),
+          animateMenuItems: false,
+          menuBoxDecoration: BoxDecoration(
+            color: Color(0xFFEDF6F6),
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          ),
           menuItems: <FocusedMenuItem> [
-            FocusedMenuItem(title: Text('Alert'), onPressed: () {}),
-            FocusedMenuItem(title: Text('Confirm Arrival'), onPressed: () {}),
-            FocusedMenuItem(title: Text('Kick Out'), onPressed: () {}),
+            FocusedMenuItem(title: Text(
+              'Alert',
+              style: TextStyle(
+                color: Color(0xFF2B3148),
+                fontSize: 20,
+                fontFamily: "VisbyCF",
+                fontWeight: FontWeight.bold,
+              ),
+            ), onPressed: () {}),
+            FocusedMenuItem(title: Text(
+              'Confirm Arrival',
+              style: TextStyle(
+                color: Color(0xFF2B3148),
+                fontSize: 20,
+                fontFamily: "VisbyCF",
+                fontWeight: FontWeight.bold,
+              ),
+            ), onPressed: () {}),
+            FocusedMenuItem(title: Text(
+              'Kick Out',
+              style: TextStyle(
+                color: Color(0xFF2B3148),
+                fontSize: 20,
+                fontFamily: "VisbyCF",
+                fontWeight: FontWeight.bold,
+              ),
+            ), onPressed: () {}),
           ],
           child: FlatButton(
             onPressed: () {
@@ -69,10 +100,10 @@ class Group {
                       ),
                     ),
                     Text(
-                      "customer@example.com", //TODO: change this later
+                      "91234567", //TODO: change this later
                       style: TextStyle(
                         color: Color(0xFF2B3148),
-                        fontSize: 20,
+                        fontSize: 25,
                         fontFamily: "VisbyCF",
                       )
                     )

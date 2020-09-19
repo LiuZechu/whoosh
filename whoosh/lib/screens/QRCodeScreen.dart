@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../requests/PostRequestBuilder.dart';
 import 'package:http/http.dart';
+import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 
 class QRCodeScreen extends StatelessWidget {
   String restaurantName;
@@ -80,6 +81,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
         child: Column(
             children: [
               generateQrCode(),
+              generateViewQueueButton(context),
             ]
         )
     );
@@ -117,6 +119,42 @@ class _QRCodeCardState extends State<QRCodeCard> {
       String qrCodeUrl = googleQrCodeUrl + hostUrl;
       return Image.network(
         qrCodeUrl,
+      );
+    }
+  }
+
+  Widget generateViewQueueButton(BuildContext context) {
+    if (restaurantId == null) {
+      return null;
+    } else {
+      return Container(
+          margin: EdgeInsets.only(top: 50.0),
+          child: ButtonTheme(
+              minWidth: 350,
+              height: 40,
+              child: FlatButton(
+                color: Color(0xFF376ADB),
+                textColor: Color(0xFFEDF6F6),
+                onPressed: () async {
+                  Navigator.pushReplacement(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => RestaurantQueueScreen(restaurantId)
+                      )
+                  );
+                },
+                child: Text(
+                    'view current queue',
+                    style: TextStyle(
+                      fontFamily: "VisbyCF",
+                      fontSize: 25,
+                    )
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+              )
+          )
       );
     }
   }

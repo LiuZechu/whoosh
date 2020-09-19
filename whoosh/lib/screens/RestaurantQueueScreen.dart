@@ -159,7 +159,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
     fetchQueue();
     return Column(
         children: groups.map(
-                (e) => e.createGroupRestaurantView() //TODO: not implemented yet
+                (e) => e.createGroupRestaurantView()
         ).toList()
     );
   }
