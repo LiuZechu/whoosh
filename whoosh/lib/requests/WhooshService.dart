@@ -27,18 +27,31 @@ class WhooshService {
   }
 
   static Future<dynamic> joinQueue(int restaurantId, String groupName, int groupSize,
-      String monsterTypes, String emailAddress) async {
+      String monsterTypes, String phoneNumber) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
           "group_name": groupName, // need to add word bank
           "group_size": groupSize.toString(),
           "monster_type": monsterTypes,
           "queue_status": "0",
-          "email": emailAddress,
+          "phone_number": phoneNumber,
         })
         .addPath('restaurants')
         .addPath(restaurantId.toString())
         .addPath('groups')
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
+  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime) async {
+    Response response = await PostRequestBuilder()
+        .addBody(<String, String>{
+          "restaurant_name": restaurantName,
+          "unit_queue_time": estimatedWaitingTime.toString(),
+          "icon_url":  "www.example.com" // hardcoded; to change later
+        })
+        .addPath('restaurants')
         .sendRequest();
     dynamic data = jsonDecode(response.body);
     return data;

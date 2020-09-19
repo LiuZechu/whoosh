@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 import '../requests/PostRequestBuilder.dart';
 import 'package:http/http.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
@@ -88,15 +89,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
   }
 
   void registerRestaurant() async {
-    Response response = await PostRequestBuilder()
-        .addBody(<String, String>{
-      "restaurant_name": restaurantName,
-      "unit_queue_time": estimatedWaitingTime.toString(),
-      "icon_url":  "www.example.com" // hardcoded; to change later
-    })
-        .addPath('restaurants')
-        .sendRequest();
-    dynamic data = jsonDecode(response.body);
+    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime);
     int currentRestaurantId = data['restaurant_id'];
     if (this.mounted) {
       setState(() {

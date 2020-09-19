@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'dart:convert' show json;
 
 import 'package:whoosh/entity/Group.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
 
 import '../requests/GetRequestBuilder.dart';
@@ -165,23 +166,17 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   }
 
   void fetchQueue() async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .addPath('groups')
-        .addParams('status', '0')
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
+    List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
         .toList()
         .map((group) => new Group(
-        group['group_id'],
-        group['group_name'],
-        group['group_size'],
-        DateTime.parse(group['arrival_time']),
-        []) //TODO: change this
-    ).toList();
+          group['group_id'],
+          group['group_name'],
+          group['group_size'],
+          DateTime.parse(group['arrival_time']),
+          []) //TODO: change this
+        ).toList();
     allGroups.sort((a, b) => a.timeOfArrival.compareTo(b.timeOfArrival));
     if (this.mounted) {
       setState(() {
