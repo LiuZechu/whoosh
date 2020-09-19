@@ -35,7 +35,7 @@ class QRCodeScreen extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: new Image.asset(
-            'images/logo.png',
+            'images/static/logo.png',
           ),
           tooltip: 'return to homepage',
           onPressed: () {},

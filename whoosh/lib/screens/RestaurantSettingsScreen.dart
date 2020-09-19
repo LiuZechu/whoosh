@@ -47,7 +47,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: new Image.asset(
-            'images/logo.png',
+            'images/static/logo.png',
           ),
           tooltip: 'return to homepage',
           onPressed: () {},
@@ -83,7 +83,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     return Container(
       margin: const EdgeInsets.all(50.0),
       child: new Image.asset(
-        'images/restaurant_icon_big.png'
+        'images/static/restaurant_icon_big.png'
       )
     );
   }
@@ -151,7 +151,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
             ]
           ),
           IconButton(
-            icon: Image.asset('images/edit_button.png'),
+            icon: Image.asset('images/static/edit_button.png'),
             iconSize: 50,
             onPressed: () => {}, // to implement
           )
@@ -223,7 +223,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                   ]
               ),
               IconButton(
-                icon: Image.asset('images/edit_button.png'),
+                icon: Image.asset('images/static/edit_button.png'),
                 iconSize: 50,
                 onPressed: () => {}, // to implement
               )

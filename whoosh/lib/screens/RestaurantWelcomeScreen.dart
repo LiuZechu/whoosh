@@ -26,7 +26,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
     return Column(
       children: [
         new Image.asset(
-          'images/whoosh_heading.png',
+          'images/static/whoosh_heading.png',
         ),
         Container(
           margin: const EdgeInsets.all(50.0),
@@ -145,7 +145,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
 
   Widget generateBottomImage() {
     return new Image.asset(
-      'images/bottom_sea.png',
+      'images/static/bottom_sea.png',
     );
   }
 }

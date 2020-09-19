@@ -32,7 +32,7 @@ class RestaurantQueueScreen extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: new Image.asset(
-            'images/logo.png',
+            'images/static/logo.png',
           ),
           tooltip: 'return to homepage',
           onPressed: () {},
@@ -109,7 +109,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/restaurant_icon.png'),
+                Image(image: AssetImage('images/static/restaurant_icon.png'),
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
