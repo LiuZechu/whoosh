@@ -3,4 +3,4 @@ const String queueRoute = '/queue';
 const String addGroupRoute = '/joinQueue';
 const String restaurantWelcomeRoute = '/restaurant';
 const String restaurantSettingsRoute = '/restaurant/settings';
-//const String restaurantQrCodeRoute = '/restaurant/qrcode';
+const String restaurantQueueRoute = '/view-queue';

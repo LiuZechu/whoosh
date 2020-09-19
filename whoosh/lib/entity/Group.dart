@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 
 class Group {
   int id;
@@ -24,6 +26,91 @@ class Group {
 
   Widget createOtherGroupImage() {
     return generateContainerWithStack(createOtherGroupStackElements(), 400);
+  }
+
+  Widget createGroupRestaurantView() {
+    return Container(
+      margin: EdgeInsets.all(6.0),
+      child: Container( // with rounded corners
+        width: 400,
+        height: 75,
+        decoration: BoxDecoration(
+            color: Color(0xFFEDF6F6),
+            borderRadius: BorderRadius.all(Radius.circular(15.0))
+        ),
+        child: FocusedMenuHolder(
+          onPressed: () {
+            // do something
+          },
+          menuWidth: 200,
+          menuItems: <FocusedMenuItem> [
+            FocusedMenuItem(title: Text('Alert'), onPressed: () {}),
+            FocusedMenuItem(title: Text('Confirm Arrival'), onPressed: () {}),
+            FocusedMenuItem(title: Text('Kick Out'), onPressed: () {}),
+          ],
+          child: FlatButton(
+            onPressed: () {
+              // do something
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      timeOfArrival.hour.toString().padLeft(2, "0")
+                          + ':' + timeOfArrival.minute.toString().padLeft(2, "0"),
+                      style: TextStyle(
+                        color: Color(0xFF2B3148),
+                        fontSize: 25,
+                        fontFamily: "VisbyCF",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "customer@example.com", //TODO: change this later
+                      style: TextStyle(
+                        color: Color(0xFF2B3148),
+                        fontSize: 20,
+                        fontFamily: "VisbyCF",
+                      )
+                    )
+                  ]
+                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                            name,
+                            style: TextStyle(
+                              color: Color(0xFF2B3148),
+                              fontSize: 25,
+                              fontFamily: "VisbyCF",
+                            )
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                            groupSize.toString(),
+                            style: TextStyle(
+                              color: Color(0xFF2B3148),
+                              fontSize: 25,
+                              fontFamily: "VisbyCF",
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ]
+                    ),
+                    SizedBox(height: 10)
+                  ]
+                )
+              ]
+            )
+          )
+        ),
+      )
+    );
   }
 
   Widget generateContainerWithStack(List<Widget> stack, double height) {

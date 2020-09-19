@@ -112,9 +112,9 @@ class _QRCodeCardState extends State<QRCodeCard> {
       );
     } else {
       // TODO: change url to actual ones
-      // String qrCodeUrl = 'http://localhost:${port}/#/joinQueue?restaurant_id=${restaurantId}';
-      var port = 52857;
-      String qrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=http%3A%2F%2Flocalhost%3A${port}%2F%23%2FjoinQueue%3Frestaurant_id%3D${restaurantId}';
+      String hostUrl = 'https%3A%2F%2Fhoholyin.github.io%2Fwhoosh%2F%23%2FjoinQueue%3Frestaurant_id%3D${restaurantId}';
+      String googleQrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
+      String qrCodeUrl = googleQrCodeUrl + hostUrl;
       return Image.network(
         qrCodeUrl,
       );
