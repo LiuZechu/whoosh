@@ -2,3 +2,4 @@ set_flutter_path.sh
 .dart_tool/package_config.json
 .idea/
 .packages
+.DS_Store
