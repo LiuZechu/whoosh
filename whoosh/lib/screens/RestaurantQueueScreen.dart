@@ -179,7 +179,9 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         group['group_id'],
         group['group_name'],
         group['group_size'],
-        DateTime.parse(group['arrival_time']))
+        DateTime.parse(group['arrival_time']),
+        group['monster_type']
+    )
     ).toList();
     allGroups.sort((a, b) => a.timeOfArrival.compareTo(b.timeOfArrival));
     if (this.mounted) {
