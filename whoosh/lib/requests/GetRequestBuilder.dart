@@ -7,7 +7,7 @@ class GetRequestBuilder extends RequestBuilder {
   @override
   Future<http.Response> sendRequest() async {
     mountRequest();
-    log('GET request to:' + finalUrl);
+    log(DateTime.now().toString() + ' GET request to:' + finalUrl);
     return http.get(finalUrl);
   }
 }
