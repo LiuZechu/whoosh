@@ -5,6 +5,11 @@ import 'package:whoosh/entity/MonsterFactory.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:whoosh/requests/WhooshService.dart';
+import '../requests/PutRequestBuilder.dart';
+import '../requests/PostRequestBuilder.dart';
+import 'dart:convert';
+import 'package:http/http.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'MonsterType.dart';
 
@@ -37,7 +42,7 @@ class Group {
     return generateContainerWithStack(createOtherGroupStackElements(), 400);
   }
 
-  Widget createGroupRestaurantView() {
+  Widget createGroupRestaurantView(int restaurantId, String restaurantName) {
     return Container(
       margin: EdgeInsets.all(6.0),
       child: Container(
@@ -68,7 +73,11 @@ class Group {
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
               ),
-            ), onPressed: () {}),
+            ), onPressed: () async {
+              String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
+              // UNCOMMENT THIS TO TEST SMS
+              // await smsGroup(phone_number, textToSent);
+            }),
             FocusedMenuItem(title: Text(
               'Confirm Arrival',
               style: TextStyle(
@@ -77,7 +86,10 @@ class Group {
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
               ),
-            ), onPressed: () {}),
+            ), onPressed: () async {
+              await changeGroupQueueStatus(1, restaurantId);
+              //notifyParent();
+            }),
             FocusedMenuItem(title: Text(
               'Kick Out',
               style: TextStyle(
@@ -86,7 +98,10 @@ class Group {
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
               ),
-            ), onPressed: () {}),
+            ), onPressed: () async {
+              await changeGroupQueueStatus(2, restaurantId);
+              //notifyParent();
+            }),
           ],
           child: FlatButton(
             onPressed: () {
@@ -347,4 +362,28 @@ class Group {
       ),
     );
   }
+
+  void changeGroupQueueStatus(int statusCode, int restaurantId) async {
+    if (statusCode < 0 || statusCode > 2) {
+      return;
+    }
+    dynamic data = await WhooshService.updateQueueStatus(statusCode, id, restaurantId); // use this later
+    showToast("Queue status updated successfully!");
+  }
+
+  void smsGroup(String phone_number, String text) async {
+    dynamic data = await WhooshService.sendSmsToGroup(phone_number, text); // use this later
+    showToast("SMS sent successfully!");
+  }
+
+  // TODO: beautify this.
+  void showToast(String text) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0
+    );
+  }
+
 }
