@@ -44,12 +44,13 @@ class WhooshService {
     return data;
   }
 
-  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime) async {
+  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime, String menuUrl, String iconUrl) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
           "restaurant_name": restaurantName,
           "unit_queue_time": estimatedWaitingTime.toString(),
-          "icon_url":  "www.example.com" // hardcoded; to change later
+          "menu_url": menuUrl,
+          "icon_url": iconUrl,
         })
         .addPath('restaurants')
         .sendRequest();
@@ -70,4 +71,31 @@ class WhooshService {
     dynamic data = jsonDecode(response.body);
     return data;
   }
+
+  static Future<dynamic> updateQueueStatus(int statusCode, int groupId, int restaurantId) async {
+    Response response = await PutRequestBuilder()
+        .addBody(<String, String>{
+      "queue_status": statusCode.toString()
+    })
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .addPath('groups')
+        .addPath(groupId.toString())
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
+  static Future<dynamic> sendSmsToGroup(String phone_number, String text) async {
+    Response response = await PostRequestBuilder()
+        .addBody(<String, String>{
+      "phone_number": phone_number,
+      "text": text
+    })
+        .addPath('sms')
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
 }
