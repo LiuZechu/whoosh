@@ -7,8 +7,10 @@ import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 class QRCodeScreen extends StatelessWidget {
   String restaurantName;
   int estimatedWaitingTime;
+  String menuUrl;
+  String iconUrl;
 
-  QRCodeScreen(this.restaurantName, this.estimatedWaitingTime);
+  QRCodeScreen(this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class QRCodeScreen extends StatelessWidget {
           generateHeader(),
           Column(
               children: [
-                QRCodeCard(restaurantName, estimatedWaitingTime),
+                QRCodeCard(restaurantName, estimatedWaitingTime, menuUrl, iconUrl),
               ]
           )
         ],
@@ -56,19 +58,23 @@ class QRCodeScreen extends StatelessWidget {
 class QRCodeCard extends StatefulWidget {
   final String restaurantName;
   final int estimatedWaitingTime;
+  final String menuUrl;
+  final String iconUrl;
 
-  QRCodeCard(this.restaurantName, this.estimatedWaitingTime);
+  QRCodeCard(this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
 
   @override
-  _QRCodeCardState createState() => _QRCodeCardState(restaurantName, estimatedWaitingTime);
+  _QRCodeCardState createState() => _QRCodeCardState(restaurantName, estimatedWaitingTime, menuUrl, iconUrl);
 }
 
 class _QRCodeCardState extends State<QRCodeCard> {
   final String restaurantName;
   final int estimatedWaitingTime;
+  final String menuUrl;
+  final String iconUrl;
   var restaurantId = -1;
 
-  _QRCodeCardState(this.restaurantName, this.estimatedWaitingTime);
+  _QRCodeCardState(this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
 
   @override void initState() {
     super.initState();
@@ -92,7 +98,8 @@ class _QRCodeCardState extends State<QRCodeCard> {
         .addBody(<String, String>{
       "restaurant_name": restaurantName,
       "unit_queue_time": estimatedWaitingTime.toString(),
-      "icon_url":  "www.example.com" // hardcoded; to change later
+      "icon_url": iconUrl,
+      "menu_url": menuUrl,
     })
         .addPath('restaurants')
         .sendRequest();
