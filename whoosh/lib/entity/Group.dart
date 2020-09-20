@@ -372,7 +372,6 @@ class Group {
   }
 
   void smsGroup(String phone_number, String text) async {
-    sendSmsToGroup(phone_number, text);
     dynamic data = await WhooshService.sendSmsToGroup(phone_number, text); // use this later
     showToast("SMS sent successfully!");
   }

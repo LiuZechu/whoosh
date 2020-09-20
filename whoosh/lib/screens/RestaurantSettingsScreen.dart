@@ -194,6 +194,9 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
           color: Color(0xFF376ADB),
           textColor: Color(0xFFEDF6F6),
           onPressed: () async {
+            if (restaurantName == null || restaurantName.length == 0) {
+              return; // TODO: provide message that Name cannot be null
+            }
             Navigator.pushReplacement(
                 context,
                 new MaterialPageRoute(

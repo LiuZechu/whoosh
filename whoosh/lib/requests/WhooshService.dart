@@ -44,13 +44,13 @@ class WhooshService {
     return data;
   }
 
-  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime) async {
+  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime, String menuUrl, String iconUrl) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
           "restaurant_name": restaurantName,
           "unit_queue_time": estimatedWaitingTime.toString(),
-          "icon_url": iconUrl,
           "menu_url": menuUrl,
+          "icon_url": iconUrl,
         })
         .addPath('restaurants')
         .sendRequest();

@@ -95,7 +95,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
   }
 
   void registerRestaurant() async {
-    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime);
+    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime, menuUrl, iconUrl);
     int currentRestaurantId = data['restaurant_id'];
     if (this.mounted) {
       setState(() {
