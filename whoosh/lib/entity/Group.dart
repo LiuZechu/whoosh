@@ -367,28 +367,13 @@ class Group {
     if (statusCode < 0 || statusCode > 2) {
       return;
     }
-    Response response = await PutRequestBuilder()
-        .addBody(<String, String>{
-      "queue_status": statusCode.toString()
-    })
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .addPath('groups')
-        .addPath(id.toString())
-        .sendRequest();
-    dynamic data = jsonDecode(response.body); // use this later
+    dynamic data = await WhooshService.updateQueueStatus(statusCode, id, restaurantId); // use this later
     showToast("Queue status updated successfully!");
   }
 
   void smsGroup(String phone_number, String text) async {
-    Response response = await PostRequestBuilder()
-        .addBody(<String, String>{
-      "phone_number": phone_number,
-      "text": text
-    })
-        .addPath('sms')
-        .sendRequest();
-    dynamic data = jsonDecode(response.body); // use this later
+    sendSmsToGroup(phone_number, text);
+    dynamic data = await WhooshService.sendSmsToGroup(phone_number, text); // use this later
     showToast("SMS sent successfully!");
   }
 
