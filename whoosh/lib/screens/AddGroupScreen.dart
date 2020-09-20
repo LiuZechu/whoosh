@@ -61,9 +61,10 @@ class JoinQueueCard extends StatefulWidget {
 
 class _JoinQueueCardState extends State<JoinQueueCard> {
   final int restaurantId;
+  bool shouldDisplayErrorMessage = false;
   String restaurantName = 'Loading...';
   int newGroupSize = 1;
-  String emailAddress = '';
+  String phoneNumber = '';
   double buttonOpacity = 1.0;
   List<MonsterType> monsterTypes = [MonsterType.generateRandomType()];
 
@@ -77,8 +78,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         children: [
           generateRestaurantName(),
           newGroup.createJoinQueueGroupImage(),
-          generateEmailAddressField(),
-          SizedBox(height: 20),
+          generatePhoneNumberField(),
+          generateErrorMessageContainer(),
           generateGroupSizeSlider(),
           SizedBox(height: 20),
           generateEnterQueueButton(),
@@ -101,7 +102,26 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     });
   }
 
-  Widget generateEmailAddressField() {
+  Widget generateErrorMessageContainer() {
+    return Container(
+      height: 20,
+      width: 350,
+      alignment: Alignment.centerLeft,
+      child: Opacity(
+        opacity: shouldDisplayErrorMessage ? 1.0 : 0.0,
+        child: Text(
+            'phone number should be made up of 8 numbers!',
+            style: TextStyle(
+                fontSize: 14,
+                color: Colors.red,
+                fontFamily: "VisbyCF"
+            ),
+        )
+      )
+    );
+  }
+
+  Widget generatePhoneNumberField() {
     return Container(
       width: 350,
       child: Column(
@@ -109,7 +129,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'email address',
+              'phone number',
               style: TextStyle(
                   fontSize: 24,
                   color: Color(0xFF2B3148),
@@ -129,7 +149,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                     fillColor: Color(0xFFEDF6F6),
                   ),
                   onChanged: (text) {
-                    emailAddress = text;
+                    phoneNumber = text;
                   },
                 ),
               ),
@@ -238,8 +258,25 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       )
     );
   }
+
+  bool isNumeric(String s) {
+    if(s == null) {
+      return false;
+    }
+    return double.parse(s, (e) => null) != null;
+  }
+
+  bool isValidPhoneNumber() {
+    return isNumeric(phoneNumber) && phoneNumber.length == 8;
+  }
   
   void joinQueue() async {
+    if (!isValidPhoneNumber()) {
+      setState(() {
+        shouldDisplayErrorMessage = true;
+      });
+      return;
+    }
     String monsterTypesString = '';
     monsterTypes.forEach((element) {
       monsterTypesString += element.toString();
@@ -257,7 +294,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       groupName,
       newGroupSize,
       monsterTypesString,
-      emailAddress
+      phoneNumber
     );
     int groupId = data['group_id'];
     Navigator.pushNamed(
