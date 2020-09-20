@@ -53,7 +53,7 @@ class WhooshService {
       String monsterTypes, String phoneNumber) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
-          "group_name": groupName, // need to add word bank
+          "group_name": groupName,
           "group_size": groupSize.toString(),
           "monster_type": monsterTypes,
           "queue_status": "0",
