@@ -79,7 +79,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           generateRestaurantName(),
           newGroup.createJoinQueueGroupImage(),
           generatePhoneNumberField(),
-          generateErrorMessageContainer(),
+          SizedBox(height: 20),
           generateGroupSizeSlider(),
           SizedBox(height: 20),
           generateEnterQueueButton(),
@@ -102,61 +102,90 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     });
   }
 
-  Widget generateErrorMessageContainer() {
-    return Container(
-      height: 20,
-      width: 350,
-      alignment: Alignment.centerLeft,
-      child: Opacity(
-        opacity: shouldDisplayErrorMessage ? 1.0 : 0.0,
-        child: Text(
-            'phone number should be made up of 8 numbers!',
-            style: TextStyle(
-                fontSize: 14,
-                color: Colors.red,
-                fontFamily: "VisbyCF"
-            ),
-        )
-      )
-    );
-  }
-
   Widget generatePhoneNumberField() {
     return Container(
-      width: 350,
-      child: Column(
+      width: 390,
+      child: Stack(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'phone number',
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xFF2B3148),
-                  fontFamily: "VisbyCF"
+          Opacity(
+            opacity: shouldDisplayErrorMessage ? 1 : 0,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Color(0xFFF3C2C2),
+              ),
+              width: 390,
+              height: 160,
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  margin: new EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 15.0,
+                  ),
+                  child: Text(
+                    '*should have 8 digits',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xFF9A0000),
+                      fontFamily: "VisbyCF"
+                    ),
+                  ),
+                )
               ),
             ),
           ),
-          Container(
-            height: 70,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color(0xFFEDF6F6),
+          Column(
+            children: [
+              Container(
+                width: 350,
+                height: 50,
+                margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'phone number',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xFF2B3148),
+                        fontFamily: "VisbyCF"
+                    ),
                   ),
-                  onChanged: (text) {
-                    phoneNumber = text;
-                  },
                 ),
               ),
-            )
-          )
+              Container(
+                  height: 70,
+                  width: 350,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xFFEDF6F6),
+                        ),
+                        onChanged: (text) {
+                          phoneNumber = text;
+                          if (shouldDisplayErrorMessage) {
+                            setState(() {
+                              shouldDisplayErrorMessage = !isValidPhoneNumber();
+                            });
+                          }
+                        },
+                        onSubmitted: (text) {
+                          setState(() {
+                            shouldDisplayErrorMessage = !isValidPhoneNumber();
+                          });
+                        },
+                      ),
+                    ),
+                  )
+              )
+            ],
+          ),
         ],
-      ),
+      )
     );
   }
 

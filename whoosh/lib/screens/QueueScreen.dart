@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
+import 'package:whoosh/screens/LoadingModal.dart';
 
 // http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
 class QueueScreen extends StatelessWidget {
@@ -33,7 +36,6 @@ class QueueScreen extends StatelessWidget {
          icon: new Image.asset(
            'images/static/logo.png',
          ),
-         tooltip: 'return to homepage',
          onPressed: () {},
        ),
      ),
@@ -74,6 +76,7 @@ class _QueueCardState extends State<QueueCard> {
     super.initState();
     fetchRestaurantDetails();
     fetchQueue();
+    new Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
   }
 
   void fetchRestaurantDetails() async {
@@ -88,7 +91,7 @@ class _QueueCardState extends State<QueueCard> {
     }
   }
 
-  void fetchQueue() async {
+  Future<bool> fetchQueue() async {
     List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
@@ -105,7 +108,7 @@ class _QueueCardState extends State<QueueCard> {
     if (!currentGroupIsInside && context != null) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
-      return;
+      return false;
     }
     Group currentGroup =
         allGroups.where((group) => group.id == currentGroupId).single;
@@ -121,6 +124,7 @@ class _QueueCardState extends State<QueueCard> {
         estimatedWait = generateEstimatedWaitTime(groupsInFront.length - 1, unitQueueTime);
       });
     }
+    return true;
   }
 
   String generateEstimatedWaitTime(int numberOfGroups, int unitQueueTime) {
@@ -203,14 +207,46 @@ class _QueueCardState extends State<QueueCard> {
                 fontFamily: "VisbyCF"
             ),
           ),
-          Text(
-            estimatedWait,
-            style: TextStyle(
-              fontSize: 64,
-              fontFamily: "VisbyCF",
-              fontWeight: FontWeight.w700,
+          Container(
+            width: 350,
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    estimatedWait,
+                    style: TextStyle(
+                      fontSize: 64,
+                      fontFamily: "VisbyCF",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () async {
+                        LoadingModal waves = LoadingModal(context);
+                        showDialog(
+                            context: context,
+                            builder: (_) => waves
+                        );
+                        await refresh();
+                        waves.dismiss();
+                      },
+                      child: Image(
+                          alignment: Alignment.centerRight,
+                          image: AssetImage('images/static/refresh_button.png')
+                      ),
+                    ),
+                  )
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
@@ -229,8 +265,8 @@ class _QueueCardState extends State<QueueCard> {
     );
   }
 
-  void refresh() {
-    fetchQueue();
+  Future<bool> refresh() async {
+    return fetchQueue();
   }
 }
 
