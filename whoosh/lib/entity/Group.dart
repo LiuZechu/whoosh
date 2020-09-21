@@ -45,7 +45,7 @@ class Group {
   );
 
   Widget createJoinQueueGroupImage() {
-    return generateContainerWithStack(createNewGroupStackElements(), 300, 300);
+    return generateContainerWithStack(createNewGroupStackElements(250, 250), 300, 300);
   }
 
   Widget createCurrentGroupImage(
@@ -197,15 +197,16 @@ class Group {
     );
   }
   
-  List<Widget> createNewGroupStackElements() {
-    return addMonsterStackTo([]);
+  List<Widget> createNewGroupStackElements(double monsterStackWidth, double monsterStackHeight) {
+    return addMonsterStackTo([], monsterStackWidth, monsterStackHeight);
   }
   
-  List<Widget> addMonsterStackTo(List<Widget> currentStack) {
+  List<Widget> addMonsterStackTo(
+      List<Widget> currentStack, monsterStackWidth, monsterStackHeight) {
     List<Widget> monsterWidgets = [];
     List<Monster> monsters = [];
     for (int i = 0; i < groupSize; i++) {
-      monsters.add(MonsterFactory.getMonsterById(i, types[i]));
+      monsters.add(MonsterFactory.getMonsterById(i, types[i], monsterStackWidth / 2));
     }
     while (monsters.isNotEmpty && monsters.last.id > 2) {
       Monster last = monsters.removeLast();
@@ -216,16 +217,16 @@ class Group {
       monsterWidgets.add(generateMonsterWidget(monster));
     });
     // Add constrained container to main stack
-    currentStack.add(generateMonsterWidgetStack(monsterWidgets));
+    currentStack.add(generateMonsterWidgetStack(monsterWidgets, monsterStackWidth, monsterStackHeight));
     return currentStack;
   }
 
-  Widget generateMonsterWidgetStack(List<Widget> monsterWidgets) {
+  Widget generateMonsterWidgetStack(List<Widget> monsterWidgets, width, height) {
     return Align(
         alignment: Alignment(0, -0.3),
         child: Container(
-          width: 200,
-          height: 200,
+          width: width,
+          height: height,
           child: Stack(
             children: monsterWidgets,
           ),
@@ -250,7 +251,7 @@ class Group {
     stackElements.add(queueLine);
     // Block top half of queue line
     stackElements.add(generateMask(400, 200, Alignment.topCenter));
-    stackElements = addMonsterStackTo(stackElements);
+    stackElements = addMonsterStackTo(stackElements, 200, 200);
     // Add group name bubble
     stackElements.add(generateNameBubble());
     // Add button panel
@@ -419,7 +420,7 @@ class Group {
   List<Widget> createOtherGroupStackElements() {
     List<Widget> stackElements = [];
     stackElements.add(queueLine);
-    return addMonsterStackTo(stackElements);
+    return addMonsterStackTo(stackElements, 200, 200);
   }
 
   Widget generateMask(double width, double height, Alignment align) {
