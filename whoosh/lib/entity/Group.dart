@@ -77,7 +77,7 @@ class Group {
     return Container(
       margin: EdgeInsets.all(6.0),
       child: Container(
-        width: 400,
+        width: 350,
         height: 75,
         decoration: BoxDecoration( // with rounded corners
             color: Color(0xFFEDF6F6),
@@ -87,7 +87,7 @@ class Group {
           onPressed: () {
             // do something
           },
-          menuWidth: 250,
+          menuWidth: 300,
           blurSize: 4,
           blurBackgroundColor: Color(0xFF2B3148),
           animateMenuItems: false,
