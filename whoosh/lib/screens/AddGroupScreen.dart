@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/Group.dart';
@@ -66,6 +71,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   String phoneNumber = '';
   double buttonOpacity = 1.0;
   List<MonsterType> monsterTypes = [MonsterType.generateRandomType()];
+  FlareControls poofController = FlareControls();
+  bool areMonstersVisible = true;
 
   _JoinQueueCardState(this.restaurantId);
 
@@ -76,7 +83,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       child: Column(
         children: [
           generateRestaurantName(),
-          newGroup.createJoinQueueGroupImage(),
+          generateJoinQueueGroupImage(newGroup),
           generatePhoneNumberField(),
           SizedBox(height: 20),
           generateGroupSizeSlider(),
@@ -85,6 +92,10 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         ],
       ),
     );
+  }
+
+  void playPoof() {
+    poofController.play('poof');
   }
 
   @override
@@ -99,6 +110,32 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     setState(() {
       restaurantName = currentRestaurantName;
     });
+  }
+
+  Widget generateJoinQueueGroupImage(Group newGroup) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Opacity(
+          opacity: areMonstersVisible ? 1 : 0,
+          child: newGroup.createJoinQueueGroupImage(),
+        ),
+        Container(
+            width: 400,
+            height: 400,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: FlareActor(
+                'images/actors/effect.flr',
+                artboard: 'poof',
+                animation: 'poof',
+                controller: poofController,
+                color: Color(0xFF376ADB),
+              ),
+            )
+        )
+      ],
+    );
   }
 
   Widget generatePhoneNumberField() {
@@ -215,7 +252,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
               min: 1,
               max: 5,
               divisions: 4,
-              onChanged: (double value) {
+              onChanged: (double value) async {
                 if (value.round() > newGroupSize && value.round() - 1 != monsterTypes.length) {
                   return;
                 }
@@ -225,9 +262,19 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 if (value.round() == newGroupSize) {
                   return;
                 }
+                if (value == newGroupSize.roundToDouble()) {
+                  return;
+                }
+                playPoof();
                 setState(() {
                   monsterTypes = getUpdatedMonsterType(value.round() > newGroupSize, monsterTypes);
                   newGroupSize = value.round();
+                  areMonstersVisible = false;
+                });
+                new Timer(Duration(milliseconds: 900), () {
+                  setState(() {
+                    areMonstersVisible = true;
+                  });
                 });
               },
             ),
