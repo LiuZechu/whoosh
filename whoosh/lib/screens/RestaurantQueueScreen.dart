@@ -5,47 +5,48 @@ import 'dart:convert' show json;
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
+import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
+import 'package:whoosh/screens/QRCodeScreen.dart';
+import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
 
 import '../requests/GetRequestBuilder.dart';
 
-// http://localhost:${port}/#/view-queue?restaurant_id=1
+
+// http://localhost:${port}/#/view-queue?restaurant_id=1 [OBSOLETE]
 class RestaurantQueueScreen extends StatelessWidget {
+  final String restaurantName;
   final int restaurantId;
-  RestaurantQueueScreen(this.restaurantId);
+
+  RestaurantQueueScreen(this.restaurantName, this.restaurantId);
 
   @override
   Widget build(BuildContext context) {
+    var _settingsCallBack = () {
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+          )
+      );
+    };
+
+    var _qrCodeCallBack = () {
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+          )
+      );
+    };
+
     return Scaffold(
       backgroundColor: Color(0xFF2B3148),
       body: ListView(
         children: [
-          generateHeader(),
+          RestaurantHeaderBuilder.generateHeader(context, (){}, _settingsCallBack, _qrCodeCallBack),
           RestaurantQueueCard(restaurantId),
         ],
       ),
-    );
-  }
-
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Color(0xFF376ADB),
     );
   }
 

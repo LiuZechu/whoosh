@@ -119,7 +119,6 @@ class Group {
               ),
             ), onPressed: () async {
               await changeGroupQueueStatus(1, restaurantId);
-              //notifyParent();
             }),
             FocusedMenuItem(title: Text(
               'Kick Out',
@@ -131,7 +130,6 @@ class Group {
               ),
             ), onPressed: () async {
               await changeGroupQueueStatus(2, restaurantId);
-              //notifyParent();
             }),
           ],
           child: FlatButton(

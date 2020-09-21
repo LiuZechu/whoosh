@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:whoosh/screens/QRCodeScreen.dart';
+import 'package:whoosh/screens/RestaurantQueueScreen.dart';
+import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,16 +44,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     } else {
       _user_found = false;
     }
-//    // fetch restaurantId
-//    var data = await WhooshService.getRestaurantDetailsWithUid(uid);
-//    if (data.toList().length != 0) {
-//      restaurantId = data.single['restaurant_id'];
-//    } else {
-//      restaurantId = -1;
-//    }
-//
-//    // register restaurant if id = -1
-//    await registerRestaurant();
+
+    fetchRestaurantDetails(); // for returning users
   }
 
   @override
@@ -64,12 +58,11 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       backgroundColor: Color(0xFF2B3148),
       body: ListView(
         children: [
-          generateHeader(),
+          RestaurantHeaderBuilder.generateHeader(context,
+              _waitlistCallBack, (){}, _qrCodeCallBack),
           Column(
             children: [
               generateSettingsHeading(),
-              //Text("UID is : " + uid),
-              //Text("restaurant id is: " + restaurantId.toString()),
               generateRestaurantPhotoCard(iconUrl),
               generateField("restaurant name",
                       (text) { restaurantName = text; }, restaurantName ?? ""),
@@ -84,7 +77,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                       menuUrl ?? ""),
               SizedBox(height: 100),
               generateSubmitButton(context),
-              // generateQRCodeButton(context),
             ]
           )
         ],
@@ -92,27 +84,36 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     );
   }
 
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Color(0xFF376ADB),
+  void _waitlistCallBack() {
+    Navigator.pushReplacement(
+      context,
+      new MaterialPageRoute(
+          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+      )
     );
+  }
+
+  void _qrCodeCallBack() {
+    Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+        )
+    );
+  }
+
+  void fetchRestaurantDetails() async {
+    if (restaurantId > 0) {
+      dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+      if (this.mounted) {
+        setState( () {
+            estimatedWaitingTime = data["unit_queue_time"];
+            menuUrl = data["menu_url"];
+            iconUrl = data["icon_url"];
+          }
+        );
+      }
+    }
   }
 
   Widget generateSettingsHeading() {
@@ -242,50 +243,5 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         )
     );
   }
-
-//  void registerRestaurant() async {
-//    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime, menuUrl, iconUrl, uid);
-//    int currentRestaurantId = data['restaurant_id'];
-//    if (this.mounted) {
-//      setState(() {
-//        restaurantId = currentRestaurantId;
-//      });
-//    }
-//  }
-//
-//  Widget generateQRCodeButton(BuildContext context) {
-//    return Container(
-//      margin: EdgeInsets.only(top: 50.0),
-//      child: ButtonTheme(
-//        minWidth: 350,
-//        height: 40,
-//        child: FlatButton(
-//          color: Color(0xFF376ADB),
-//          textColor: Color(0xFFEDF6F6),
-//          onPressed: () async {
-//            if (restaurantName == null || restaurantName.length == 0) {
-//              return; // TODO: provide message that Name cannot be null
-//            }
-//            Navigator.pushReplacement(
-//                context,
-//                new MaterialPageRoute(
-//                    builder: (context) => QRCodeScreen(restaurantName, estimatedWaitingTime, menuUrl, iconUrl)
-//                )
-//            );
-//          },
-//          child: Text(
-//              'generate QR code',
-//              style: TextStyle(
-//                fontFamily: "VisbyCF",
-//                fontSize: 25,
-//              )
-//          ),
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(18.0),
-//          ),
-//        )
-//      )
-//    );
-//  }
 
 }
