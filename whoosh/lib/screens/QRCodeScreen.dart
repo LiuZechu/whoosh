@@ -138,7 +138,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
               child: FlatButton(
                 color: Color(0xFF376ADB),
                 textColor: Color(0xFFEDF6F6),
-                onPressed: () async {
+                onPressed: () {
                   Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
