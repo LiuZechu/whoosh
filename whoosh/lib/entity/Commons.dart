@@ -74,6 +74,25 @@ class Commons {
     Color(0xFFF9A373),
     Color(0xFFFAB856),
     Color(0xFFFFD15B),
+    Color(0xFFAE0707),
+    Color(0xFFB1714C),
+    Color(0xFFBE6614),
+    Color(0xFFC88576),
+    Color(0xFFCD4141),
+    Color(0xFFCE711B),
+    Color(0xFFCE875E),
+    Color(0xFFD4563A),
+    Color(0xFFDD7439),
+    Color(0xFFE29F3A),
+    Color(0xFFE45B5B),
+    Color(0xFFE78D5A),
+    Color(0xFFE7B330),
+    Color(0xFFE8C9A4),
+    Color(0xFFEF9A87),
+    Color(0xFFF3AF89),
+    Color(0xFFF5C957),
+    Color(0xFFFDEE69),
+
   ];
 
 }
