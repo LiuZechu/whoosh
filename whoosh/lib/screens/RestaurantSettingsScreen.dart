@@ -91,7 +91,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       ),
     );
   }
-  
+
   Widget generateHeader() {
     return AppBar(
       leading: Transform.scale(
@@ -215,7 +215,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               color: Color(0xFF376ADB),
               textColor: Color(0xFFEDF6F6),
               onPressed: () async {
-                print(restaurantId);
+                //print(restaurantId);
                 await WhooshService.updateRestaurantDetails(restaurantId,
                     restaurantName, estimatedWaitingTime,
                     iconUrl, menuUrl);
