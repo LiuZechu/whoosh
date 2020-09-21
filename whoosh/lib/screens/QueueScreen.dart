@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
@@ -69,6 +72,7 @@ class _QueueCardState extends State<QueueCard> {
   Restaurant restaurant = Restaurant(0, 'Loading...', 0, '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
+  FlareControls poofController = FlareControls();
 
   _QueueCardState(this.restaurantId, this.currentGroupId);
 
@@ -146,61 +150,43 @@ class _QueueCardState extends State<QueueCard> {
       fetchQueue();
     }
     return Column(
-        children: groups.map(
-                (e) => e.id == currentGroupId
-                    ? e.createCurrentGroupImage(groups.length - 1, restaurant, refresh, displayCopiedMessage)
-                    : e.createOtherGroupImage()
-        ).toList()
+        children: groups.map((e) => createGroupImage(e)).toList()
     );
   }
 
-  Widget generateRestaurantName() {
-    Widget restaurantIcon = Image(image: AssetImage('images/static/restaurant_icon.png'),
-      width: 50,
-      height: 50,
-      fit: BoxFit.cover,
-    );
-    Widget restaurantNameContainer = Container(
-        height: 50,
-        constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
-        child: FittedBox(
-          child: Text(
-            restaurant.name,
-            style: TextStyle(
-              fontSize: 36,
-              fontFamily: "VisbyCF",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        )
-    );
-    return Container(
-      child: Column(
+  Widget createGroupImage(Group group) {
+    if (group.id == currentGroupId) {
+      return Stack(
+        alignment: Alignment(0, -0.9),
         children: [
-          SizedBox(height: 10),
-          Text(
-            'you\'re queueing for',
-            style: TextStyle(
-                fontSize: 18,
-                fontFamily: "VisbyCF"
-            ),
+          group.createCurrentGroupImage(
+              groups.length - 1,
+              restaurant,
+              refresh,
+              displayCopiedMessage,
+              playPoof,
           ),
           Container(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                restaurantIcon,
-                SizedBox(width: 10),
-                restaurantNameContainer
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
+            width: 330,
+            height: 330,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: FlareActor(
+                'images/actors/effect.flr',
+                artboard: 'poof',
+                animation: 'poof',
+                controller: poofController,
+                color: Color(0xFF376ADB),
+              ),
+            )
+          )
         ],
-      ),
-    );
+      );
+    } else {
+      return group.createOtherGroupImage();
+    }
   }
+
 
   Widget generateWaitTime() {
     Widget estimatedWaitLabel = Text(
@@ -278,7 +264,7 @@ class _QueueCardState extends State<QueueCard> {
     return Container(
       child: Column(
         children: [
-          generateRestaurantName(),
+          CommonWidget.generateRestaurantName(restaurant.name),
           generateWaitTime(),
           generateQueue(),
         ]
@@ -313,6 +299,10 @@ class _QueueCardState extends State<QueueCard> {
           ),
         )
     );
+  }
+
+  void playPoof() {
+    poofController.play('poof');
   }
 }
 

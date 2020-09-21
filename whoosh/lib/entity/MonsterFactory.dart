@@ -2,11 +2,11 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 
 class MonsterFactory {
   static final FlareControls controls = FlareControls();
-  static List<Color> colors = [Colors.black, Colors.green, Colors.cyan, Colors.deepOrange];
 
   static Widget createMonsterActor(int id, MonsterType type, double monsterSize) {
     return Container(
@@ -16,7 +16,7 @@ class MonsterFactory {
         children: [
           FlareActor(
             'images/actors/bodies.flr',
-            color: colors[type.color],
+            color: Commons.monsterColors[type.color],
             isPaused: false,
             animation: 'fidget',
             artboard: type.body.toString(),
