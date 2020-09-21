@@ -5,9 +5,6 @@ import 'package:whoosh/requests/WhooshService.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-//void main() {
-//  runApp(App());
-//}
 
 class RestaurantSignupScreen extends StatefulWidget {
   _RestaurantSignupScreenState createState() => _RestaurantSignupScreenState(null, null, null, "");

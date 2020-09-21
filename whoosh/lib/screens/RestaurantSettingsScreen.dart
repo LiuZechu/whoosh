@@ -42,16 +42,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     } else {
       _user_found = false;
     }
-//    // fetch restaurantId
-//    var data = await WhooshService.getRestaurantDetailsWithUid(uid);
-//    if (data.toList().length != 0) {
-//      restaurantId = data.single['restaurant_id'];
-//    } else {
-//      restaurantId = -1;
-//    }
-//
-//    // register restaurant if id = -1
-//    await registerRestaurant();
   }
 
   @override
@@ -68,8 +58,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
           Column(
             children: [
               generateSettingsHeading(),
-              //Text("UID is : " + uid),
-              //Text("restaurant id is: " + restaurantId.toString()),
               generateRestaurantPhotoCard(iconUrl),
               generateField("restaurant name",
                       (text) { restaurantName = text; }, restaurantName ?? ""),
@@ -84,7 +72,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                       menuUrl ?? ""),
               SizedBox(height: 100),
               generateSubmitButton(context),
-              // generateQRCodeButton(context),
             ]
           )
         ],
@@ -242,50 +229,5 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         )
     );
   }
-
-//  void registerRestaurant() async {
-//    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime, menuUrl, iconUrl, uid);
-//    int currentRestaurantId = data['restaurant_id'];
-//    if (this.mounted) {
-//      setState(() {
-//        restaurantId = currentRestaurantId;
-//      });
-//    }
-//  }
-//
-//  Widget generateQRCodeButton(BuildContext context) {
-//    return Container(
-//      margin: EdgeInsets.only(top: 50.0),
-//      child: ButtonTheme(
-//        minWidth: 350,
-//        height: 40,
-//        child: FlatButton(
-//          color: Color(0xFF376ADB),
-//          textColor: Color(0xFFEDF6F6),
-//          onPressed: () async {
-//            if (restaurantName == null || restaurantName.length == 0) {
-//              return; // TODO: provide message that Name cannot be null
-//            }
-//            Navigator.pushReplacement(
-//                context,
-//                new MaterialPageRoute(
-//                    builder: (context) => QRCodeScreen(restaurantName, estimatedWaitingTime, menuUrl, iconUrl)
-//                )
-//            );
-//          },
-//          child: Text(
-//              'generate QR code',
-//              style: TextStyle(
-//                fontFamily: "VisbyCF",
-//                fontSize: 25,
-//              )
-//          ),
-//          shape: RoundedRectangleBorder(
-//            borderRadius: BorderRadius.circular(18.0),
-//          ),
-//        )
-//      )
-//    );
-//  }
 
 }

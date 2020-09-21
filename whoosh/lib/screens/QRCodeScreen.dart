@@ -8,11 +8,7 @@ import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 class QRCodeScreen extends StatelessWidget {
   String restaurantName;
   int restaurantId;
-//  int estimatedWaitingTime;
-//  String menuUrl;
-//  String iconUrl;
 
-//  QRCodeScreen(this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
   QRCodeScreen(this.restaurantName, this.restaurantId);
 
   @override
@@ -61,11 +57,7 @@ class QRCodeScreen extends StatelessWidget {
 class QRCodeCard extends StatefulWidget {
   final String restaurantName;
   final int restaurantId;
-//  final int estimatedWaitingTime;
-//  final String menuUrl;
-//  final String iconUrl;
 
-  //QRCodeCard(this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
   QRCodeCard(this.restaurantName, this.restaurantId);
 
   @override
@@ -74,17 +66,9 @@ class QRCodeCard extends StatefulWidget {
 
 class _QRCodeCardState extends State<QRCodeCard> {
   final String restaurantName;
-//  final int estimatedWaitingTime;
-//  final String menuUrl;
-//  final String iconUrl;
   final restaurantId;
 
   _QRCodeCardState(this.restaurantName, this.restaurantId);
-
-//  @override void initState() {
-//    super.initState();
-//    registerRestaurant();
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,32 +82,13 @@ class _QRCodeCardState extends State<QRCodeCard> {
     );
   }
 
-//  void registerRestaurant() async {
-//    dynamic data = await WhooshService.registerRestaurant(restaurantName, estimatedWaitingTime, menuUrl, iconUrl);
-//    int currentRestaurantId = data['restaurant_id'];
-//    if (this.mounted) {
-//      setState(() {
-//        restaurantId = currentRestaurantId;
-//      });
-//    }
-//  }
-
   Widget generateQrCode() {
-//    if (restaurantId == -1) {
-//      // TODO: make this more aesthatic
-//      return Text(
-//        'Loading...',
-//        style: TextStyle(color: Colors.red, fontSize: 50, fontFamily: "VisbyCF",)
-//      );
-//    } else {
-      // TODO: change url to actual ones
       String hostUrl = 'https%3A%2F%2Fhoholyin.github.io%2Fwhoosh%2F%23%2FjoinQueue%3Frestaurant_id%3D${restaurantId}';
       String googleQrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
       String qrCodeUrl = googleQrCodeUrl + hostUrl;
       return Image.network(
         qrCodeUrl,
       );
-//    }
   }
 
   Widget generateViewQueueButton(BuildContext context) {
