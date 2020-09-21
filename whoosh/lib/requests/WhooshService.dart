@@ -68,13 +68,14 @@ class WhooshService {
     return data;
   }
 
-  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime, String menuUrl, String iconUrl) async {
+  static Future<dynamic> registerRestaurant(String restaurantName, int estimatedWaitingTime, String menuUrl, String iconUrl, String uid) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
           "restaurant_name": restaurantName,
           "unit_queue_time": estimatedWaitingTime.toString(),
           "menu_url": menuUrl,
           "icon_url": iconUrl,
+          "uid": uid
         })
         .addPath('restaurants')
         .sendRequest();
@@ -122,6 +123,31 @@ class WhooshService {
     return data;
   }
 
+  static Future<dynamic> getRestaurantDetailsWithUid(String uid) async {
+    Response response = await GetRequestBuilder()
+        .addPath('restaurants')
+        .addParams('uid', uid)
+        .sendRequest();
+    List<dynamic> data = json.decode(response.body);
+    return data.single;
+  }
+
+  static Future<dynamic> updateRestaurantDetails(int restaurantId, String restaurantName,
+      int waitingTime, String iconUrl, String menuUrl) async {
+    Response response = await PutRequestBuilder()
+        .addBody(<String, String>{
+      "restaurant_name": restaurantName,
+      "unit_queue_time": waitingTime.toString(),
+      "icon_url": iconUrl,
+      "menu_url": menuUrl
+    })
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
   static String generateQueueUrl(int restaurantId, int groupId) {
     return '/queue?restaurant_id='
         + restaurantId.toString()
@@ -132,4 +158,5 @@ class WhooshService {
   static String generateEntireQueueUrl(int restaurantId, int groupId) {
     return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId);
   }
+
 }
