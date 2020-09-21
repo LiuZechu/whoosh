@@ -1,14 +1,12 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
-import '../requests/PutRequestBuilder.dart';
-import '../requests/PostRequestBuilder.dart';
-import 'dart:convert';
-import 'package:http/http.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'MonsterType.dart';
@@ -28,20 +26,40 @@ class Group {
     this.timeOfArrival = DateTime.now();
   }
 
+  Widget queueLine =
+    Align(
+      alignment: Alignment.bottomCenter,
+      child: Image(
+        alignment: Alignment.bottomCenter,
+        image: AssetImage('images/static/queue_line.png'),
+        width: 13,
+        height: 400,
+      ),
+    );
+
+  Widget nameBubble = Align(
+    alignment: Alignment.topRight,
+    child: Image(
+        image: AssetImage('images/static/name_bubble.png')
+    ),
+  );
+
   Widget createJoinQueueGroupImage() {
-    return generateContainerWithStack(createNewGroupStackElements(), 300);
+    return generateContainerWithStack(createNewGroupStackElements(250, 250), 300, 300);
   }
 
-  Widget createCurrentGroupImage(int noOfGroupsAhead, void Function() refresh, int restaurantId) {
+  Widget createCurrentGroupImage(
+      int noOfGroupsAhead, Restaurant restaurant, void Function() refresh, void Function() displayMessage) {
     return generateContainerWithStack(
-        createCurrentGroupStackElements(noOfGroupsAhead, refresh, restaurantId), 400
+        createCurrentGroupStackElements(noOfGroupsAhead, restaurant, refresh, displayMessage), 500, 400
     );
   }
 
   Widget createOtherGroupImage() {
-    return generateContainerWithStack(createOtherGroupStackElements(), 400);
+    return generateContainerWithStack(createOtherGroupStackElements(), 220, 220);
   }
 
+  // TODO: Should refactor (can use restaurant class)
   Widget createGroupRestaurantView(int restaurantId, String restaurantName) {
     return Container(
       margin: EdgeInsets.all(6.0),
@@ -168,10 +186,10 @@ class Group {
     );
   }
 
-  Widget generateContainerWithStack(List<Widget> stack, double height) {
+  Widget generateContainerWithStack(List<Widget> stack, double height, double width) {
     return Container(
         height: height,
-        width: 400,
+        width: width,
         alignment: Alignment.center,
         child: Stack(
             children: stack
@@ -179,147 +197,213 @@ class Group {
     );
   }
   
-  List<Widget> createNewGroupStackElements() {
-    return addMonsterStackTo([]);
+  List<Widget> createNewGroupStackElements(double monsterStackWidth, double monsterStackHeight) {
+    return addMonsterStackTo([], monsterStackWidth, monsterStackHeight);
   }
   
-  List<Widget> addMonsterStackTo(List<Widget> currentStack) {
+  List<Widget> addMonsterStackTo(
+      List<Widget> currentStack, monsterStackWidth, monsterStackHeight) {
     List<Widget> monsterWidgets = [];
     List<Monster> monsters = [];
     for (int i = 0; i < groupSize; i++) {
-      monsters.add(MonsterFactory.getMonsterById(i, types[i]));
+      monsters.add(MonsterFactory.getMonsterById(i, types[i], monsterStackWidth / 2));
     }
     while (monsters.isNotEmpty && monsters.last.id > 2) {
       Monster last = monsters.removeLast();
       monsters.insert(0, last);
     }
     // Add monsters to constrained container
-    for (int i = 0; i < groupSize; i++) {
-      Monster monster = monsters[i];
-      monsterWidgets.add(
-          Align(
-              alignment: monster.alignment,
-              child: Align(
-                alignment: monster.alignment,
-                child: monster.actor,
-              )
-          )
-      );
-    }
+    monsters.forEach((monster) {
+      monsterWidgets.add(generateMonsterWidget(monster));
+    });
     // Add constrained container to main stack
-    currentStack.add(
-        Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 200,
-              height: 200,
-              child: Stack(
-                children: monsterWidgets,
-              ),
-            )
-        )
-    );
+    currentStack.add(generateMonsterWidgetStack(monsterWidgets, monsterStackWidth, monsterStackHeight));
     return currentStack;
   }
 
-  List<Widget> createCurrentGroupStackElements(
-      int noOfGroupsAhead, void Function() refresh, int restaurantId) {
-    List<Widget> stackElements = [];
-    // Add Queue line
-    stackElements.add(
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Image(
-            alignment: Alignment.bottomCenter,
-            image: AssetImage('images/static/queue_line.png'),
-            width: 13,
-            height: 400,
+  Widget generateMonsterWidgetStack(List<Widget> monsterWidgets, width, height) {
+    return Align(
+        alignment: Alignment(0, -0.3),
+        child: Container(
+          width: width,
+          height: height,
+          child: Stack(
+            children: monsterWidgets,
           ),
         )
     );
+  }
+
+  Widget generateMonsterWidget(Monster monster) {
+    return Align(
+        alignment: monster.alignment,
+        child: Align(
+          alignment: monster.alignment,
+          child: monster.actor,
+        )
+    );
+  }
+
+  List<Widget> createCurrentGroupStackElements(
+      int noOfGroupsAhead, Restaurant restaurant, void Function() refresh, void Function() displayMessage) {
+    List<Widget> stackElements = [];
+    // Add Queue line
+    stackElements.add(queueLine);
     // Block top half of queue line
     stackElements.add(generateMask(400, 200, Alignment.topCenter));
-    stackElements = addMonsterStackTo(stackElements);
+    stackElements = addMonsterStackTo(stackElements, 200, 200);
     // Add group name bubble
+    stackElements.add(generateNameBubble());
+    // Add button panel
     stackElements.add(
-      Align(
-        alignment: Alignment.topRight,
-          child: Container(
-            width: 266,
-            height: 160,
-            child: Stack(
+        generateCurrentGroupButtonPanel(restaurant, noOfGroupsAhead, refresh, displayMessage)
+    );
+    return stackElements;
+  }
+
+  Widget generateCurrentGroupButtonPanel(
+      Restaurant restaurant, int noOfGroupsAhead, void Function() refresh, void Function() displayMessage) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+          height: 160,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              generateRandomizeButton(restaurant.id, refresh),
+              SizedBox(height: 5,),
+              generateNumberOfGroupsAheadLabel(noOfGroupsAhead),
+              SizedBox(height: 5,),
+              generateRestaurantMenuButton(restaurant.menuUrl, () { }),
+              SizedBox(height: 5,),
+              generateShareQueueButton(restaurant.id, displayMessage),
+            ],
+          )
+      ),
+    );
+  }
+
+  Widget generateNameBubble() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+          width: 243,
+          height: 133,
+          child: Stack(
             alignment: Alignment.topRight,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Image(
-                  image: AssetImage('images/static/name_bubble.png')
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 200,
-                  height: 110,
-                  alignment: Alignment.centerLeft,
+              nameBubble,
+              generateNameText(),
+            ],
+          )
+      ),
+    );
+  }
+
+  Widget generateNameText() {
+    return Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          width: 200,
+          height: 110,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            name,
+            style: TextStyle(
+              color: Color(0xFFEDF6F6),
+              fontSize: 30,
+              fontFamily: "VisbyCF",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        )
+    );
+  }
+
+  Widget generateRandomizeButton(int restaurantId, void Function() refresh) {
+    return Align(
+      child: Container(
+        height: 25,
+        child: generateButton(
+          AssetImage('images/static/randomize_button.png'),
+          () async {
+            await randomizeMonsterTypes(restaurantId);
+            refresh();
+          }
+        )
+      )
+    );
+  }
+  
+  Widget generateRestaurantMenuButton(String restaurantMenuUrl, void Function() redirect) {
+    return Align(
+      child: Container(
+        height: 25,
+        child: generateButton(
+          AssetImage('images/static/restaurant_menu_button.png'),
+            () async {
+              if (await canLaunch(restaurantMenuUrl)) {
+                await launch(restaurantMenuUrl);
+              } else {
+                throw 'Could not launch $restaurantMenuUrl';
+              }
+            }
+          )
+      )
+    );
+  }
+
+  Widget generateShareQueueButton(int restaurantId, void Function() displayMessage) {
+    String queueUrl = WhooshService.generateEntireQueueUrl(restaurantId, id);
+    return Align(
+      child: Container(
+        height: 25,
+        child: generateButton(
+          AssetImage('images/static/share_queue_button.png'),
+          () async {
+            FlutterClipboard.copy(queueUrl).then((value) => print('copied'));
+            displayMessage();
+          }
+        )
+      )
+    );
+  }
+
+  Widget generateButton(AssetImage image, void Function() onTap) {
+    return GestureDetector(
+      onTap: () async { onTap();},
+      child: Image(
+        alignment: Alignment.center,
+        image: image,
+      ),
+    );
+  }
+
+  Widget generateNumberOfGroupsAheadLabel(int noOfGroupsAhead) {
+    return Container(
+      child: Align(
+          alignment: Alignment.center,
+          child: Stack(
+              children: [
+                generateMask(400, 50, Alignment.center),
+                Align(
+                  alignment: Alignment.center,
                   child: Text(
-                    name,
+                    noOfGroupsAhead == 0
+                        ? 'you\'re next!'
+                        : noOfGroupsAhead.toString() + ' groups ahead',
                     style: TextStyle(
-                      color: Color(0xFFEDF6F6),
                       fontSize: 30,
                       fontFamily: "VisbyCF",
                       fontWeight: FontWeight.w700,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 )
-              )
-            ],
+              ]
           )
-        ),
-      )
+      ),
     );
-    // Add randomize button and no of groups ahead
-    stackElements.add(
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: 400,
-          height: 100,
-          child: Stack(
-            children: [
-              generateMask(400, 50, Alignment(0, 0.4)),
-              Align(
-                alignment: Alignment.topCenter,
-                child: GestureDetector(
-                  onTap: () async {
-                    await randomizeMonsterTypes(restaurantId);
-                    refresh();
-                  },
-                  child: Image(
-                    alignment: Alignment.topCenter,
-                    image: AssetImage('images/static/randomize_button.png'),
-                  ),
-                )
-              ),
-              Align(
-                alignment: Alignment(0, 0.4),
-                child: Text(
-                  noOfGroupsAhead == 0
-                      ? 'you\'re next!'
-                      : noOfGroupsAhead.toString() + ' groups ahead',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              )
-            ],
-          )
-        ),
-      )
-    );
-    return stackElements;
   }
 
   dynamic randomizeMonsterTypes(int restaurantId) async {
@@ -328,28 +412,15 @@ class Group {
   }
 
   dynamic updateGroup(int restaurantId) async {
-    String monsterTypesString = '';
-    types.forEach((element) {
-      monsterTypesString += element.toString();
-    });
+    String monsterTypesString = MonsterType.generateMonsterTypesString(types);
     dynamic response = await WhooshService.updateGroupTypes(id, restaurantId, monsterTypesString);
     return response;
   }
 
   List<Widget> createOtherGroupStackElements() {
     List<Widget> stackElements = [];
-    stackElements.add(
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Image(
-            alignment: Alignment.bottomCenter,
-            image: AssetImage('images/static/queue_line.png'),
-            width: 13,
-            height: 400,
-          ),
-        )
-    );
-    return addMonsterStackTo(stackElements);
+    stackElements.add(queueLine);
+    return addMonsterStackTo(stackElements, 200, 200);
   }
 
   Widget generateMask(double width, double height, Alignment align) {

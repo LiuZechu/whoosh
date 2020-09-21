@@ -1,20 +1,44 @@
-
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:whoosh/requests/PutRequestBuilder.dart';
+import 'package:whoosh/requests/QueueCache.dart';
+import 'package:whoosh/requests/RequestBuilder.dart';
 import 'GetRequestBuilder.dart';
 import 'PostRequestBuilder.dart';
 
 class WhooshService {
+  static final QueueCache queueCache = QueueCache();
+
   static Future<List<dynamic>> getAllGroupsInQueue(int restaurantId) async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .addPath('groups')
-        .addParams('status', '0')
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
-    return data;
+    try {
+      bool shouldTry = true;
+      Response response;
+      new Timer(Duration(seconds: 5), () => shouldTry = false);
+      while (shouldTry && (response == null || response.statusCode != 200)) {
+        try {
+          response = await GetRequestBuilder()
+              .addPath('restaurants')
+              .addPath(restaurantId.toString())
+              .addPath('groups')
+              .addParams('status', '0')
+              .sendRequest();
+        } catch (err) {
+          log(err.toString());
+        }
+      }
+      if (response.statusCode != 200) {
+        return queueCache.getAllGroupsInQueue(restaurantId);
+      }
+      List<dynamic> data = json.decode(response.body);
+      queueCache.addGroupsInQueue(restaurantId, data);
+      return data;
+    } catch (err) {
+      log(err.toString());
+      log('Unable to retrieve queue data from network. Retrieving from cache...');
+      return queueCache.getAllGroupsInQueue(restaurantId);
+    }
   }
 
   static Future<dynamic> getRestaurantDetails(int restaurantId) async {
@@ -30,7 +54,7 @@ class WhooshService {
       String monsterTypes, String phoneNumber) async {
     Response response = await PostRequestBuilder()
         .addBody(<String, String>{
-          "group_name": groupName, // need to add word bank
+          "group_name": groupName,
           "group_size": groupSize.toString(),
           "monster_type": monsterTypes,
           "queue_status": "0",
@@ -122,6 +146,17 @@ class WhooshService {
         .sendRequest();
     dynamic data = jsonDecode(response.body);
     return data;
+  }
+
+  static String generateQueueUrl(int restaurantId, int groupId) {
+    return '/queue?restaurant_id='
+        + restaurantId.toString()
+        + '&group_id='
+        + groupId.toString();
+  }
+
+  static String generateEntireQueueUrl(int restaurantId, int groupId) {
+    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId);
   }
 
 }
