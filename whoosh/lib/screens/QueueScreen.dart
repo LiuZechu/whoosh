@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
+import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
+import 'package:whoosh/screens/GroupObserver.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 
 // http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
@@ -65,8 +67,7 @@ class _QueueCardState extends State<QueueCard> {
   final int restaurantId;
   final int currentGroupId;
   List<Group> groups = [];
-  String restaurantName = 'Loading...';
-  int unitQueueTime = 0;
+  Restaurant restaurant = Restaurant(0, 'Loading...', 0, '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
 
@@ -83,10 +84,16 @@ class _QueueCardState extends State<QueueCard> {
     dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
     String currentRestaurantName = data['restaurant_name'];
     int currentUnitQueueTime = data['unit_queue_time'];
+    String currentRestaurantMenuUrl = data['menu_url'];
     if (this.mounted) {
+      Restaurant currentRestaurant = Restaurant(
+          restaurantId,
+          currentRestaurantName,
+          currentUnitQueueTime,
+          currentRestaurantMenuUrl
+      );
       setState(() {
-        restaurantName = currentRestaurantName;
-        unitQueueTime = currentUnitQueueTime;
+        restaurant = currentRestaurant;
       });
     }
   }
@@ -121,7 +128,7 @@ class _QueueCardState extends State<QueueCard> {
     if (this.mounted) {
       setState(() {
         groups = groupsInFront;
-        estimatedWait = generateEstimatedWaitTime(groupsInFront.length - 1, unitQueueTime);
+        estimatedWait = generateEstimatedWaitTime(groupsInFront.length - 1, restaurant.unitQueueTime);
       });
     }
     return true;
@@ -136,13 +143,13 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Widget generateQueue() {
-    if (groups.isEmpty || unitQueueTime == 0) {
+    if (groups.isEmpty || restaurant.unitQueueTime == 0) {
       fetchQueue();
     }
     return Column(
         children: groups.map(
                 (e) => e.id == currentGroupId
-                    ? e.createCurrentGroupImage(groups.length - 1, refresh, restaurantId)
+                    ? e.createCurrentGroupImage(groups.length - 1, restaurant, refresh, displayCopiedMessage)
                     : e.createOtherGroupImage()
         ).toList()
     );
@@ -159,7 +166,7 @@ class _QueueCardState extends State<QueueCard> {
         constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
         child: FittedBox(
           child: Text(
-            restaurantName,
+            restaurant.name,
             style: TextStyle(
               fontSize: 36,
               fontFamily: "VisbyCF",
@@ -197,53 +204,68 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Widget generateWaitTime() {
+    Widget estimatedWaitLabel = Text(
+      'estimated wait:',
+      style: TextStyle(
+          fontSize: 18,
+          fontFamily: "VisbyCF"
+      ),
+    );
+
+    Widget estimatedWaitTime = Align(
+      alignment: Alignment.center,
+      child: Container(
+        height: 70,
+        width: 250,
+        constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
+        child: FittedBox(
+          child: Text(
+            estimatedWait,
+            style: TextStyle(
+              fontSize: 64,
+              fontFamily: "VisbyCF",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Widget refreshButton = Container(
+      height: 70,
+      child: Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            height: 35,
+            child: GestureDetector(
+              onTap: () async {
+                LoadingModal waves = LoadingModal(context);
+                showDialog(
+                    context: context,
+                    builder: (_) => waves
+                );
+                await refresh();
+                waves.dismiss();
+              },
+              child: Image(
+                  alignment: Alignment.centerRight,
+                  image: AssetImage('images/static/refresh_button.png')
+              ),
+            ),
+          )
+      ),
+    );
+
     return Container(
       child: Column(
         children: [
-          Text(
-            'estimated wait:',
-            style: TextStyle(
-                fontSize: 18,
-                fontFamily: "VisbyCF"
-            ),
-          ),
+          estimatedWaitLabel,
           Container(
             width: 350,
             child: Stack(
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    estimatedWait,
-                    style: TextStyle(
-                      fontSize: 64,
-                      fontFamily: "VisbyCF",
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 80,
-                  alignment: Alignment.center,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () async {
-                        LoadingModal waves = LoadingModal(context);
-                        showDialog(
-                            context: context,
-                            builder: (_) => waves
-                        );
-                        await refresh();
-                        waves.dismiss();
-                      },
-                      child: Image(
-                          alignment: Alignment.centerRight,
-                          image: AssetImage('images/static/refresh_button.png')
-                      ),
-                    ),
-                  )
-                ),
+                estimatedWaitTime,
+                refreshButton
               ],
             ),
           )
@@ -267,6 +289,31 @@ class _QueueCardState extends State<QueueCard> {
 
   Future<bool> refresh() async {
     return fetchQueue();
+  }
+
+  void displayCopiedMessage() {
+    showDialog(
+        context: context,
+        builder: (_) => Dialog(
+          child: Container(
+            width: 350,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color(0xFFD1E6F2),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              'Link copied to clipboard!',
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: "VisbyCF",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        )
+    );
   }
 }
 

@@ -3,3 +3,5 @@ set_flutter_path.sh
 .idea/
 .packages
 .DS_Store
+.flutter-plugins
+.flutter-plugins-dependencies

@@ -38,4 +38,15 @@ class WordFactory {
 
     return wordBank[_random.nextInt(wordBank.length)];
   }
+
+  static String getRandomWordNotInList(List<String> words) {
+    if (words.length >= wordBank.length) {
+      return "";
+    }
+    String groupName = WordFactory.getRandomWord();
+    while (words.contains(groupName)) {
+      groupName = WordFactory.getRandomWord();
+    }
+    return groupName;
+  }
 }
