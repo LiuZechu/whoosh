@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:whoosh/requests/PutRequestBuilder.dart';
 import 'package:whoosh/requests/QueueCache.dart';
+import 'package:whoosh/requests/RequestBuilder.dart';
 import 'GetRequestBuilder.dart';
 import 'PostRequestBuilder.dart';
 
@@ -121,4 +122,14 @@ class WhooshService {
     return data;
   }
 
+  static String generateQueueUrl(int restaurantId, int groupId) {
+    return '/queue?restaurant_id='
+        + restaurantId.toString()
+        + '&group_id='
+        + groupId.toString();
+  }
+
+  static String generateEntireQueueUrl(int restaurantId, int groupId) {
+    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId);
+  }
 }

@@ -46,4 +46,11 @@ class MonsterType {
     return types;
   }
 
+  static String generateMonsterTypesString(List<MonsterType> monsterTypes) {
+    String monsterTypesString = '';
+    monsterTypes.forEach((element) {
+      monsterTypesString += element.toString();
+    });
+    return monsterTypesString;
+  }
 }

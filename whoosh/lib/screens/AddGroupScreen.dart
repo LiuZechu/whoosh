@@ -4,7 +4,6 @@ import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/WordFactory.dart';
 import 'package:whoosh/requests/WhooshService.dart';
-import 'package:whoosh/screens/QueueScreen.dart';
 
 // http://localhost:${port}/#/joinQueue?restaurant_id=1
 class AddGroupScreen extends StatelessWidget {
@@ -306,18 +305,12 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       });
       return;
     }
-    String monsterTypesString = '';
-    monsterTypes.forEach((element) {
-      monsterTypesString += element.toString();
-    });
+    String monsterTypesString = MonsterType.generateMonsterTypesString(monsterTypes);
     List<dynamic> allGroups = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<String> allGroupNames = allGroups
         .map((group) => group['group_name'].toString())
         .toList();
-    String groupName = WordFactory.getRandomWord();
-    while (allGroupNames.contains(groupName)) {
-      groupName = WordFactory.getRandomWord();
-    }
+    String groupName = WordFactory.getRandomWordNotInList(allGroupNames);
     dynamic data = await WhooshService.joinQueue(
       restaurantId,
       groupName,
@@ -328,15 +321,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     int groupId = data['group_id'];
     Navigator.pushNamed(
         context,
-        generateQueuePageUrl(groupId)
+        WhooshService.generateQueueUrl(restaurantId, groupId)
     );
-  }
-
-  String generateQueuePageUrl(int groupId) {
-    return '/queue?restaurant_id='
-        + restaurantId.toString()
-        + '&group_id='
-        + groupId.toString();
   }
 
   Widget generateRestaurantName() {
