@@ -8,10 +8,10 @@ class MonsterFactory {
   static final FlareControls controls = FlareControls();
   static List<Color> colors = [Colors.black, Colors.green, Colors.cyan, Colors.deepOrange];
 
-  static Widget createMonsterActor(int id, MonsterType type) {
+  static Widget createMonsterActor(int id, MonsterType type, double monsterSize) {
     return Container(
-      width: 100,
-      height: 100,
+      width: monsterSize,
+      height: monsterSize,
       child: Stack(
         children: [
           FlareActor(
@@ -52,11 +52,11 @@ class MonsterFactory {
     Alignment.topRight,
   ];
 
-  static Monster getMonsterById(int id, MonsterType type) {
+  static Monster getMonsterById(int id, MonsterType type, double monsterSize) {
     return Monster(
         id,
-        createMonsterActor(id, type),
-        allMonsterAlignments[id]
+        createMonsterActor(id, type, monsterSize),
+        allMonsterAlignments[id],
     );
   }
 }

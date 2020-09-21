@@ -7,7 +7,6 @@ import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
-import 'package:whoosh/screens/GroupObserver.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 
 // http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
