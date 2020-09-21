@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
+import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RestaurantLoginScreen extends StatefulWidget {
-  _RestaurantLoginScreenState createState() => _RestaurantLoginScreenState(null, null, null, "");
+  _RestaurantLoginScreenState createState() => _RestaurantLoginScreenState("", "", "");
 }
 
 class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
@@ -20,7 +21,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   var errorText;
   var restaurantId = -1;
 
-  _RestaurantLoginScreenState(this.restaurantName, this.email, this.password, this.errorText);
+  _RestaurantLoginScreenState(this.email, this.password, this.errorText);
 
   // Define an async function to initialize FlutterFire
   void initializeFlutterFire() async {
@@ -88,7 +89,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
               width: 400,
               margin: const EdgeInsets.all(20.0),
               child: Text(
-                'sign up',
+                'log in',
                 style: TextStyle(
                   color: Color(0xFFEDF6F6),
                   fontSize: 40,
@@ -175,9 +176,10 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                   FirebaseAuth auth = FirebaseAuth.instance;
                   if (auth.currentUser != null) {
                     var uid = auth.currentUser.uid;
-                    restaurantId = await WhooshService.getRestaurantDetailsWithUid(uid).single["restaurant_id"];
+                    dynamic data = await WhooshService.getRestaurantDetailsWithUid(uid);
+                    restaurantId = data["restaurant_id"];
                   }
-                  
+                  // go to view queue screen
                   Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
@@ -211,7 +213,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
               color: Color(0xFFEDF6F6),
               textColor: Color(0xFF2B3148),
               onPressed: () => {
-
+                Navigator.of(context).pushNamed('/restaurant/signup')
               },
               child: Text(
                   "i don't have an account",

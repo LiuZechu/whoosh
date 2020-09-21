@@ -105,7 +105,7 @@ class WhooshService {
         .addParams('uid', uid)
         .sendRequest();
     List<dynamic> data = json.decode(response.body);
-    return data;
+    return data.single;
   }
 
   static Future<dynamic> updateRestaurantDetails(int restaurantId, String restaurantName,

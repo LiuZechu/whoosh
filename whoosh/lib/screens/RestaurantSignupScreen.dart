@@ -220,7 +220,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           color: Color(0xFFEDF6F6),
           textColor: Color(0xFF2B3148),
           onPressed: () => {
-
+            Navigator.of(context).pushNamed('/restaurant/login')
           },
           child: Text(
               "i already have an account",

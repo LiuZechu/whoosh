@@ -3,6 +3,7 @@ import 'package:whoosh/screens/AddGroupScreen.dart';
 import 'package:whoosh/screens/QueueScreen.dart';
 import 'package:whoosh/screens/RestaurantWelcomeScreen.dart';
 import 'package:whoosh/screens/RestaurantSignupScreen.dart';
+import 'package:whoosh/screens/RestaurantLoginScreen.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/main.dart';
@@ -25,6 +26,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(RestaurantWelcomeScreen(), settings);
     case restaurantSignupRoute:
       return _getPageRoute(RestaurantSignupScreen(), settings);
+    case restaurantLoginRoute:
+      return _getPageRoute(RestaurantLoginScreen(), settings);
 //    case restaurantSettingsRoute:
 //      return _getPageRoute(RestaurantSettingsScreen(), settings);
     case restaurantQueueRoute:
