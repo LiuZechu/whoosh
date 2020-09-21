@@ -106,7 +106,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         children: [
           SizedBox(height: 10),
           Container(
-            width: 400,
+            width: 350,
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +125,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
                         restaurantName ?? 'Loading...',
                         style: TextStyle(
                           color: Color(0xFFEDF6F6),
-                          fontSize: 36,
+                          fontSize: 30,
                           fontFamily: "VisbyCF",
                           fontWeight: FontWeight.w700,
                         ),
@@ -143,7 +143,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
 
   Widget generateWaitListHeading() {
     return Container(
-        width: 400,
+        width: 350,
         margin: const EdgeInsets.all(30.0),
         child: Text(
           'waitlist',

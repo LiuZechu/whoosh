@@ -118,7 +118,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
 
   Widget generateSettingsHeading() {
     return Container(
-      width: 400,
+      width: 350,
       margin: const EdgeInsets.all(30.0),
       child: Text(
         'Settings',
@@ -166,7 +166,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 10.0),
-              width: 400,
+              width: 350,
               child: Text(
                 fieldName,
                 style: TextStyle(
@@ -179,7 +179,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               ),
             ),
             Container(
-              width: 400,
+              width: 350,
               child: TextField(
                 decoration: new InputDecoration(
                   border: new OutlineInputBorder(
@@ -210,7 +210,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: ButtonTheme(
-            minWidth: 400,
+            minWidth: 350,
             height: 40,
             child: FlatButton(
               color: Color(0xFF376ADB),
