@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
@@ -186,53 +187,6 @@ class _QueueCardState extends State<QueueCard> {
     }
   }
 
-  Widget generateRestaurantName() {
-    Widget restaurantIcon = Image(image: AssetImage('images/static/restaurant_icon.png'),
-      width: 50,
-      height: 50,
-      fit: BoxFit.cover,
-    );
-    Widget restaurantNameContainer = Container(
-        height: 50,
-        constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
-        child: FittedBox(
-          child: Text(
-            restaurant.name,
-            style: TextStyle(
-              fontSize: 36,
-              fontFamily: "VisbyCF",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        )
-    );
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          Text(
-            'you\'re queueing for',
-            style: TextStyle(
-                fontSize: 18,
-                fontFamily: "VisbyCF"
-            ),
-          ),
-          Container(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                restaurantIcon,
-                SizedBox(width: 10),
-                restaurantNameContainer
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
 
   Widget generateWaitTime() {
     Widget estimatedWaitLabel = Text(
@@ -310,7 +264,7 @@ class _QueueCardState extends State<QueueCard> {
     return Container(
       child: Column(
         children: [
-          generateRestaurantName(),
+          CommonWidget.generateRestaurantName(restaurant.name),
           generateWaitTime(),
           generateQueue(),
         ]

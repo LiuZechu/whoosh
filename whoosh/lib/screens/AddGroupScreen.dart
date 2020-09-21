@@ -5,6 +5,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/WordFactory.dart';
@@ -79,10 +80,11 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   @override
   Widget build(BuildContext context) {
     Group newGroup = Group.fromSize(newGroupSize.round(), monsterTypes);
+    print(MonsterType.generateMonsterTypesString(newGroup.types));
     return Container(
       child: Column(
         children: [
-          generateRestaurantName(),
+          CommonWidget.generateRestaurantName(restaurantName),
           generateJoinQueueGroupImage(newGroup),
           generatePhoneNumberField(),
           SizedBox(height: 20),
@@ -138,90 +140,176 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     );
   }
 
+  Widget generateErrorModal() {
+    return Opacity(
+      opacity: shouldDisplayErrorMessage ? 1 : 0,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Color(0xFFF3C2C2),
+        ),
+        width: 390,
+        height: 160,
+        child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              margin: new EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 15.0,
+              ),
+              child: Text(
+                '*should have 8 digits',
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xFF9A0000),
+                    fontFamily: "VisbyCF"
+                ),
+              ),
+            )
+        ),
+      ),
+    );
+  }
+
+  Widget generatePhoneNumberLabel() {
+    return Container(
+      width: 350,
+      height: 50,
+      margin: new EdgeInsets.symmetric(horizontal: 20.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'phone number',
+          style: TextStyle(
+              fontSize: 24,
+              color: Color(0xFF2B3148),
+              fontFamily: "VisbyCF"
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget generateTextField() {
+    return Container(
+      height: 70,
+      width: 350,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: TextField(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Color(0xFFEDF6F6),
+            ),
+            onChanged: (text) {
+              phoneNumber = text;
+              if (shouldDisplayErrorMessage) {
+                setState(() {
+                  shouldDisplayErrorMessage = !isValidPhoneNumber();
+                });
+              }
+            },
+            onSubmitted: (text) {
+              setState(() {
+                shouldDisplayErrorMessage = !isValidPhoneNumber();
+              });
+            },
+          ),
+        ),
+      )
+    );
+  }
+
+  Widget generatePhoneNumberTextField() {
+    return Column(
+      children: [
+        generatePhoneNumberLabel(),
+        generateTextField(),
+      ],
+    );
+  }
+
   Widget generatePhoneNumberField() {
     return Container(
       width: 390,
       child: Stack(
         children: [
-          Opacity(
-            opacity: shouldDisplayErrorMessage ? 1 : 0,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Color(0xFFF3C2C2),
-              ),
-              width: 390,
-              height: 160,
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: new EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 15.0,
-                  ),
-                  child: Text(
-                    '*should have 8 digits',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Color(0xFF9A0000),
-                      fontFamily: "VisbyCF"
-                    ),
-                  ),
-                )
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Container(
-                width: 350,
-                height: 50,
-                margin: new EdgeInsets.symmetric(horizontal: 20.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'phone number',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFF2B3148),
-                        fontFamily: "VisbyCF"
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                  height: 70,
-                  width: 350,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xFFEDF6F6),
-                        ),
-                        onChanged: (text) {
-                          phoneNumber = text;
-                          if (shouldDisplayErrorMessage) {
-                            setState(() {
-                              shouldDisplayErrorMessage = !isValidPhoneNumber();
-                            });
-                          }
-                        },
-                        onSubmitted: (text) {
-                          setState(() {
-                            shouldDisplayErrorMessage = !isValidPhoneNumber();
-                          });
-                        },
-                      ),
-                    ),
-                  )
-              )
-            ],
-          ),
+          generateErrorModal(),
+          generatePhoneNumberTextField()
         ],
       )
+    );
+  }
+
+  Widget generateSliderLabel() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        'group size',
+        style: TextStyle(
+            fontSize: 24,
+            color: Color(0xFF2B3148),
+            fontFamily: "VisbyCF"
+        ),
+      ),
+    );
+  }
+
+  Widget generateSlider() {
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        activeTrackColor: Color(0xFFEDF6F6),
+        inactiveTrackColor: Color(0xFFEDF6F6),
+        inactiveTickMarkColor: Color(0xFFEDF6F6),
+      ),
+      child: Slider(
+        value: newGroupSize.roundToDouble(),
+        min: 1,
+        max: 5,
+        divisions: 4,
+        onChanged: (double value) async {
+          if (value.round() > newGroupSize && value.round() - 1 != monsterTypes.length) {
+            return;
+          }
+          if (value.round() < newGroupSize && value.round() + 1 != monsterTypes.length) {
+            return;
+          }
+          if (value.round() == newGroupSize) {
+            return;
+          }
+          if (value == newGroupSize.roundToDouble()) {
+            return;
+          }
+          playPoof();
+          setState(() {
+            monsterTypes = getUpdatedMonsterType(value.round() > newGroupSize, monsterTypes);
+            newGroupSize = value.round();
+            areMonstersVisible = false;
+          });
+          new Timer(Duration(milliseconds: 900), () {
+            setState(() {
+              areMonstersVisible = true;
+            });
+          });
+        },
+      ),
+    );
+  }
+
+  Widget generateGroupSizeLabel() {
+    return Align(
+      alignment: Alignment.center,
+      child: Text(
+        newGroupSize.round().toString(),
+        style: TextStyle(
+          fontSize: 36,
+          color: Color(0xFF2B3148),
+          fontFamily: "VisbyCF",
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 
@@ -230,67 +318,9 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       width: 350,
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'group size',
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xFF2B3148),
-                  fontFamily: "VisbyCF"
-              ),
-            ),
-          ),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              activeTrackColor: Color(0xFFEDF6F6),
-              inactiveTrackColor: Color(0xFFEDF6F6),
-              inactiveTickMarkColor: Color(0xFFEDF6F6),
-            ),
-            child: Slider(
-              value: newGroupSize.roundToDouble(),
-              min: 1,
-              max: 5,
-              divisions: 4,
-              onChanged: (double value) async {
-                if (value.round() > newGroupSize && value.round() - 1 != monsterTypes.length) {
-                  return;
-                }
-                if (value.round() < newGroupSize && value.round() + 1 != monsterTypes.length) {
-                  return;
-                }
-                if (value.round() == newGroupSize) {
-                  return;
-                }
-                if (value == newGroupSize.roundToDouble()) {
-                  return;
-                }
-                playPoof();
-                setState(() {
-                  monsterTypes = getUpdatedMonsterType(value.round() > newGroupSize, monsterTypes);
-                  newGroupSize = value.round();
-                  areMonstersVisible = false;
-                });
-                new Timer(Duration(milliseconds: 900), () {
-                  setState(() {
-                    areMonstersVisible = true;
-                  });
-                });
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              newGroupSize.round().toString(),
-              style: TextStyle(
-                  fontSize: 36,
-                  color: Color(0xFF2B3148),
-                  fontFamily: "VisbyCF",
-                  fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
+          generateSliderLabel(),
+          generateSlider(),
+          generateGroupSizeLabel(),
         ],
       ),
     );
@@ -298,10 +328,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
 
   List<MonsterType> getUpdatedMonsterType(bool didAddMonster, List<MonsterType> monsterTypes) {
     if (didAddMonster) {
-      // added a new monster
       monsterTypes.add(MonsterType.generateRandomType());
     } else {
-      // monster is removed
       monsterTypes.removeLast();
     }
     return monsterTypes;
@@ -372,50 +400,4 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     );
   }
 
-  Widget generateRestaurantName() {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          Text(
-            'you\'re queueing for',
-            style: TextStyle(
-                fontSize: 18,
-                fontFamily: "VisbyCF"
-            ),
-          ),
-          Container(
-            width: 400,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(image: AssetImage('images/static/restaurant_icon.png'),
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(width: 10),
-                Container(
-                  height: 50,
-                  constraints: BoxConstraints(minWidth: 0, maxWidth: 250),
-                  child: FittedBox(
-                    child: Text(
-                      restaurantName,
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontFamily: "VisbyCF",
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  )
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
 }

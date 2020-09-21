@@ -203,6 +203,7 @@ class Group {
     return Container(
         height: height,
         width: width,
+
         alignment: Alignment.center,
         child: Stack(
             children: stack
@@ -367,6 +368,9 @@ class Group {
         child: generateButton(
           AssetImage('images/static/restaurant_menu_button.png'),
             () async {
+              if (restaurantMenuUrl.substring(0, 4) != 'http') {
+                restaurantMenuUrl = 'http://' + restaurantMenuUrl;
+              }
               if (await canLaunch(restaurantMenuUrl)) {
                 await launch(restaurantMenuUrl);
               } else {
