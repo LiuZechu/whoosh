@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +51,20 @@ class Group {
   }
 
   Widget createCurrentGroupImage(
-      int noOfGroupsAhead, Restaurant restaurant, void Function() refresh, void Function() displayMessage) {
+      int noOfGroupsAhead,
+      Restaurant restaurant,
+      void Function() refresh,
+      void Function() displayMessage,
+      void Function() playPoof,
+      ) {
     return generateContainerWithStack(
-        createCurrentGroupStackElements(noOfGroupsAhead, restaurant, refresh, displayMessage), 500, 400
+        createCurrentGroupStackElements(
+            noOfGroupsAhead,
+            restaurant,
+            refresh,
+            displayMessage,
+            playPoof
+        ), 500, 400
     );
   }
 
@@ -245,7 +258,11 @@ class Group {
   }
 
   List<Widget> createCurrentGroupStackElements(
-      int noOfGroupsAhead, Restaurant restaurant, void Function() refresh, void Function() displayMessage) {
+      int noOfGroupsAhead,
+      Restaurant restaurant,
+      void Function() refresh,
+      void Function() displayMessage,
+      void Function() playPoof) {
     List<Widget> stackElements = [];
     // Add Queue line
     stackElements.add(queueLine);
@@ -256,13 +273,17 @@ class Group {
     stackElements.add(generateNameBubble());
     // Add button panel
     stackElements.add(
-        generateCurrentGroupButtonPanel(restaurant, noOfGroupsAhead, refresh, displayMessage)
+        generateCurrentGroupButtonPanel(restaurant, noOfGroupsAhead, refresh, displayMessage, playPoof)
     );
     return stackElements;
   }
 
   Widget generateCurrentGroupButtonPanel(
-      Restaurant restaurant, int noOfGroupsAhead, void Function() refresh, void Function() displayMessage) {
+      Restaurant restaurant,
+      int noOfGroupsAhead,
+      void Function() refresh,
+      void Function() displayMessage,
+      void Function() playPoof) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -270,7 +291,7 @@ class Group {
           alignment: Alignment.center,
           child: Column(
             children: [
-              generateRandomizeButton(restaurant.id, refresh),
+              generateRandomizeButton(restaurant.id, refresh, playPoof),
               SizedBox(height: 5,),
               generateNumberOfGroupsAheadLabel(noOfGroupsAhead),
               SizedBox(height: 5,),
@@ -320,7 +341,10 @@ class Group {
     );
   }
 
-  Widget generateRandomizeButton(int restaurantId, void Function() refresh) {
+  Widget generateRandomizeButton(
+      int restaurantId,
+      void Function() refresh,
+      void Function() playPoof) {
     return Align(
       child: Container(
         height: 25,
@@ -328,7 +352,8 @@ class Group {
           AssetImage('images/static/randomize_button.png'),
           () async {
             await randomizeMonsterTypes(restaurantId);
-            refresh();
+            playPoof();
+            new Timer(Duration(milliseconds: 600), refresh);
           }
         )
       )

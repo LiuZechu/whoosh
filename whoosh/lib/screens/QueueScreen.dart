@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 
 import 'package:whoosh/entity/Group.dart';
@@ -69,6 +71,7 @@ class _QueueCardState extends State<QueueCard> {
   Restaurant restaurant = Restaurant(0, 'Loading...', 0, '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
+  FlareControls poofController = FlareControls();
 
   _QueueCardState(this.restaurantId, this.currentGroupId);
 
@@ -146,12 +149,41 @@ class _QueueCardState extends State<QueueCard> {
       fetchQueue();
     }
     return Column(
-        children: groups.map(
-                (e) => e.id == currentGroupId
-                    ? e.createCurrentGroupImage(groups.length - 1, restaurant, refresh, displayCopiedMessage)
-                    : e.createOtherGroupImage()
-        ).toList()
+        children: groups.map((e) => createGroupImage(e)).toList()
     );
+  }
+
+  Widget createGroupImage(Group group) {
+    if (group.id == currentGroupId) {
+      return Stack(
+        alignment: Alignment(0, -0.9),
+        children: [
+          group.createCurrentGroupImage(
+              groups.length - 1,
+              restaurant,
+              refresh,
+              displayCopiedMessage,
+              playPoof,
+          ),
+          Container(
+            width: 330,
+            height: 330,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: FlareActor(
+                'images/actors/effect.flr',
+                artboard: 'poof',
+                animation: 'poof',
+                controller: poofController,
+                color: Color(0xFF376ADB),
+              ),
+            )
+          )
+        ],
+      );
+    } else {
+      return group.createOtherGroupImage();
+    }
   }
 
   Widget generateRestaurantName() {
@@ -313,6 +345,10 @@ class _QueueCardState extends State<QueueCard> {
           ),
         )
     );
+  }
+
+  void playPoof() {
+    poofController.play('poof');
   }
 }
 
