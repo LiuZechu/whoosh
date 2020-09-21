@@ -25,8 +25,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(RestaurantWelcomeScreen(), settings);
     case restaurantSignupRoute:
       return _getPageRoute(RestaurantSignupScreen(), settings);
-    case restaurantSettingsRoute:
-      return _getPageRoute(RestaurantSettingsScreen(), settings);
+//    case restaurantSettingsRoute:
+//      return _getPageRoute(RestaurantSettingsScreen(), settings);
     case restaurantQueueRoute:
       int restaurantId = int.tryParse(routingData['restaurant_id']);
       return _getPageRoute(RestaurantQueueScreen(restaurantId), settings);

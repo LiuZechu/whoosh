@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
+import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,20 +10,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 //}
 
 class RestaurantSignupScreen extends StatefulWidget {
-  _RestaurantSignupScreenState createState() => _RestaurantSignupScreenState(null, null, null);
+  _RestaurantSignupScreenState createState() => _RestaurantSignupScreenState(null, null, null, "");
 }
 
 class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   // Set default `_initialized` and `_error` state to false
   bool _initialized = false;
   bool _error = false;
+  bool _account_created = false;
 
   // text field inputs
   var restaurantName;
   var email;
   var password;
 
-  _RestaurantSignupScreenState(this.restaurantName, this.email, this.password);
+  var errorText;
+
+  // for registering restaurant
+  var restaurantId;
+
+  _RestaurantSignupScreenState(this.restaurantName, this.email, this.password, this.errorText);
 
   // Define an async function to initialize FlutterFire
   void initializeFlutterFire() async {
@@ -67,6 +75,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                 generateField("restaurant name", (text) { restaurantName = text; }, false),
                 generateField("email address", (text) { email = text; }, false),
                 generateField("password", (text) { password = text; }, true),
+                generateErrorText(errorText),
                 SizedBox(height: 30),
                 generateSignupButton(context),
                 generateLoginButton(context),
@@ -149,6 +158,17 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         );
   }
 
+  Widget generateErrorText(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: "VisbyCF",
+        fontSize: 25,
+        color: Colors.red,
+      ),
+    );
+  }
+
   Widget generateSignupButton(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -158,8 +178,22 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           child: FlatButton(
             color: Color(0xFF376ADB),
             textColor: Color(0xFFEDF6F6),
-            onPressed: () => {
+            onPressed: () async {
+              await registerNewUserOnFirebase(email, password);
+              if (_account_created) {
+                FirebaseAuth auth = FirebaseAuth.instance;
+                if (auth.currentUser != null) {
+                  var uid = auth.currentUser.uid;
+                  await registerRestaurant(restaurantName, uid);
+                }
 
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+                    )
+                );
+              }
             },
             child: Text(
                 "i'm ready",
@@ -207,6 +241,65 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     return new Image.asset(
       'images/static/bottom_sea.png',
     );
+  }
+
+  void registerNewUserOnFirebase(String email, String password) async {
+    if (restaurantName == null || restaurantName.length == 0) {
+      setState(() {
+        errorText = "Please enter your restaurant name.";
+      });
+      return;
+    }
+
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+    if (email == null || email.length == 0 || !emailValid) {
+      setState(() {
+        errorText = "Please enter a valid email address.";
+      });
+      return;
+    }
+
+    if (password == null || password.length == 0) {
+      setState(() {
+        errorText = "Please enter your password.";
+      });
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+      setState(() {
+        errorText = "Account created.";
+        _account_created = true;
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        setState(() {
+          errorText = 'The password provided is too weak.';
+        });
+      } else if (e.code == 'email-already-in-use') {
+        setState(() {
+          errorText = 'The account already exists for that email.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorText = e.toString();
+      });
+    }
+  }
+
+  void registerRestaurant(String restaurantName, String uid) async {
+    dynamic data = await WhooshService.registerRestaurant(restaurantName, 5, "", "", uid);
+    int currentRestaurantId = data['restaurant_id'];
+    if (this.mounted) {
+      setState(() {
+        restaurantId = currentRestaurantId;
+      });
+    }
   }
 
 }
