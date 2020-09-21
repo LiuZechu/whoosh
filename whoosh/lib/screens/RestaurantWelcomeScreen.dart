@@ -51,7 +51,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         color: Color(0xFF376ADB),
         textColor: Color(0xFFEDF6F6),
         onPressed: () => {
-          Navigator.of(context).pushNamed('/restaurant/settings')
+          Navigator.of(context).pushNamed('/restaurant/signup')
         },
         child: Text(
             'get started',
@@ -69,16 +69,21 @@ class RestaurantWelcomeScreen extends StatelessWidget {
 
   Widget generateTopTextBox() {
     String title = "No more wait.";
-    String mainText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum nunc in leo convallis, sed dapibus lectus sagittis. Duis justo est, accumsan non vestibulum a, commodo at lorem.";
+    String mainText = "whoosh makes queuing a breeze, both for you and your customers. "
+        + "You never have to manage the queue again. Your customers will have "
+        + "a great time and be automatically notified to return.";
     return Container(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container( // place holder for image
-                width: 120,
-                height: 210,
-                color: Color(0xFFEDF6F6),
-                margin: const EdgeInsets.symmetric(horizontal: 20.0)),
+            Container(
+              width: 169,
+              height: 230,
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: new Image.asset(
+                'images/static/restaurant_welcome_monster1.png',
+              ),
+            ),
             Column(
               children: [
                 Container(
@@ -105,7 +110,9 @@ class RestaurantWelcomeScreen extends StatelessWidget {
 
   Widget generateBottomTextBox() {
     String title = "Get data.";
-    String mainText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum nunc in leo convallis, sed dapibus lectus sagittis. Duis justo est, accumsan non vestibulum a, commodo at lorem.";
+    String mainText = "With whoosh, you’ll have real data about your waiting"
+        + " times and customer footfall. And data is power. You’ll know exactly "
+        + "what’s working well and what’s not working out.";
     return Container(
       child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -131,11 +138,13 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                   )
                 ]
             ),
-            Container( // place holder for image
-                width: 120,
-                height: 210,
-                color: Color(0xFFEDF6F6),
-                margin: const EdgeInsets.symmetric(horizontal: 20.0)
+            Container(
+              width: 169,
+              height: 230,
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: new Image.asset(
+                "images/static/restaurant_welcome_monster2.png"
+              ),
             ),
           ]
       ),
