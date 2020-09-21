@@ -68,8 +68,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
           Column(
             children: [
               generateSettingsHeading(),
-              Text("UID is : " + uid),
-              Text("restaurant id is: " + restaurantId.toString()),
+              //Text("UID is : " + uid),
+              //Text("restaurant id is: " + restaurantId.toString()),
               generateRestaurantPhotoCard(iconUrl),
               generateField("restaurant name",
                       (text) { restaurantName = text; }, restaurantName ?? ""),
