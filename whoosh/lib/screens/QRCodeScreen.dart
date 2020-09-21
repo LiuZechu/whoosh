@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import '../requests/PostRequestBuilder.dart';
 import 'package:http/http.dart';
+import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
+import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
+
 
 class QRCodeScreen extends StatelessWidget {
   String restaurantName;
@@ -13,12 +16,30 @@ class QRCodeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _waitlistCallBack = () {
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+          )
+      );
+    };
+
+    var _settingsCallBack = () {
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+          )
+      );
+    };
 
     return Scaffold(
       backgroundColor: Color(0xFF2B3148),
       body: ListView(
         children: [
-          generateHeader(),
+          RestaurantHeaderBuilder.generateHeader(context, _waitlistCallBack,
+              _settingsCallBack, (){}),
           Column(
               children: [
                 QRCodeCard(restaurantName, restaurantId),
@@ -26,29 +47,6 @@ class QRCodeScreen extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Color(0xFF376ADB),
     );
   }
 
@@ -75,6 +73,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
     return Container(
         child: Column(
             children: [
+              SizedBox(height: 50),
               generateQrCode(),
               generateViewQueueButton(context),
             ]
@@ -107,7 +106,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
                   Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => RestaurantQueueScreen(restaurantId)
+                          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
                       )
                   );
                 },

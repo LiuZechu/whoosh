@@ -20,6 +20,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   var password;
   var errorText;
   var restaurantId = -1;
+  var restaurantName = "";
 
   _RestaurantLoginScreenState(this.email, this.password, this.errorText);
 
@@ -178,12 +179,13 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                     var uid = auth.currentUser.uid;
                     dynamic data = await WhooshService.getRestaurantDetailsWithUid(uid);
                     restaurantId = data["restaurant_id"];
+                    restaurantName = data["restaurant_name"];
                   }
                   // go to view queue screen
                   Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => RestaurantQueueScreen(restaurantId)
+                          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
                       )
                   );
                 }

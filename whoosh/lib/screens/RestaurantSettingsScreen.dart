@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:whoosh/screens/QRCodeScreen.dart';
+import 'package:whoosh/screens/RestaurantQueueScreen.dart';
+import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +44,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     } else {
       _user_found = false;
     }
+
+    fetchRestaurantDetails(); // for returning users
   }
 
   @override
@@ -54,7 +58,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       backgroundColor: Color(0xFF2B3148),
       body: ListView(
         children: [
-          generateHeader(),
+          RestaurantHeaderBuilder.generateHeader(context,
+              _waitlistCallBack, (){}, _qrCodeCallBack),
           Column(
             children: [
               generateSettingsHeading(),
@@ -79,27 +84,36 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     );
   }
 
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Color(0xFF376ADB),
+  void _waitlistCallBack() {
+    Navigator.pushReplacement(
+      context,
+      new MaterialPageRoute(
+          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+      )
     );
+  }
+
+  void _qrCodeCallBack() {
+    Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+        )
+    );
+  }
+
+  void fetchRestaurantDetails() async {
+    if (restaurantId > 0) {
+      dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+      if (this.mounted) {
+        setState( () {
+            estimatedWaitingTime = data["unit_queue_time"];
+            menuUrl = data["menu_url"];
+            iconUrl = data["icon_url"];
+          }
+        );
+      }
+    }
   }
 
   Widget generateSettingsHeading() {
