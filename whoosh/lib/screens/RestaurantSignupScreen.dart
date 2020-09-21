@@ -92,7 +92,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
             'images/static/whoosh_heading.png',
           ),
           Container(
-              width: 400,
+              width: 350,
               margin: const EdgeInsets.all(20.0),
               child: Text(
                 'sign up',
@@ -116,7 +116,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 10.0),
-                  width: 400,
+                  width: 350,
                   child: Text(
                     fieldName,
                     style: TextStyle(
@@ -129,7 +129,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                   ),
                 ),
                 Container(
-                  width: 400,
+                  width: 350,
                   child: TextField(
                     decoration: new InputDecoration(
                       border: new OutlineInputBorder(
@@ -170,7 +170,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: ButtonTheme(
-          minWidth: 400,
+          minWidth: 350,
           height: 40,
           child: FlatButton(
             color: Color(0xFF376ADB),
@@ -211,7 +211,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: ButtonTheme(
-        minWidth: 400,
+        minWidth: 350,
         height: 40,
         child: FlatButton(
           color: Color(0xFFEDF6F6),

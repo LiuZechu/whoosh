@@ -77,8 +77,8 @@ class RestaurantWelcomeScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 169,
-              height: 230,
+              width: 160,
+              height: 218,
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: new Image.asset(
                 'images/static/restaurant_welcome_monster1.png',
@@ -87,14 +87,14 @@ class RestaurantWelcomeScreen extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  width: 200,
+                  width: 188,
                   child: Text(
                     title,
                     style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Color(0xFFEDF6F6))
                   )
                 ),
                 Container(
-                  width: 200,
+                  width: 188,
                   child: Text(
                     mainText,
                     style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Color(0xFFEDF6F6)),
@@ -120,7 +120,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
             Column(
                 children: [
                   Container(
-                      width: 200,
+                      width: 188,
                       child: Text(
                         title,
                         style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Color(0xFFEDF6F6)),
@@ -128,7 +128,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                       )
                   ),
                   Container(
-                      width: 200,
+                      width: 188,
                       child: Text(
                         mainText,
                         style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Color(0xFFEDF6F6)),
@@ -139,8 +139,8 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                 ]
             ),
             Container(
-              width: 169,
-              height: 230,
+              width: 160,
+              height: 218,
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: new Image.asset(
                 "images/static/restaurant_welcome_monster2.png"

@@ -143,7 +143,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
 
   Widget generateWaitListHeading() {
     return Container(
-        width: 400,
+        width: 350,
         margin: const EdgeInsets.all(30.0),
         child: Text(
           'waitlist',
