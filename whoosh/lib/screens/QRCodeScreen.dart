@@ -108,7 +108,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
     if (restaurantId == -1) {
       // TODO: make this more aesthatic
       return Text(
-        'LOADING',
+        'Loading...',
         style: TextStyle(color: Colors.red, fontSize: 50, fontFamily: "VisbyCF",)
       );
     } else {
