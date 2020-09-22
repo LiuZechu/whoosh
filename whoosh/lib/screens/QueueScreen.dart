@@ -73,7 +73,7 @@ class _QueueCardState extends State<QueueCard> {
   final int currentGroupId;
   final String groupKey;
   List<Group> groups = [];
-  Restaurant restaurant = Restaurant(0, 'Loading...', 0, '');
+  Restaurant restaurant = Restaurant(0, 'Loading...', 0, '', '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
   FlareControls poofController = FlareControls();
@@ -82,9 +82,9 @@ class _QueueCardState extends State<QueueCard> {
 
   @override void initState() {
     super.initState();
+    checkConsistencyOfGroupKey(); // directs to home page for invalid group key
     fetchRestaurantDetails();
     fetchQueue();
-    checkConsistencyOfGroupKey(); // directs to home page for invalid group key
     new Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
   }
 
@@ -93,12 +93,14 @@ class _QueueCardState extends State<QueueCard> {
     String currentRestaurantName = data['restaurant_name'];
     int currentUnitQueueTime = data['unit_queue_time'];
     String currentRestaurantMenuUrl = data['menu_url'];
+    String currentRestaurantIconUrl = data['icon_url'];
     if (this.mounted) {
       Restaurant currentRestaurant = Restaurant(
           restaurantId,
           currentRestaurantName,
           currentUnitQueueTime,
-          currentRestaurantMenuUrl
+          currentRestaurantMenuUrl,
+          currentRestaurantIconUrl
       );
       setState(() {
         restaurant = currentRestaurant;
@@ -209,8 +211,9 @@ class _QueueCardState extends State<QueueCard> {
     Widget estimatedWaitLabel = Text(
       'estimated wait:',
       style: TextStyle(
-          fontSize: 18,
-          fontFamily: "VisbyCF"
+        fontSize: 18,
+        fontFamily: "VisbyCF",
+        color: Color(0xFF2B3148),
       ),
     );
 
@@ -227,6 +230,7 @@ class _QueueCardState extends State<QueueCard> {
               fontSize: 64,
               fontFamily: "VisbyCF",
               fontWeight: FontWeight.w700,
+              color: Color(0xFF2B3148),
             ),
           ),
         ),
@@ -281,7 +285,7 @@ class _QueueCardState extends State<QueueCard> {
     return Container(
       child: Column(
         children: [
-          CommonWidget.generateRestaurantName(restaurant.name),
+          CommonWidget.generateRestaurantName(restaurant.name, restaurant.iconUrl),
           generateWaitTime(),
           generateQueue(),
         ]
@@ -311,6 +315,7 @@ class _QueueCardState extends State<QueueCard> {
                 fontSize: 24,
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.w700,
+                color: Color(0xFF2B3148),
               ),
             ),
           ),

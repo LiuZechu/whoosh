@@ -9,6 +9,7 @@ import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
 
+import '../entity/CommonWidget.dart';
 import '../requests/GetRequestBuilder.dart';
 
 
@@ -44,7 +45,7 @@ class RestaurantQueueScreen extends StatelessWidget {
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context, (){}, _settingsCallBack, _qrCodeCallBack),
-          RestaurantQueueCard(restaurantId),
+          RestaurantQueueCard(restaurantName, restaurantId),
         ],
       ),
     );
@@ -54,19 +55,21 @@ class RestaurantQueueScreen extends StatelessWidget {
 
 class RestaurantQueueCard extends StatefulWidget {
   final int restaurantId;
+  final String restaurantName;
 
-  RestaurantQueueCard(this.restaurantId);
+  RestaurantQueueCard(this.restaurantName, this.restaurantId);
 
   @override
-  _RestaurantQueueCardState createState() => _RestaurantQueueCardState(restaurantId);
+  _RestaurantQueueCardState createState() => _RestaurantQueueCardState(restaurantName, restaurantId);
 }
 
 class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   final int restaurantId;
   String restaurantName;
   List<Group> groups = [];
+  String iconUrl = "";
 
-  _RestaurantQueueCardState(this.restaurantId);
+  _RestaurantQueueCardState(this.restaurantName, this.restaurantId);
 
   @override void initState() {
     super.initState();
@@ -80,9 +83,11 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         .sendRequest();
     List<dynamic> data = json.decode(response.body);
     String currentRestaurantName = data.single['restaurant_name'];
+    String currentIconUrl = data.single['icon_url'];
     if (this.mounted) {
       setState(() {
         restaurantName = currentRestaurantName;
+        iconUrl = currentIconUrl;
       });
     }
   }
@@ -92,7 +97,8 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
     return Container(
         child: Column(
             children: [
-              generateRestaurantHeading(),
+              SizedBox(height: 20),
+              CommonWidget.generateRestaurantIconAndName(restaurantName, iconUrl, Color(0xFFEDF6F6)),
               generateWaitListHeading(),
               generateQueue(),
             ]
@@ -100,51 +106,10 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
     );
   }
 
-  Widget generateRestaurantHeading() {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          Container(
-            width: 350,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(image: AssetImage('images/static/restaurant_icon.png'),
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(width: 10),
-                Container(
-                  height: 50,
-                  constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
-                  child: FittedBox(
-                    child: Text(
-                      restaurantName ?? 'Loading...',
-                      style: TextStyle(
-                        color: Color(0xFFEDF6F6),
-                        fontSize: 25,
-                        fontFamily: "VisbyCF",
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )
-                  )
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-
   Widget generateWaitListHeading() {
     return Container(
         width: 350,
-        margin: const EdgeInsets.all(30.0),
+        margin: const EdgeInsets.all(20.0),
         child: Text(
           'waitlist',
           style: TextStyle(
