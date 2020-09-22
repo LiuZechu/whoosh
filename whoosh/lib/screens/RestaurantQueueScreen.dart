@@ -65,6 +65,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   final int restaurantId;
   String restaurantName;
   List<Group> groups = [];
+  String iconUrl = "";
 
   _RestaurantQueueCardState(this.restaurantId);
 
@@ -80,9 +81,11 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         .sendRequest();
     List<dynamic> data = json.decode(response.body);
     String currentRestaurantName = data.single['restaurant_name'];
+    String currentIconUrl = data.single['icon_url'];
     if (this.mounted) {
       setState(() {
         restaurantName = currentRestaurantName;
+        iconUrl = currentIconUrl;
       });
     }
   }
@@ -111,10 +114,13 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('images/static/restaurant_icon.png'),
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(5.0),
+                    child: iconUrl == "" ?
+                      Image.asset('images/static/whoosh_icon.png') :
+                      Image.network(
+                        iconUrl,
+                      ),
                 ),
                 SizedBox(width: 10),
                 Container(
