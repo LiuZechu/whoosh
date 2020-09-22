@@ -148,15 +148,32 @@ class WhooshService {
     return data;
   }
 
-  static String generateQueueUrl(int restaurantId, int groupId) {
+  static String generateQueueUrl(int restaurantId, int groupId, String groupKey) {
     return '/queue?restaurant_id='
         + restaurantId.toString()
         + '&group_id='
-        + groupId.toString();
+        + groupId.toString()
+        + '&group_key='
+        + groupKey;
   }
 
-  static String generateEntireQueueUrl(int restaurantId, int groupId) {
-    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId);
+  static String generateEntireQueueUrl(int restaurantId, int groupId, String groupKey) {
+    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId, groupKey);
+  }
+
+  static Future<dynamic> getOneQueueGroupDetails(int restaurantId, int groupId) async {
+    try {
+      Response response = await GetRequestBuilder()
+          .addPath('restaurants')
+          .addPath(restaurantId.toString())
+          .addPath('groups')
+          .addPath(groupId.toString())
+          .sendRequest();
+      List<dynamic> data = json.decode(response.body);
+      return data.single;
+    } on StateError {
+      return null;
+    }
   }
 
 }

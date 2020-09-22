@@ -12,11 +12,13 @@ import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 
-// http://localhost:${port}/#/queue?restaurant_id=1&group_id=1
+// http://localhost:${port}/#/queue?restaurant_id=1&group_id=1&group_key=${group_key}
 class QueueScreen extends StatelessWidget {
   final int restaurantId;
   final int groupId;
-  QueueScreen(this.restaurantId, this.groupId);
+  final String groupKey;
+
+  QueueScreen(this.restaurantId, this.groupId, this.groupKey);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class QueueScreen extends StatelessWidget {
       body: ListView(
         children: [
           generateHeader(),
-          QueueCard(restaurantId, groupId),
+          QueueCard(restaurantId, groupId, groupKey),
         ],
       ),
     );
@@ -58,28 +60,31 @@ class QueueScreen extends StatelessWidget {
 class QueueCard extends StatefulWidget {
   final int restaurantId;
   final int currentGroupId;
+  final String groupKey;
 
-  QueueCard(this.restaurantId, this.currentGroupId);
+  QueueCard(this.restaurantId, this.currentGroupId, this.groupKey);
 
   @override
-  _QueueCardState createState() => _QueueCardState(restaurantId, currentGroupId);
+  _QueueCardState createState() => _QueueCardState(restaurantId, currentGroupId, groupKey);
 }
 
 class _QueueCardState extends State<QueueCard> {
   final int restaurantId;
   final int currentGroupId;
+  final String groupKey;
   List<Group> groups = [];
   Restaurant restaurant = Restaurant(0, 'Loading...', 0, '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
   FlareControls poofController = FlareControls();
 
-  _QueueCardState(this.restaurantId, this.currentGroupId);
+  _QueueCardState(this.restaurantId, this.currentGroupId, this.groupKey);
 
   @override void initState() {
     super.initState();
     fetchRestaurantDetails();
     fetchQueue();
+    checkConsistencyOfGroupKey(); // directs to home page for invalid group key
     new Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
   }
 
@@ -108,10 +113,12 @@ class _QueueCardState extends State<QueueCard> {
         .toList()
         .map((group) => new Group(
           group['group_id'],
+          group['group_key'],
           group['group_name'],
           group['group_size'],
-          DateTime.parse(group['arrival_time']),
-          MonsterType.generateMonsterTypes(group['monster_type']))
+          DateTime.parse(group['arrival_time']).toLocal(),
+          MonsterType.generateMonsterTypes(group['monster_type']),
+          group['phone_number'])
         ).toList();
     bool currentGroupIsInside =
         allGroups.where((group) => group.id == currentGroupId).length == 1;
@@ -135,6 +142,16 @@ class _QueueCardState extends State<QueueCard> {
       });
     }
     return true;
+  }
+
+  // directs to home page if group key is invalid
+  void checkConsistencyOfGroupKey() async {
+    dynamic group = await WhooshService.getOneQueueGroupDetails(restaurantId, currentGroupId);
+    if (group == null || group["group_key"] != groupKey) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
+    }
+    // else do nothing
   }
 
   String generateEstimatedWaitTime(int numberOfGroups, int unitQueueTime) {

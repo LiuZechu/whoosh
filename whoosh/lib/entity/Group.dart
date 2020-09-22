@@ -16,17 +16,21 @@ import 'MonsterType.dart';
 
 class Group {
   int id;
+  String key;
   String name;
   int groupSize;
   DateTime timeOfArrival;
   List<MonsterType> types;
+  String phoneNumber;
 
-  Group(this.id, this.name, this.groupSize, this.timeOfArrival, this.types);
+  Group(this.id, this.key, this.name, this.groupSize, this.timeOfArrival, this.types, this.phoneNumber);
 
   Group.fromSize(this.groupSize, this.types) {
     this.id = -1;
+    this.key = '';
     this.name = '';
     this.timeOfArrival = DateTime.now();
+    this.phoneNumber = '';
   }
 
   Widget queueLine =
@@ -108,7 +112,7 @@ class Group {
             ), onPressed: () async {
               String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
               // UNCOMMENT THIS TO TEST SMS
-              // await smsGroup(phone_number, textToSent);
+              // await smsGroup(phoneNumber, textToSent);
             }),
             FocusedMenuItem(title: Text(
               'Confirm Arrival',
@@ -154,7 +158,7 @@ class Group {
                       ),
                     ),
                     Text(
-                      "91234567", //TODO: change this later
+                      phoneNumber ?? "no phone number",
                       style: TextStyle(
                         color: Color(0xFF2B3148),
                         fontSize: 25,
@@ -382,7 +386,7 @@ class Group {
   }
 
   Widget generateShareQueueButton(int restaurantId, void Function() displayMessage) {
-    String queueUrl = WhooshService.generateEntireQueueUrl(restaurantId, id);
+    String queueUrl = WhooshService.generateEntireQueueUrl(restaurantId, id, key);
     return Align(
       child: Container(
         height: 25,

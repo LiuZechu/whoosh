@@ -394,9 +394,10 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       phoneNumber
     );
     int groupId = data['group_id'];
+    String groupKey = data['group_key'];
     Navigator.pushNamed(
         context,
-        WhooshService.generateQueueUrl(restaurantId, groupId)
+        WhooshService.generateQueueUrl(restaurantId, groupId, groupKey)
     );
   }
 
