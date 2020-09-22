@@ -21,10 +21,9 @@ class PutRequestBuilder extends RequestBuilder {
       finalUrl,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: RequestBuilder.authorisationToken
       },
       body: jsonEncode(body),
-      // Send authorization headers to the backend.
-      headers: {HttpHeaders.authorizationHeader: RequestBuilder.authorisationToken},
     );
   }
 }
