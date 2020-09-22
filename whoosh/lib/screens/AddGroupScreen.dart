@@ -67,20 +67,20 @@ class JoinQueueCard extends StatefulWidget {
 class _JoinQueueCardState extends State<JoinQueueCard> {
   final int restaurantId;
   bool shouldDisplayErrorMessage = false;
+  bool areMonstersVisible = true;
+  bool hasJoinedQueue = false;
   String restaurantName = 'Loading...';
   int newGroupSize = 1;
   String phoneNumber = '';
   double buttonOpacity = 1.0;
   List<MonsterType> monsterTypes = [MonsterType.generateRandomType()];
   FlareControls poofController = FlareControls();
-  bool areMonstersVisible = true;
 
   _JoinQueueCardState(this.restaurantId);
 
   @override
   Widget build(BuildContext context) {
     Group newGroup = Group.fromSize(newGroupSize.round(), monsterTypes);
-    print(MonsterType.generateMonsterTypesString(newGroup.types));
     return Container(
       child: Column(
         children: [
@@ -349,10 +349,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       onTapCancel: () {
         setButtonOpacityTo(1.0);
       },
-      onTapUp: (TapUpDetails details) {
-        setButtonOpacityTo(1.0);
-      },
-      onTap: () {
+      onTap: hasJoinedQueue ? null : () {
         joinQueue();
       },
       child: Opacity(
@@ -376,10 +373,13 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   void joinQueue() async {
     if (!isValidPhoneNumber()) {
       setState(() {
+        hasJoinedQueue = false;
+        setButtonOpacityTo(1.0);
         shouldDisplayErrorMessage = true;
       });
       return;
     }
+    hasJoinedQueue = true;
     String monsterTypesString = MonsterType.generateMonsterTypesString(monsterTypes);
     List<dynamic> allGroups = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<String> allGroupNames = allGroups

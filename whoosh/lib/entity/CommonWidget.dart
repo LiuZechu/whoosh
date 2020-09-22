@@ -28,6 +28,17 @@ class CommonWidget {
     );
   }
 
+  static Widget generateMask(double width, double height, Alignment align) {
+    return Align(
+      alignment: align,
+      child: Image(
+        image: AssetImage('images/static/queue_line_mask.png'),
+        width: width,
+        height: height,
+      ),
+    );
+  }
+
   static Widget generateRestaurantIcon(String iconUrl) {
     return Image(image: AssetImage('images/static/restaurant_icon.png'),
       width: 50,
