@@ -120,7 +120,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
                 Container(
                   height: 50,
                   constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
-                  child: Flexible(
+                  child: FittedBox(
                     child: Text(
                       restaurantName ?? 'Loading...',
                       style: TextStyle(
@@ -129,7 +129,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
                         fontFamily: "VisbyCF",
                         fontWeight: FontWeight.w700,
                       ),
-                    ),
+                    )
                   )
                 )
               ],
@@ -173,10 +173,12 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         .toList()
         .map((group) => new Group(
           group['group_id'],
+          group['group_key'],
           group['group_name'],
           group['group_size'],
-          DateTime.parse(group['arrival_time']),
-          []) //TODO: change this
+          DateTime.parse(group['arrival_time']).toLocal(),
+          [], // monster types are not needed on the restaurant side
+          group['phone_number'])
         ).toList();
     allGroups.sort((a, b) => a.timeOfArrival.compareTo(b.timeOfArrival));
     if (this.mounted) {

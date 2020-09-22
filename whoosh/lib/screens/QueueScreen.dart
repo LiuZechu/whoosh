@@ -108,10 +108,12 @@ class _QueueCardState extends State<QueueCard> {
         .toList()
         .map((group) => new Group(
           group['group_id'],
+          group['group_key'],
           group['group_name'],
           group['group_size'],
-          DateTime.parse(group['arrival_time']),
-          MonsterType.generateMonsterTypes(group['monster_type']))
+          DateTime.parse(group['arrival_time']).toLocal(),
+          MonsterType.generateMonsterTypes(group['monster_type']),
+          group['phone_number'])
         ).toList();
     bool currentGroupIsInside =
         allGroups.where((group) => group.id == currentGroupId).length == 1;
