@@ -11,6 +11,7 @@ import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'CommonWidget.dart';
 import 'MonsterType.dart';
 
 class Group {
@@ -266,7 +267,7 @@ class Group {
     // Add Queue line
     stackElements.add(queueLine);
     // Block top half of queue line
-    stackElements.add(generateMask(400, 200, Alignment.topCenter));
+    stackElements.add(CommonWidget.generateMask(400, 200, Alignment.topCenter));
     stackElements = addMonsterStackTo(stackElements, 200, 200);
     // Add group name bubble
     stackElements.add(generateNameBubble());
@@ -412,7 +413,7 @@ class Group {
           alignment: Alignment.center,
           child: Stack(
               children: [
-                generateMask(400, 50, Alignment.center),
+                CommonWidget.generateMask(400, 50, Alignment.center),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -448,17 +449,6 @@ class Group {
     List<Widget> stackElements = [];
     stackElements.add(queueLine);
     return addMonsterStackTo(stackElements, 200, 200);
-  }
-
-  Widget generateMask(double width, double height, Alignment align) {
-    return Align(
-      alignment: align,
-      child: Image(
-        image: AssetImage('images/static/queue_line_mask.png'),
-        width: width,
-        height: height,
-      ),
-    );
   }
 
   void changeGroupQueueStatus(int statusCode, int restaurantId) async {
