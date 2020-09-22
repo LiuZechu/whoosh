@@ -118,19 +118,19 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
                 ),
                 SizedBox(width: 10),
                 Container(
-                    height: 50,
-                    constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
-                    child: FittedBox(
-                      child: Text(
-                        restaurantName ?? 'Loading...',
-                        style: TextStyle(
-                          color: Color(0xFFEDF6F6),
-                          fontSize: 30,
-                          fontFamily: "VisbyCF",
-                          fontWeight: FontWeight.w700,
-                        ),
+                  height: 50,
+                  constraints: BoxConstraints(minWidth: 0, maxWidth: 340),
+                  child: Flexible(
+                    child: Text(
+                      restaurantName ?? 'Loading...',
+                      style: TextStyle(
+                        color: Color(0xFFEDF6F6),
+                        fontSize: 25,
+                        fontFamily: "VisbyCF",
+                        fontWeight: FontWeight.w700,
                       ),
-                    )
+                    ),
+                  )
                 )
               ],
             ),
