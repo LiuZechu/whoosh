@@ -385,7 +385,7 @@ class Group {
   }
 
   Widget generateShareQueueButton(int restaurantId, void Function() displayMessage) {
-    String queueUrl = WhooshService.generateEntireQueueUrl(restaurantId, id);
+    String queueUrl = WhooshService.generateEntireQueueUrl(restaurantId, id, key);
     return Align(
       child: Container(
         height: 25,

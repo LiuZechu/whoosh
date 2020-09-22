@@ -146,7 +146,7 @@ class _QueueCardState extends State<QueueCard> {
 
   // directs to home page if group key is invalid
   void checkConsistencyOfGroupKey() async {
-    dynamic group = await WhooshService.getOneQueueGroupDetails(restaurantId, groupId);
+    dynamic group = await WhooshService.getOneQueueGroupDetails(restaurantId, currentGroupId);
     if (group == null || group["group_key"] != groupKey) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);

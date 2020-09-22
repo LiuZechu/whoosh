@@ -18,7 +18,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case queueRoute:
       int restaurantId = int.tryParse(routingData['restaurant_id']);
       int groupId = int.tryParse(routingData['group_id']);
-      int groupKey = routingData['group_key'];
+      String groupKey = routingData['group_key'];
       return _getPageRoute(QueueScreen(restaurantId, groupId, groupKey), settings);
     case addGroupRoute:
       int restaurantId = int.tryParse(routingData['restaurant_id']);

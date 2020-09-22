@@ -157,8 +157,8 @@ class WhooshService {
         + groupKey;
   }
 
-  static String generateEntireQueueUrl(int restaurantId, int groupId) {
-    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId);
+  static String generateEntireQueueUrl(int restaurantId, int groupId, String groupKey) {
+    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId, groupKey);
   }
 
   static Future<dynamic> getOneQueueGroupDetails(int restaurantId, int groupId) async {
@@ -171,7 +171,7 @@ class WhooshService {
           .sendRequest();
       List<dynamic> data = json.decode(response.body);
       return data.single;
-    } catch StateError {
+    } on StateError {
       return null;
     }
   }
