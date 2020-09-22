@@ -70,6 +70,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   bool areMonstersVisible = true;
   bool hasJoinedQueue = false;
   String restaurantName = 'Loading...';
+  String restaurantIconUrl = "";
   int newGroupSize = 1;
   String phoneNumber = '';
   double buttonOpacity = 1.0;
@@ -84,7 +85,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     return Container(
       child: Column(
         children: [
-          CommonWidget.generateRestaurantName(restaurantName),
+          CommonWidget.generateRestaurantName(restaurantName, restaurantIconUrl),
           generateJoinQueueGroupImage(newGroup),
           generatePhoneNumberField(),
           SizedBox(height: 20),
@@ -109,8 +110,10 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   void fetchRestaurantDetails() async {
     dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
     String currentRestaurantName = data['restaurant_name'];
+    String currentRestaurantIconUrl = data['icon_url'];
     setState(() {
       restaurantName = currentRestaurantName;
+      restaurantIconUrl = currentRestaurantIconUrl;
     });
   }
 
