@@ -37,7 +37,7 @@ class RestaurantQueueScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: Commons.whooshDarkBlue,
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context, (){},

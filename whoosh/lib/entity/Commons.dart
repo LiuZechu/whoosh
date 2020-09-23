@@ -96,6 +96,15 @@ class Commons {
     Color(0xFFF5C957),
     Color(0xFFFDEE69),
   ];
+  
+  // Themes
+  static final queueingTheme = ThemeData(
+      backgroundColor: whooshOffWhite
+  );
+
+  static final restaurantTheme = ThemeData(
+      backgroundColor: whooshDarkBlue
+  );
 
   // Group assets
   static final Image queueLine = Image.asset('images/static/queue_line.png');

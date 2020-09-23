@@ -7,7 +7,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Commons.whooshDarkBlue,
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
