@@ -66,7 +66,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      CommonWidget.generateWhooshHeading(),
+                      CommonWidget.generateWhooshHeading("log in"),
                       CommonWidget.generateField("email address",
                               (text) { email = text; }, false, ""),
                       CommonWidget.generateField("password",

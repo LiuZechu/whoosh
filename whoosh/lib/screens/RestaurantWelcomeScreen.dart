@@ -12,7 +12,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
                   children: [
-                    CommonWidget.generateWhooshHeading(),
+                    CommonWidget.generateWhooshHeading(""),
                     generateStartButton(context),
                     generateTopTextBox(),
                     generateBottomTextBox(),

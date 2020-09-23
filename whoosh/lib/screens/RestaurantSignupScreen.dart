@@ -67,7 +67,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                CommonWidget.generateWhooshHeading(),
+                CommonWidget.generateWhooshHeading("sign up"),
                 CommonWidget.generateField("restaurant name",
                         (text) { restaurantName = text; }, false, ""),
                 CommonWidget.generateField("email address",

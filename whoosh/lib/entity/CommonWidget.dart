@@ -144,24 +144,36 @@ class CommonWidget {
     );
   }
 
-  static Widget generateWhooshHeading() {
+  static Widget generateWhooshHeading(String heading) {
     return Column(
         children: [
           Commons.whooshHeading,
-          Container(
-              width: 350,
-              margin: const EdgeInsets.all(20.0),
-              child: Text(
-                'log in',
-                style: TextStyle(
-                  color: Commons.whooshTextWhite,
-                  fontSize: 40,
-                  fontFamily: "VisbyCF",
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
+          heading == ""
+              ? Container(
+                margin: const EdgeInsets.all(50.0),
+                child: Text(
+                    'queueing made serene.',
+                    style: TextStyle(
+                      color: Commons.whooshTextWhite,
+                      fontSize: 30,
+                      fontFamily: "VisbyCF",
+                    )
+                )
               )
-          )
+              : Container(
+                width: 350,
+                margin: const EdgeInsets.all(20.0),
+                child: Text(
+                  heading,
+                  style: TextStyle(
+                    color: Commons.whooshTextWhite,
+                    fontSize: 40,
+                    fontFamily: "VisbyCF",
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                )
+              )
         ]
     );
   }
