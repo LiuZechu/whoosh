@@ -197,4 +197,21 @@ class CommonWidget {
     );
   }
 
+  static Widget generateAuthenticationErrorText(String text) {
+    return Container(
+        width: 350,
+        height: 40,
+        child: FittedBox(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: "VisbyCF",
+                fontSize: 25,
+                color: Colors.red,
+              ),
+            )
+        )
+    );
+  }
+
 }

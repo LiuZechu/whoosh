@@ -100,7 +100,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         )
     );
   }
-  
+
   Widget generateQueue() {
     fetchQueue();
     return Column(
