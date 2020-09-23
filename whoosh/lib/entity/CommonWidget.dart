@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 
 import 'Commons.dart';
 
@@ -97,50 +98,61 @@ class CommonWidget {
   }
 
   static generateField(String fieldName, Function(String text) onChanged,
-      bool isObscureText, String prefillText) {
+      bool isObscureText, String prefillText, [String trigger, String currentError]) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 10.0),
-              width: 350,
-              child: Text(
-                fieldName,
-                style: TextStyle(
-                  fontFamily: "VisbyCF",
-                  fontSize: 20,
-                  color: Commons.whooshTextWhite,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              width: 350,
-              child: TextField(
-                decoration: new InputDecoration(
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
+      width: 390,
+      child: Stack(
+        children: [
+          TextfieldErrorModalBuilder.generateErrorModal(trigger, currentError),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    width: 350,
+                    child: Text(
+                      fieldName,
+                      style: TextStyle(
+                        fontFamily: "VisbyCF",
+                        fontSize: 20,
+                        color: Commons.whooshTextWhite,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                  contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                  fillColor: Commons.whooshTextWhite,
-                  filled: true,
-                ),
-                style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                    color: Commons.whooshDarkBlue
-                ),
-                onChanged: onChanged,
-                obscureText: isObscureText,
-                controller: TextEditingController()..text = prefillText,
+                  Container(
+                    width: 350,
+                    child: TextField(
+                      decoration: new InputDecoration(
+                        border: new OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(10.0),
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
+                        fillColor: Commons.whooshTextWhite,
+                        filled: true,
+                      ),
+                      style: TextStyle(
+                          fontFamily: "VisbyCF",
+                          fontSize: 25,
+                          color: Commons.whooshDarkBlue
+                      ),
+                      onChanged: onChanged,
+                      obscureText: isObscureText,
+                      controller: TextEditingController()..text = prefillText,
+                    ),
+                  ),
+                ]
               ),
-            ),
-          ]
-      ),
+            )
+          )
+        ],
+      )
     );
   }
 
@@ -200,7 +212,7 @@ class CommonWidget {
   static Widget generateAuthenticationErrorText(String text) {
     return Container(
         width: 350,
-        height: 40,
+        height: 30,
         child: FittedBox(
             child: Text(
               text,
@@ -216,7 +228,7 @@ class CommonWidget {
 
   static Widget generateRestaurantScreenButton(Widget image, Function() onPressed) {
     return Container (
-      width: 420,
+      width: 400,
       margin: EdgeInsets.symmetric(vertical: 5.0),
       child: FlatButton(
         onPressed: onPressed,

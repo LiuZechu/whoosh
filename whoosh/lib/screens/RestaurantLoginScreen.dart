@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
@@ -21,6 +22,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
 
   var email;
   var password;
+  var currentError;
   var errorText;
   var restaurantId = -1;
   var restaurantName = "";
@@ -69,9 +71,11 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                     children: [
                       CommonWidget.generateWhooshHeading("log in"),
                       CommonWidget.generateField("email address",
-                              (text) { email = text; }, false, email),
+                          (text) { email = text; }, false, email,
+                          TextfieldErrorModalBuilder.invalidEmail, currentError),
                       CommonWidget.generateField("password",
-                              (text) { password = text; }, true, password),
+                          (text) { password = text; }, true, password,
+                          TextfieldErrorModalBuilder.invalidPassword, currentError),
                       CommonWidget.generateAuthenticationErrorText(errorText),
                       SizedBox(height: 10),
                       CommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
@@ -121,17 +125,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   }
 
   void loginOnFirebase(String email, String password) async {
-    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
-      setState(() {
-        errorText = "Please enter a valid email address.";
-      });
-      return;
-    }
-
-    if (password == null || password.length == 0) {
-      setState(() {
-        errorText = "Please enter your password.";
-      });
+    bool isValid = _validateFields(email, password);
+    if (!isValid) {
       return;
     }
 
@@ -141,20 +136,41 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
           password: password
       );
       setState(() {
+        currentError = null;
         errorText = 'Log in successful!';
       });
       _isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {
-          errorText = 'No user found for that email.';
+          currentError = null;
+          errorText = 'No user found for this email.';
         });
       } else if (e.code == 'wrong-password') {
         setState(() {
-          errorText = 'Wrong password provided for that user.';
+          currentError = TextfieldErrorModalBuilder.invalidPassword;
+          errorText = 'Wrong password provided.';
         });
       }
     }
+  }
+
+  bool _validateFields(String email, String password) {
+    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
+      setState(() {
+        currentError = TextfieldErrorModalBuilder.invalidEmail;
+      });
+      return false;
+    }
+
+    if (password == null || password.length == 0) {
+      setState(() {
+        currentError = TextfieldErrorModalBuilder.invalidPassword;
+      });
+      return false;
+    }
+
+    return true;
   }
 
 }

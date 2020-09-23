@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
@@ -23,6 +24,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   var restaurantName;
   var email;
   var password;
+  var currentError;
   var errorText;
   var restaurantId; // for registering restaurant
 
@@ -70,11 +72,14 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
               children: [
                 CommonWidget.generateWhooshHeading("sign up"),
                 CommonWidget.generateField("restaurant name",
-                        (text) { restaurantName = text; }, false, restaurantName),
+                    (text) { restaurantName = text; }, false, restaurantName,
+                    TextfieldErrorModalBuilder.noRestaurantName, currentError),
                 CommonWidget.generateField("email address",
-                        (text) { email = text; }, false, email),
+                    (text) { email = text; }, false, email,
+                    TextfieldErrorModalBuilder.invalidEmail, currentError),
                 CommonWidget.generateField("password",
-                        (text) { password = text; }, true, password),
+                    (text) { password = text; }, true, password,
+                    TextfieldErrorModalBuilder.invalidPassword, currentError),
                 CommonWidget.generateAuthenticationErrorText(errorText),
                 SizedBox(height: 10),
                 CommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
@@ -133,17 +138,19 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           password: password
       );
       setState(() {
-        errorText = "Account created.";
+        errorText = "Account created!";
         _accountCreated = true;
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setState(() {
+          currentError = TextfieldErrorModalBuilder.invalidPassword;
           errorText = 'The password provided is too weak.';
         });
       } else if (e.code == 'email-already-in-use') {
         setState(() {
-          errorText = 'The account already exists for that email.';
+          currentError = TextfieldErrorModalBuilder.invalidEmail;
+          errorText = 'The account already exists for this email.';
         });
       }
     } catch (e) {
@@ -156,21 +163,21 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _validateFields(String restaurantName, String email, String password) {
     if (restaurantName == null || restaurantName.length == 0) {
       setState(() {
-        errorText = "Please enter your restaurant name.";
+        currentError = TextfieldErrorModalBuilder.noRestaurantName;
       });
       return false;
     }
 
     if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
-        errorText = "Please enter a valid email address.";
+        currentError = TextfieldErrorModalBuilder.invalidEmail;
       });
       return false;
     }
 
     if (password == null || password.length == 0) {
       setState(() {
-        errorText = "Please enter your password.";
+        currentError = TextfieldErrorModalBuilder.invalidPassword;
       });
       return false;
     }
