@@ -69,10 +69,10 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                     children: [
                       CommonWidget.generateWhooshHeading("log in"),
                       CommonWidget.generateField("email address",
-                              (text) { email = text; }, false, ""),
+                              (text) { email = text; }, false, email),
                       CommonWidget.generateField("password",
-                              (text) { password = text; }, true, ""),
-                      generateErrorText(errorText),
+                              (text) { password = text; }, true, password),
+                      CommonWidget.generateAuthenticationErrorText(errorText),
                       SizedBox(height: 30),
                       generateLoginButton(context),
                       generateSignupButton(context),
@@ -82,17 +82,6 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                 )
             )
         )
-    );
-  }
-
-  Widget generateErrorText(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontFamily: "VisbyCF",
-        fontSize: 25,
-        color: Colors.red,
-      ),
     );
   }
 

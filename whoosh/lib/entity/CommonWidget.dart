@@ -180,4 +180,38 @@ class CommonWidget {
     );
   }
 
+  static Widget generateRestaurantScreenHeading(String heading) {
+    return Container(
+      width: 350,
+      margin: const EdgeInsets.all(30.0),
+      child: Text(
+        heading,
+        style: TextStyle(
+          color: Commons.whooshTextWhite,
+          fontSize: 40,
+          fontFamily: "VisbyCF",
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.left,
+      )
+    );
+  }
+
+  static Widget generateAuthenticationErrorText(String text) {
+    return Container(
+        width: 350,
+        height: 40,
+        child: FittedBox(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: "VisbyCF",
+                fontSize: 25,
+                color: Colors.red,
+              ),
+            )
+        )
+    );
+  }
+
 }
