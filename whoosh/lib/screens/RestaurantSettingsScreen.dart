@@ -192,12 +192,14 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                   )
                 );
               },
-              child: Text(
-                  "submit",
-                  style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                  )
+              child: FittedBox(
+                child: Text(
+                    "submit",
+                    style: TextStyle(
+                      fontFamily: "VisbyCF",
+                      fontSize: 25,
+                    )
+                ),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),

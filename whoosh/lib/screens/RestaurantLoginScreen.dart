@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/screens/LoadingModal.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
@@ -105,12 +106,14 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
               color: Commons.whooshLightBlue,
               textColor: Commons.whooshTextWhite,
               onPressed: _loginUser(context),
-              child: Text(
-                  "enter",
-                  style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                  )
+              child: FittedBox(
+                child: Text(
+                    "enter",
+                    style: TextStyle(
+                      fontFamily: "VisbyCF",
+                      fontSize: 25,
+                    )
+                )
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
@@ -122,7 +125,14 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
 
   Function() _loginUser(BuildContext context) {
     return () async {
+      LoadingModal waves = LoadingModal(context);
+      showDialog(
+          context: context,
+          builder: (_) => waves
+      );
+
       await loginOnFirebase(email, password);
+
       if (_isLoggedIn) {
         // get restaurant ID
         FirebaseAuth auth = FirebaseAuth.instance;
@@ -139,6 +149,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                 builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
             )
         );
+      } else {
+        waves.dismiss();
       }
     };
   }
@@ -155,12 +167,14 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
               onPressed: () => {
                 Navigator.of(context).pushNamed('/restaurant/signup')
               },
-              child: Text(
-                  "i don't have an account",
-                  style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                  )
+              child: FittedBox(
+                child: Text(
+                    "i don't have an account",
+                    style: TextStyle(
+                      fontFamily: "VisbyCF",
+                      fontSize: 25,
+                    )
+                )
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),

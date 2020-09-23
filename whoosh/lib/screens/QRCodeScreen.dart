@@ -105,12 +105,14 @@ class _QRCodeCardState extends State<QRCodeCard> {
                       )
                   );
                 },
-                child: Text(
-                    'view current queue',
-                    style: TextStyle(
-                      fontFamily: "VisbyCF",
-                      fontSize: 25,
-                    )
+                child: FittedBox(
+                  child: Text(
+                      'view current queue',
+                      style: TextStyle(
+                        fontFamily: "VisbyCF",
+                        fontSize: 25,
+                      )
+                  )
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
