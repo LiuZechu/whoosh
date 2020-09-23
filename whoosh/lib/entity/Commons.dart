@@ -111,6 +111,7 @@ class Commons {
   static final Image welcomeMonster2 = Image.asset("images/static/restaurant_welcome_monster2.png");
   static final AssetImage enterQueueButton = AssetImage('images/static/enter_queue_button.png');
   static final AssetImage refreshButton = AssetImage('images/static/refresh_button.png');
+  static final AssetImage counter = AssetImage('images/static/counter.png');
 
   // Flare actor paths
   static final String bodyFlareActorPath = 'images/actors/body.flr';
