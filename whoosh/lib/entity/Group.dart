@@ -207,15 +207,15 @@ class Group {
   }
   
   List<Widget> createNewGroupStackElements(double monsterStackWidth, double monsterStackHeight) {
-    return addMonsterStackTo([], monsterStackWidth, monsterStackHeight);
+    return addMonsterStackTo([], monsterStackWidth, monsterStackHeight, true);
   }
   
   List<Widget> addMonsterStackTo(
-      List<Widget> currentStack, monsterStackWidth, monsterStackHeight) {
+      List<Widget> currentStack, monsterStackWidth, monsterStackHeight, bool isCurrentGroup) {
     List<Widget> monsterWidgets = [];
     List<Monster> monsters = [];
     for (int i = 0; i < groupSize; i++) {
-      monsters.add(MonsterFactory.getMonsterById(i, types[i], monsterStackWidth / 2));
+      monsters.add(MonsterFactory.getMonsterById(i, types[i], monsterStackWidth / 2, isCurrentGroup));
     }
     while (monsters.isNotEmpty && monsters.last.id > 2) {
       Monster last = monsters.removeLast();
@@ -264,7 +264,7 @@ class Group {
     stackElements.add(queueLine);
     // Block top half of queue line
     stackElements.add(CommonWidget.generateMask(400, 200, Alignment.topCenter));
-    stackElements = addMonsterStackTo(stackElements, 200, 200);
+    stackElements = addMonsterStackTo(stackElements, 200, 200, true);
     // Add group name bubble
     stackElements.add(generateNameBubble());
     // Add button panel
@@ -442,7 +442,7 @@ class Group {
   List<Widget> createOtherGroupStackElements() {
     List<Widget> stackElements = [];
     stackElements.add(queueLine);
-    return addMonsterStackTo(stackElements, 200, 200);
+    return addMonsterStackTo(stackElements, 200, 200, false);
   }
 
   void changeGroupQueueStatus(int statusCode, int restaurantId) async {

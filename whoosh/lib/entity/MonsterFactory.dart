@@ -8,7 +8,7 @@ import 'package:whoosh/entity/MonsterType.dart';
 class MonsterFactory {
   static final FlareControls controls = FlareControls();
 
-  static Widget createMonsterActor(int id, MonsterType type, double monsterSize) {
+  static Widget createMonsterActor(int id, MonsterType type, double monsterSize, bool shouldAnimate) {
     return Container(
       width: monsterSize,
       height: monsterSize,
@@ -18,14 +18,14 @@ class MonsterFactory {
             Commons.bodyFlareActorPath,
             color: Commons.monsterColors[type.color],
             isPaused: false,
-            animation: 'fidget',
+            animation: shouldAnimate ? 'fidget' : null,
             artboard: type.body.toString(),
             controller: controls,
           ),
           FlareActor(
             Commons.eyesFlareActorPath,
             isPaused: false,
-            animation: 'blink',
+            animation: shouldAnimate ? 'blink' : null,
             artboard: type.eyes.toString(),
             controller: controls,
           ),
@@ -52,10 +52,10 @@ class MonsterFactory {
     Alignment.topRight,
   ];
 
-  static Monster getMonsterById(int id, MonsterType type, double monsterSize) {
+  static Monster getMonsterById(int id, MonsterType type, double monsterSize, bool shouldAnimate) {
     return Monster(
         id,
-        createMonsterActor(id, type, monsterSize),
+        createMonsterActor(id, type, monsterSize, shouldAnimate),
         allMonsterAlignments[id],
     );
   }

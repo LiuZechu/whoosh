@@ -108,6 +108,7 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Future<bool> fetchQueue() async {
+    print('fetching');
     List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
