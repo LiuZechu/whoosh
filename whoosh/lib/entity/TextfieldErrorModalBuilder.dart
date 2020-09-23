@@ -16,7 +16,7 @@ class TextfieldErrorModalBuilder {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Commons.whooshErrorRed,
+          color: Commons.whooshErrorDarkRed,
         ),
         width: 390,
         height: 130,
