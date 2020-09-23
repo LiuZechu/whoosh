@@ -169,7 +169,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 '*should have 8 digits',
                 style: TextStyle(
                     fontSize: 24,
-                    color: Commons.whooshErrorRed,
+                    color: Commons.whooshErrorDarkRed,
                     fontFamily: Commons.whooshFont
                 ),
               ),

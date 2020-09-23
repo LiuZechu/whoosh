@@ -54,7 +54,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               _waitlistCallBack, (){}, _qrCodeCallBack),
           Column(
             children: [
-              generateSettingsHeading(),
+              CommonWidget.generateRestaurantScreenHeading("settings"),
               generateRestaurantPhotoCard(iconUrl),
               CommonWidget.generateField("restaurant name",
                       (text) { restaurantName = text; },
@@ -117,23 +117,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         );
       }
     }
-  }
-
-  Widget generateSettingsHeading() {
-    return Container(
-      width: 350,
-      margin: const EdgeInsets.all(30.0),
-      child: Text(
-        'Settings',
-        style: TextStyle(
-          color: Commons.whooshTextWhite,
-          fontSize: 40,
-          fontFamily: Commons.whooshFont,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.left,
-      )
-    );
   }
 
   Widget generateRestaurantPhotoCard(String iconUrl) {

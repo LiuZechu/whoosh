@@ -94,25 +94,9 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
               SizedBox(height: 20),
               CommonWidget.generateRestaurantIconAndName(restaurantName,
                   iconUrl, Commons.whooshTextWhite),
-              generateWaitListHeading(),
+              CommonWidget.generateRestaurantScreenHeading("waitlist"),
               generateQueue(),
             ]
-        )
-    );
-  }
-
-  Widget generateWaitListHeading() {
-    return Container(
-        width: 350,
-        margin: const EdgeInsets.all(20.0),
-        child: Text(
-          'waitlist',
-          style: TextStyle(
-            color: Commons.whooshTextWhite,
-            fontSize: 40,
-            fontFamily: Commons.whooshFont,
-          ),
-          textAlign: TextAlign.left,
         )
     );
   }

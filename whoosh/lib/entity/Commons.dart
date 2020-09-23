@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Commons {
   static List<Color> monsterColors = [
@@ -113,6 +114,9 @@ class Commons {
   static final Image refreshButton = Image.asset('images/static/refresh_button.png');
   static final Image counter = Image.asset('images/static/counter.png');
 
+  static final AssetImage whooshIcon = AssetImage('images/static/whoosh_icon.png');
+  static final AssetImage queueLineMask = AssetImage('images/static/queue_line_mask.png');
+
   // Flare actor paths
   static final String bodyFlareActorPath = 'images/actors/body.flr';
   static final String eyesFlareActorPath = 'images/actors/eyes.flr';
@@ -127,7 +131,8 @@ class Commons {
   static final Color whooshLightBlue = Color(0xFF376ADB);
   static final Color whooshOffWhite = Color(0xFFD1E6F2);
   static final Color whooshErrorPink = Color(0xFFF3C2C2);
-  static final Color whooshErrorRed = Color(0xFF9A0000);
+  static final Color whooshErrorRed = Colors.red;
+  static final Color whooshErrorDarkRed = Color(0xFF9A0000);
 
   // Fonts
   static final String whooshFont = "VisbyCF";

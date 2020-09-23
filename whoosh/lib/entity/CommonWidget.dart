@@ -37,7 +37,7 @@ class CommonWidget {
     return Align(
       alignment: align,
       child: Image(
-        image: AssetImage('images/static/queue_line_mask.png'),
+        image: Commons.queueLineMask,
         width: width,
         height: height,
       ),
@@ -48,7 +48,7 @@ class CommonWidget {
     var image;
     if (iconUrl == "") {
       image = Image(
-        image: AssetImage('images/static/whoosh_icon.png'),
+        image: Commons.whooshIcon,
         width: 50,
         height: 50,
         fit: BoxFit.cover,
@@ -177,6 +177,40 @@ class CommonWidget {
                 )
               )
         ]
+    );
+  }
+
+  static Widget generateRestaurantScreenHeading(String heading) {
+    return Container(
+      width: 350,
+      margin: const EdgeInsets.all(30.0),
+      child: Text(
+        heading,
+        style: TextStyle(
+          color: Commons.whooshTextWhite,
+          fontSize: 40,
+          fontFamily: Commons.whooshFont,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.left,
+      )
+    );
+  }
+
+  static Widget generateAuthenticationErrorText(String text) {
+    return Container(
+        width: 350,
+        height: 40,
+        child: FittedBox(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: Commons.whooshFont,
+                fontSize: 25,
+                color: Commons.whooshErrorRed,
+              ),
+            )
+        )
     );
   }
 
