@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import 'Commons.dart';
+
 class CommonWidget {
   static Widget generateQueuingForLabel() {
     return Text(
@@ -7,7 +9,7 @@ class CommonWidget {
       style: TextStyle(
           fontSize: 18,
           fontFamily: "VisbyCF",
-          color: Color(0xFF2B3148),
+          color: Commons.whooshDarkBlue,
       ),
     );
   }
@@ -86,7 +88,7 @@ class CommonWidget {
         children: [
           SizedBox(height: 10),
           generateQueuingForLabel(),
-          generateRestaurantIconAndName(restaurantName, iconUrl, Color(0xFF2B3148)),
+          generateRestaurantIconAndName(restaurantName, iconUrl, Commons.whooshDarkBlue),
           SizedBox(height: 10),
         ],
       ),

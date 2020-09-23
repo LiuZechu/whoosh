@@ -6,6 +6,7 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/WordFactory.dart';
@@ -20,7 +21,7 @@ class AddGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD1E6F2),
+      backgroundColor: Commons.whooshOffWhite,
       body: ListView(
         children: [
           generateHeader(),
@@ -49,7 +50,7 @@ class AddGroupScreen extends StatelessWidget {
           child: Icon(Icons.menu),
         ),
       ],
-      backgroundColor: Color(0xFF376ADB),
+      backgroundColor: Commons.whooshLightBlue,
     );
   }
 
@@ -135,7 +136,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 artboard: 'poof',
                 animation: 'poof',
                 controller: poofController,
-                color: Color(0xFF376ADB),
+                color: Commons.whooshLightBlue,
               ),
             )
         )
@@ -149,7 +150,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Color(0xFFF3C2C2),
+          color: Commons.whooshErrorPink,
         ),
         width: 390,
         height: 160,
@@ -164,7 +165,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 '*should have 8 digits',
                 style: TextStyle(
                     fontSize: 24,
-                    color: Color(0xFF9A0000),
+                    color: Commons.whooshErrorRed,
                     fontFamily: "VisbyCF"
                 ),
               ),
@@ -185,7 +186,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           'phone number',
           style: TextStyle(
               fontSize: 24,
-              color: Color(0xFF2B3148),
+              color: Commons.whooshDarkBlue,
               fontFamily: "VisbyCF"
           ),
         ),
@@ -204,7 +205,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           child: TextField(
             decoration: InputDecoration(
               filled: true,
-              fillColor: Color(0xFFEDF6F6),
+              fillColor: Commons.whooshTextWhite,
             ),
             onChanged: (text) {
               phoneNumber = text;
@@ -253,7 +254,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         'group size',
         style: TextStyle(
             fontSize: 24,
-            color: Color(0xFF2B3148),
+            color: Commons.whooshDarkBlue,
             fontFamily: "VisbyCF"
         ),
       ),
@@ -263,9 +264,9 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   Widget generateSlider() {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        activeTrackColor: Color(0xFFEDF6F6),
-        inactiveTrackColor: Color(0xFFEDF6F6),
-        inactiveTickMarkColor: Color(0xFFEDF6F6),
+        activeTrackColor: Commons.whooshTextWhite,
+        inactiveTrackColor: Commons.whooshTextWhite,
+        inactiveTickMarkColor: Commons.whooshTextWhite,
       ),
       child: Slider(
         value: newGroupSize.roundToDouble(),
@@ -308,7 +309,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         newGroupSize.round().toString(),
         style: TextStyle(
           fontSize: 36,
-          color: Color(0xFF2B3148),
+          color: Commons.whooshDarkBlue,
           fontFamily: "VisbyCF",
           fontWeight: FontWeight.w700,
         ),
@@ -357,7 +358,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       },
       child: Opacity(
         opacity: buttonOpacity,
-        child: Image(image: AssetImage('images/static/enter_queue_button.png')),
+        child: Image(image: Commons.enterQueueButton),
       )
     );
   }

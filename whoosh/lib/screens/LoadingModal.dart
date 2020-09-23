@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 
 class LoadingModal extends StatelessWidget {
   final BuildContext context;
@@ -14,7 +15,7 @@ class LoadingModal extends StatelessWidget {
         width: 380,
         height: 150,
         child: FlareActor(
-          'images/actors/wave.flr',
+          Commons.waveFlareActorPath,
           animation: 'scroll',
         ),
       ),

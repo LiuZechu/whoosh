@@ -8,10 +8,26 @@ class MonsterType {
   int mouth;
   int accessory;
   int color;
-  static List<String> bodyIndices = ['1', '2', '3'];
-  static List<String> eyesIndices = ['1', '2', '3'];
-  static List<String> mouthIndices = ['1', '2', '3'];
-  static List<String> accessoryIndices = ['1', '2', '3'];
+  static final numberOfBodies = 7;
+  static final numberOfEyes = 8;
+  static final numberOfMouths = 15;
+  static final numberOfAccessories = 15;
+  static List<String> bodyIndices = Iterable<int>
+      .generate(numberOfBodies)
+      .map((e) => (e + 1).toString())
+      .toList();
+  static List<String> eyesIndices = Iterable<int>
+      .generate(numberOfEyes)
+      .map((e) => (e + 1).toString())
+      .toList();
+  static List<String> mouthIndices = Iterable<int>
+      .generate(numberOfMouths)
+      .map((e) => (e + 1).toString())
+      .toList();
+  static List<String> accessoryIndices = Iterable<int>
+      .generate(numberOfAccessories)
+      .map((e) => (e + 1).toString())
+      .toList();
   static List<String> colorIndices = Iterable<int>
       .generate(Commons.monsterColors.length)
       .map((e) => e.toString())

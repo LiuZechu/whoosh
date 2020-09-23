@@ -15,7 +15,7 @@ class MonsterFactory {
       child: Stack(
         children: [
           FlareActor(
-            'images/actors/bodies.flr',
+            Commons.bodyFlareActorPath,
             color: Commons.monsterColors[type.color],
             isPaused: false,
             animation: 'fidget',
@@ -23,19 +23,19 @@ class MonsterFactory {
             controller: controls,
           ),
           FlareActor(
-            'images/actors/eyes.flr',
+            Commons.eyesFlareActorPath,
             isPaused: false,
             animation: 'blink',
             artboard: type.eyes.toString(),
             controller: controls,
           ),
           FlareActor(
-            'images/actors/mouths.flr',
+            Commons.mouthsFlareActorPath,
             artboard: type.mouth.toString(),
             controller: controls,
           ),
           FlareActor(
-            'images/actors/accessories.flr',
+            Commons.accessoriesFlareActorPath,
             artboard: type.accessory.toString(),
             controller: controls,
           ),
