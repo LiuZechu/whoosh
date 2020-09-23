@@ -68,7 +68,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               CommonWidget.generateField("URL to menu", (text) { menuUrl = text; },
                       false, menuUrl ?? ""),
               SizedBox(height: 100),
-              generateSubmitButton(context),
+              CommonWidget.generateRestaurantScreenButton(Commons.confirmButton, _submitSettings),
             ]
           )
         ],
@@ -152,42 +152,17 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         )
     );
   }
-  
-  Widget generateSubmitButton(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: ButtonTheme(
-            minWidth: 350,
-            height: 40,
-            child: FlatButton(
-              color: Commons.whooshLightBlue,
-              textColor: Commons.whooshTextWhite,
-              onPressed: () async {
-                await WhooshService.updateRestaurantDetails(restaurantId,
-                    restaurantName, estimatedWaitingTime,
-                    iconUrl, menuUrl);
 
-                // go to QR code screen
-                Navigator.pushReplacement(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => QRCodeScreen(restaurantName, restaurantId)
-                  )
-                );
-              },
-              child: FittedBox(
-                child: Text(
-                    "submit",
-                    style: TextStyle(
-                      fontFamily: "VisbyCF",
-                      fontSize: 25,
-                    )
-                ),
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-            )
+  void _submitSettings() async {
+    await WhooshService.updateRestaurantDetails(restaurantId,
+        restaurantName, estimatedWaitingTime,
+        iconUrl, menuUrl);
+
+    // go to QR code screen
+    Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => QRCodeScreen(restaurantName, restaurantId)
         )
     );
   }

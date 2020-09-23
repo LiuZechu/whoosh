@@ -73,40 +73,16 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                       CommonWidget.generateField("password",
                               (text) { password = text; }, true, password),
                       CommonWidget.generateAuthenticationErrorText(errorText),
-                      SizedBox(height: 30),
-                      generateLoginButton(context),
-                      generateSignupButton(context),
+                      SizedBox(height: 10),
+                      CommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
+                      CommonWidget.generateRestaurantScreenButton(Commons.noAccountButton,
+                        () => {
+                          Navigator.of(context).pushNamed('/restaurant/signup')
+                      }),
                       SizedBox(height: 100),
                       Commons.bottomSea
                     ]
                 )
-            )
-        )
-    );
-  }
-
-  Widget generateLoginButton(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: ButtonTheme(
-            minWidth: 350,
-            height: 40,
-            child: FlatButton(
-              color: Commons.whooshLightBlue,
-              textColor: Commons.whooshTextWhite,
-              onPressed: _loginUser(context),
-              child: FittedBox(
-                child: Text(
-                    "enter",
-                    style: TextStyle(
-                      fontFamily: "VisbyCF",
-                      fontSize: 25,
-                    )
-                )
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
             )
         )
     );
@@ -142,35 +118,6 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
         waves.dismiss();
       }
     };
-  }
-
-  Widget generateSignupButton(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: ButtonTheme(
-            minWidth: 350,
-            height: 40,
-            child: FlatButton(
-              color: Commons.whooshTextWhite,
-              textColor: Commons.whooshDarkBlue,
-              onPressed: () => {
-                Navigator.of(context).pushNamed('/restaurant/signup')
-              },
-              child: FittedBox(
-                child: Text(
-                    "i don't have an account",
-                    style: TextStyle(
-                      fontFamily: "VisbyCF",
-                      fontSize: 25,
-                    )
-                )
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-            )
-        )
-    );
   }
 
   void loginOnFirebase(String email, String password) async {

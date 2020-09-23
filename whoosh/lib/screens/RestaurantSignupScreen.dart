@@ -76,40 +76,19 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                 CommonWidget.generateField("password",
                         (text) { password = text; }, true, password),
                 CommonWidget.generateAuthenticationErrorText(errorText),
-                SizedBox(height: 30),
-                generateSignupButton(context),
-                generateLoginButton(context),
+                SizedBox(height: 10),
+                CommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
+                    signupUser(context)),
+                CommonWidget.generateRestaurantScreenButton(Commons.alreadyHaveAccountButton,
+                  () => {
+                    Navigator.of(context).pushNamed('/restaurant/login')
+                }),
                 SizedBox(height: 100),
                 Commons.bottomSea,
               ]
             )
           )
         )
-    );
-  }
-
-  Widget generateSignupButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: FlatButton(
-        minWidth: 350,
-        height: 40,
-        color: Commons.whooshLightBlue,
-        textColor: Commons.whooshTextWhite,
-        onPressed: signupUser(context),
-        child: FittedBox(
-          child: Text(
-              "i'm ready",
-              style: TextStyle(
-                fontFamily: "VisbyCF",
-                fontSize: 25,
-              )
-          )
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      )
     );
   }
 
@@ -140,35 +119,6 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         waves.dismiss();
       }
     };
-  }
-
-  Widget generateLoginButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: ButtonTheme(
-        minWidth: 350,
-        height: 40,
-        child: FlatButton(
-          color: Commons.whooshTextWhite,
-          textColor: Commons.whooshDarkBlue,
-          onPressed: () => {
-            Navigator.of(context).pushNamed('/restaurant/login')
-          },
-          child: FittedBox(
-            child: Text(
-                "i already have an account",
-                style: TextStyle(
-                  fontFamily: "VisbyCF",
-                  fontSize: 25,
-                )
-            )
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ),
-        )
-      )
-    );
   }
 
   void registerNewUserOnFirebase(String email, String password) async {

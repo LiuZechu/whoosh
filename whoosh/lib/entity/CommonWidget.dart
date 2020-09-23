@@ -214,4 +214,15 @@ class CommonWidget {
     );
   }
 
+  static Widget generateRestaurantScreenButton(Widget image, Function() onPressed) {
+    return Container (
+      width: 420,
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      child: FlatButton(
+        onPressed: onPressed,
+        child: image,
+      )
+    );
+  }
+
 }
