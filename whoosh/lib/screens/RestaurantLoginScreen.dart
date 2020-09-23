@@ -64,7 +64,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Commons.whooshDarkBlue,
+        backgroundColor: Commons.restaurantTheme.backgroundColor,
         body: Center(
             child: SingleChildScrollView(
                 child: Column(

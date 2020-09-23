@@ -7,7 +7,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Commons.whooshDarkBlue,
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -74,7 +74,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 188,
               child: Text(
                 title,
-                style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite),
+                style: TextStyle(fontFamily: Commons.whooshFont, fontSize: 25, color: Commons.whooshTextWhite),
                 textAlign: TextAlign.right,
               )
           ),
@@ -82,7 +82,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 188,
               child: Text(
                   mainText,
-                  style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
+                  style: TextStyle(fontFamily: Commons.whooshFont, fontSize: 18, color: Commons.whooshTextWhite),
                   textAlign: TextAlign.right,
                   softWrap: true
               )

@@ -20,39 +20,15 @@ class AddGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Commons.whooshOffWhite,
+      backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          generateHeader(),
+          CommonWidget.generateHeader(),
           JoinQueueCard(restaurantId)
         ],
       ),
     );
   }
-
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Commons.whooshLightBlue,
-    );
-  }
-
 }
 
 class JoinQueueCard extends StatefulWidget {
@@ -169,8 +145,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 '*should have 8 digits',
                 style: TextStyle(
                     fontSize: 24,
-                    color: Commons.whooshErrorRed,
-                    fontFamily: "VisbyCF"
+                    color: Commons.whooshErrorDarkRed,
+                    fontFamily: Commons.whooshFont
                 ),
               ),
             )
@@ -191,7 +167,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           style: TextStyle(
               fontSize: 24,
               color: Commons.whooshDarkBlue,
-              fontFamily: "VisbyCF"
+              fontFamily: Commons.whooshFont
           ),
         ),
       ),
@@ -259,7 +235,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         style: TextStyle(
             fontSize: 24,
             color: Commons.whooshDarkBlue,
-            fontFamily: "VisbyCF"
+            fontFamily: Commons.whooshFont
         ),
       ),
     );
@@ -314,7 +290,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         style: TextStyle(
           fontSize: 36,
           color: Commons.whooshDarkBlue,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -362,7 +338,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       },
       child: Opacity(
         opacity: buttonOpacity,
-        child: Image(image: Commons.enterQueueButton),
+        child: Commons.enterQueueButton,
       )
     );
   }

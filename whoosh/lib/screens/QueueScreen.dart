@@ -5,6 +5,7 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/entity/EffectManager.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
@@ -24,36 +25,15 @@ class QueueScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Commons.whooshOffWhite,
+      backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          generateHeader(),
+          CommonWidget.generateHeader(),
           QueueCard(restaurantId, groupId, groupKey),
         ],
       ),
     );
   }
-
-  Widget generateHeader() {
-   return AppBar(
-     leading: Transform.scale(
-       scale: 3,
-       alignment: Alignment.centerLeft,
-       child: IconButton(
-         icon: Commons.whooshLogo,
-         onPressed: () {},
-       ),
-     ),
-     actions: [
-       Padding(
-         padding: EdgeInsets.symmetric(horizontal: 16),
-         child: Icon(Icons.menu),
-       ),
-     ],
-     backgroundColor: Commons.whooshLightBlue,
-   );
-  }
-
 }
 
 class QueueCard extends StatefulWidget {
@@ -75,7 +55,7 @@ class _QueueCardState extends State<QueueCard> {
   Restaurant restaurant = Restaurant(0, 'Loading...', 0, '', '');
   String estimatedWait = "-";
   bool screenIsPresent = true;
-  FlareControls poofController = FlareControls();
+  EffectManager effectManager;
 
   _QueueCardState(this.restaurantId, this.currentGroupId, this.groupKey);
 
@@ -84,6 +64,7 @@ class _QueueCardState extends State<QueueCard> {
     checkConsistencyOfGroupKey(); // directs to home page for invalid group key
     fetchRestaurantDetails();
     fetchQueue();
+    effectManager = EffectManager();
     new Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
   }
 
@@ -108,7 +89,6 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   Future<bool> fetchQueue() async {
-    print('fetching');
     List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
         .where((group) => group['group_size'] <= 5)
@@ -131,12 +111,16 @@ class _QueueCardState extends State<QueueCard> {
     }
     Group currentGroup =
         allGroups.where((group) => group.id == currentGroupId).single;
+
     DateTime currentGroupArrivalTime = currentGroup.timeOfArrival;
+
     List<Group> groupsInFront = allGroups.where(
             (group) => group.timeOfArrival.isBefore(currentGroupArrivalTime)
     ).toList();
+
     groupsInFront.add(currentGroup);
     groupsInFront.sort((a, b) => b.timeOfArrival.compareTo(a.timeOfArrival));
+
     if (this.mounted) {
       setState(() {
         groups = groupsInFront;
@@ -188,16 +172,40 @@ class _QueueCardState extends State<QueueCard> {
           Container(
             width: 330,
             height: 330,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: FlareActor(
-                'images/actors/effect.flr',
-                artboard: 'poof',
-                animation: 'poof',
-                controller: poofController,
-                color: Commons.whooshLightBlue,
+            child: GestureDetector(
+              onTap: () {
+                playRandomAnimation();
+              },
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Stack(
+                  children: [
+                    FlareActor(
+                      Commons.effectFlareActorPath,
+                      artboard: 'poof',
+                      animation: 'poof',
+                      controller: effectManager.poofController,
+                      color: Commons.whooshLightBlue,
+                    ),
+                    FlareActor(
+                      Commons.effectFlareActorPath,
+                      artboard: '1',
+                      controller: effectManager.moveOneController,
+                    ),
+                    FlareActor(
+                      Commons.effectFlareActorPath,
+                      artboard: '2',
+                      controller: effectManager.moveTwoController,
+                    ),
+                    FlareActor(
+                      Commons.effectFlareActorPath,
+                      artboard: '3',
+                      controller: effectManager.moveThreeController,
+                    ),
+                  ]
+                ),
               ),
-            )
+            ),
           )
         ],
       );
@@ -212,7 +220,7 @@ class _QueueCardState extends State<QueueCard> {
       'estimated wait:',
       style: TextStyle(
         fontSize: 18,
-        fontFamily: "VisbyCF",
+        fontFamily: Commons.whooshFont,
         color: Commons.whooshDarkBlue,
       ),
     );
@@ -228,7 +236,7 @@ class _QueueCardState extends State<QueueCard> {
             estimatedWait,
             style: TextStyle(
               fontSize: 64,
-              fontFamily: "VisbyCF",
+              fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.w700,
               color: Commons.whooshDarkBlue,
             ),
@@ -246,17 +254,11 @@ class _QueueCardState extends State<QueueCard> {
             child: GestureDetector(
               onTap: () async {
                 LoadingModal waves = LoadingModal(context);
-                showDialog(
-                    context: context,
-                    builder: (_) => waves
-                );
+                waves.start();
                 await refresh();
                 waves.dismiss();
               },
-              child: Image(
-                  alignment: Alignment.centerRight,
-                  image: Commons.refreshButton,
-              ),
+              child: Commons.refreshButton
             ),
           )
       ),
@@ -289,10 +291,10 @@ class _QueueCardState extends State<QueueCard> {
         children: [
           Align(
             alignment: Alignment.center,
-            child: Image(image: Commons.queueLine),
+            child: Commons.queueLine,
           ),
           CommonWidget.generateMask(300, 80, Alignment.bottomCenter),
-          Image(image: Commons.counter),
+          Commons.counter,
         ],
       ),
     );
@@ -332,7 +334,7 @@ class _QueueCardState extends State<QueueCard> {
               'Link copied to clipboard!',
               style: TextStyle(
                 fontSize: 24,
-                fontFamily: "VisbyCF",
+                fontFamily: Commons.whooshFont,
                 fontWeight: FontWeight.w700,
                 color: Commons.whooshDarkBlue,
               ),
@@ -343,7 +345,11 @@ class _QueueCardState extends State<QueueCard> {
   }
 
   void playPoof() {
-    poofController.play('poof');
+    effectManager.playPoof();
+  }
+
+  void playRandomAnimation() {
+    effectManager.playRandomEffect();
   }
 }
 

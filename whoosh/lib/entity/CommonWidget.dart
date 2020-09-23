@@ -5,12 +5,26 @@ import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'Commons.dart';
 
 class CommonWidget {
+  static Widget generateHeader() {
+    return AppBar(
+      leading: Transform.scale(
+        scale: 3,
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          icon: Commons.whooshLogo,
+          onPressed: () {},
+        ),
+      ),
+      backgroundColor: Commons.whooshLightBlue,
+    );
+  }
+
   static Widget generateQueuingForLabel() {
     return Text(
       'you\'re queueing for',
       style: TextStyle(
           fontSize: 18,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           color: Commons.whooshDarkBlue,
       ),
     );
@@ -26,7 +40,7 @@ class CommonWidget {
             style: TextStyle(
               color: color,
               fontSize: 36,
-              fontFamily: "VisbyCF",
+              fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -38,7 +52,7 @@ class CommonWidget {
     return Align(
       alignment: align,
       child: Image(
-        image: AssetImage('images/static/queue_line_mask.png'),
+        image: Commons.queueLineMask,
         width: width,
         height: height,
       ),
@@ -49,7 +63,7 @@ class CommonWidget {
     var image;
     if (iconUrl == "") {
       image = Image(
-        image: AssetImage('images/static/whoosh_icon.png'),
+        image: Commons.whooshIcon,
         width: 50,
         height: 50,
         fit: BoxFit.cover,
@@ -169,7 +183,7 @@ class CommonWidget {
                       style: TextStyle(
                         color: Commons.whooshTextWhite,
                         fontSize: 30,
-                        fontFamily: "VisbyCF",
+                        fontFamily: Commons.whooshFont,
                       )
                   )
                 )
@@ -182,7 +196,7 @@ class CommonWidget {
                   style: TextStyle(
                     color: Commons.whooshTextWhite,
                     fontSize: 40,
-                    fontFamily: "VisbyCF",
+                    fontFamily: Commons.whooshFont,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
@@ -201,7 +215,7 @@ class CommonWidget {
         style: TextStyle(
           color: Commons.whooshTextWhite,
           fontSize: 40,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.left,
@@ -217,9 +231,9 @@ class CommonWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: "VisbyCF",
+                fontFamily: Commons.whooshFont,
                 fontSize: 25,
-                color: Colors.red,
+                color: Commons.whooshErrorRed,
               ),
             )
         )

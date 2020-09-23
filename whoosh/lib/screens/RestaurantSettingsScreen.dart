@@ -47,7 +47,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Commons.whooshDarkBlue,
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context,
