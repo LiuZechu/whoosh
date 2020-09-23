@@ -280,6 +280,24 @@ class _QueueCardState extends State<QueueCard> {
     );
   }
 
+  Widget generateCounter() {
+    return Container(
+      width: 300,
+      height: 220,
+      alignment: Alignment.center,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Image(image: Commons.queueLine),
+          ),
+          CommonWidget.generateMask(300, 80, Alignment.bottomCenter),
+          Image(image: Commons.counter),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -288,6 +306,7 @@ class _QueueCardState extends State<QueueCard> {
           CommonWidget.generateRestaurantName(restaurant.name, restaurant.iconUrl),
           generateWaitTime(),
           generateQueue(),
+          generateCounter(),
         ]
       )
     );
