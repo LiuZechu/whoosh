@@ -11,7 +11,7 @@
     "icons": [
         {
             "src": "icons/maskable_icon.png",
-            "sizes": "196x196",
+            "sizes": "1024x1024",
             "type": "image/png",
             "purpose": "any maskable"
         }
