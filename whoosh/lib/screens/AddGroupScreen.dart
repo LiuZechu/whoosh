@@ -68,7 +68,7 @@ class JoinQueueCard extends StatefulWidget {
 class _JoinQueueCardState extends State<JoinQueueCard> {
   final int restaurantId;
   bool shouldDisplayErrorMessage = false;
-  bool areMonstersVisible = true;
+  bool areMonstersVisible = false;
   bool hasJoinedQueue = false;
   String restaurantName = 'Loading...';
   String restaurantIconUrl = "";
@@ -106,6 +106,11 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
   void initState() {
     super.initState();
     fetchRestaurantDetails();
+    new Timer(Duration(milliseconds: 1200), () {
+      setState(() {
+        areMonstersVisible = true;
+      });
+    });
   }
 
   void fetchRestaurantDetails() async {
