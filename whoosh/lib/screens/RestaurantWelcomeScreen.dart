@@ -26,25 +26,28 @@ class RestaurantWelcomeScreen extends StatelessWidget {
 
   Widget generateStartButton(BuildContext context) {
     return ButtonTheme(
-      minWidth: 350,
-      height: 40,
-      child: FlatButton(
-        color: Commons.whooshLightBlue,
-        textColor: Commons.whooshTextWhite,
-        onPressed: () => {
-          Navigator.of(context).pushNamed('/restaurant/signup')
-        },
-        child: FittedBox(
-          child: Text(
-              'get started',
-              style: TextStyle(
-                fontFamily: Commons.whooshFont,
-                fontSize: 25,
+      child: Container(
+        height: 40,
+        width: 350,
+        constraints: BoxConstraints(minWidth: 0, maxWidth: 350),
+        child: FlatButton(
+          color: Commons.whooshLightBlue,
+          textColor: Commons.whooshTextWhite,
+          onPressed: () => {
+            Navigator.of(context).pushNamed('/restaurant/signup')
+          },
+          child: FittedBox(
+              child: Text(
+                  'get started',
+                  style: TextStyle(
+                    fontFamily: Commons.whooshFont,
+                    fontSize: 25,
+                  )
               )
-          )
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
         ),
       )
     );
