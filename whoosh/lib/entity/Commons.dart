@@ -126,6 +126,15 @@ class Commons {
   static final AssetImage whooshIcon = AssetImage('images/static/whoosh_icon.png');
   static final AssetImage queueLineMask = AssetImage('images/static/queue_line_mask.png');
 
+  // Restaurant button assets
+  static final Image getStartedButton = Image.asset('images/static/get_started_button.png');
+  static final Image alreadyHaveAccountButton = Image.asset('images/static/already_have_account_button.png');
+  static final Image confirmButton = Image.asset('images/static/confirm_button.png');
+  static final Image enterButton = Image.asset('images/static/enter_button.png');
+  static final Image imReadyButton = Image.asset('images/static/im_ready_button.png');
+  static final Image noAccountButton = Image.asset('images/static/no_account_button.png');
+  static final Image viewWaitlistButton = Image.asset('images/static/view_waitlist_button.png');
+
   // Flare actor paths
   static final String bodyFlareActorPath = 'images/actors/body.flr';
   static final String eyesFlareActorPath = 'images/actors/eyes.flr';

@@ -91,36 +91,15 @@ class _QRCodeCardState extends State<QRCodeCard> {
     if (restaurantId == null) {
       return null;
     } else {
-      return Container(
-          margin: EdgeInsets.only(top: 50.0),
-          child: ButtonTheme(
-              minWidth: 350,
-              height: 40,
-              child: FlatButton(
-                color: Commons.whooshLightBlue,
-                textColor: Commons.whooshTextWhite,
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
-                      )
-                  );
-                },
-                child: FittedBox(
-                  child: Text(
-                      'view waitlist',
-                      style: TextStyle(
-                        fontFamily: Commons.whooshFont,
-                        fontSize: 25,
-                      )
-                  )
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ),
+      return CommonWidget.generateRestaurantScreenButton(Commons.viewWaitlistButton,
+        () {
+          Navigator.pushReplacement(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
               )
-          )
+          );
+        }
       );
     }
   }
