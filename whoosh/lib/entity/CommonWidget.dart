@@ -180,4 +180,21 @@ class CommonWidget {
     );
   }
 
+  static Widget generateRestaurantScreenHeading(String heading) {
+    return Container(
+      width: 350,
+      margin: const EdgeInsets.all(30.0),
+      child: Text(
+        heading,
+        style: TextStyle(
+          color: Commons.whooshTextWhite,
+          fontSize: 40,
+          fontFamily: "VisbyCF",
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.left,
+      )
+    );
+  }
+
 }

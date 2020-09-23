@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
@@ -40,6 +41,7 @@ class QRCodeScreen extends StatelessWidget {
               _settingsCallBack, (){}),
           Column(
               children: [
+                CommonWidget.generateRestaurantScreenHeading("QR code"),
                 QRCodeCard(restaurantName, restaurantId),
               ]
           )
@@ -107,7 +109,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
                 },
                 child: FittedBox(
                   child: Text(
-                      'view current queue',
+                      'view waitlist',
                       style: TextStyle(
                         fontFamily: "VisbyCF",
                         fontSize: 25,
