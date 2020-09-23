@@ -34,12 +34,14 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         onPressed: () => {
           Navigator.of(context).pushNamed('/restaurant/signup')
         },
-        child: Text(
-            'get started',
-            style: TextStyle(
-              fontFamily: "VisbyCF",
-              fontSize: 25,
-            )
+        child: FittedBox(
+          child: Text(
+              'get started',
+              style: TextStyle(
+                fontFamily: "VisbyCF",
+                fontSize: 25,
+              )
+          )
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),

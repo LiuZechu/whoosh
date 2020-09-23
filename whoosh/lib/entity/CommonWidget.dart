@@ -151,13 +151,15 @@ class CommonWidget {
           heading == ""
               ? Container(
                 margin: const EdgeInsets.all(50.0),
-                child: Text(
-                    'queueing made serene.',
-                    style: TextStyle(
-                      color: Commons.whooshTextWhite,
-                      fontSize: 30,
-                      fontFamily: "VisbyCF",
-                    )
+                child: FittedBox(
+                  child: Text(
+                      'queueing made serene.',
+                      style: TextStyle(
+                        color: Commons.whooshTextWhite,
+                        fontSize: 30,
+                        fontFamily: "VisbyCF",
+                      )
+                  )
                 )
               )
               : Container(
