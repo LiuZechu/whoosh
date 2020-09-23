@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:whoosh/entity/Commons.dart';
 import 'dart:convert';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
@@ -55,7 +56,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFF2B3148),
+      backgroundColor: Commons.whooshDarkBlue,
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context,
@@ -123,7 +124,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       child: Text(
         'Settings',
         style: TextStyle(
-          color: Color(0xFFEDF6F6),
+          color: Commons.whooshTextWhite,
           fontSize: 40,
           fontFamily: "VisbyCF",
           fontWeight: FontWeight.bold,
@@ -140,8 +141,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         width: 200,
         margin: const EdgeInsets.all(50.0),
         decoration: BoxDecoration(
-            color: Color(0xFFEDF6F6),
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          color: Commons.whooshTextWhite,
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
         ),
       );
     } else {
@@ -172,7 +173,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                 style: TextStyle(
                   fontFamily: "VisbyCF",
                   fontSize: 20,
-                  color: Color(0xFFEDF6F6),
+                  color: Commons.whooshTextWhite,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
@@ -188,13 +189,13 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                     ),
                   ),
                   contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                  fillColor: Color(0xFFEDF6F6),
+                  fillColor: Commons.whooshTextWhite,
                   filled: true,
                 ),
                 style: TextStyle(
                     fontFamily: "VisbyCF",
                     fontSize: 25,
-                    color: Color(0xFF2B3148)
+                    color: Commons.whooshDarkBlue
                 ),
                 onChanged: onChanged,
                 controller: TextEditingController()..text = prefillText,
@@ -213,8 +214,8 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
             minWidth: 350,
             height: 40,
             child: FlatButton(
-              color: Color(0xFF376ADB),
-              textColor: Color(0xFFEDF6F6),
+              color: Commons.whooshLightBlue,
+              textColor: Commons.whooshTextWhite,
               onPressed: () async {
                 //print(restaurantId);
                 await WhooshService.updateRestaurantDetails(restaurantId,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../util/string_extensions.dart';
 
 class RestaurantLoginScreen extends StatefulWidget {
   _RestaurantLoginScreenState createState() => _RestaurantLoginScreenState("", "", "");
@@ -59,7 +61,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Color(0xFF2B3148),
+        backgroundColor: Commons.whooshDarkBlue,
         body: Center(
             child: SingleChildScrollView(
                 child: Column(
@@ -72,7 +74,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                       generateLoginButton(context),
                       generateSignupButton(context),
                       SizedBox(height: 100),
-                      generateBottomImage(),
+                      Commons.bottomSea
                     ]
                 )
             )
@@ -83,16 +85,14 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   Widget generateWhooshHeading() {
     return Column(
         children: [
-          new Image.asset(
-            'images/static/whoosh_heading.png',
-          ),
+          Commons.whooshHeading,
           Container(
               width: 350,
               margin: const EdgeInsets.all(20.0),
               child: Text(
                 'log in',
                 style: TextStyle(
-                  color: Color(0xFFEDF6F6),
+                  color: Commons.whooshTextWhite,
                   fontSize: 40,
                   fontFamily: "VisbyCF",
                   fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                 style: TextStyle(
                   fontFamily: "VisbyCF",
                   fontSize: 20,
-                  color: Color(0xFFEDF6F6),
+                  color: Commons.whooshTextWhite,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
@@ -133,13 +133,13 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                     ),
                   ),
                   contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                  fillColor: Color(0xFFEDF6F6),
+                  fillColor: Commons.whooshTextWhite,
                   filled: true,
                 ),
                 style: TextStyle(
                     fontFamily: "VisbyCF",
                     fontSize: 25,
-                    color: Color(0xFF2B3148)
+                    color: Commons.whooshDarkBlue
                 ),
                 onChanged: onChanged,
                 obscureText: isObscureText,
@@ -168,8 +168,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             minWidth: 350,
             height: 40,
             child: FlatButton(
-              color: Color(0xFF376ADB),
-              textColor: Color(0xFFEDF6F6),
+              color: Commons.whooshLightBlue,
+              textColor: Commons.whooshTextWhite,
               onPressed: () async {
                 await loginOnFirebase(email, password);
                 if (_is_logged_in) {
@@ -212,8 +212,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             minWidth: 350,
             height: 40,
             child: FlatButton(
-              color: Color(0xFFEDF6F6),
-              textColor: Color(0xFF2B3148),
+              color: Commons.whooshTextWhite,
+              textColor: Commons.whooshDarkBlue,
               onPressed: () => {
                 Navigator.of(context).pushNamed('/restaurant/signup')
               },
@@ -232,15 +232,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
     );
   }
 
-  Widget generateBottomImage() {
-    return new Image.asset(
-      'images/static/bottom_sea.png',
-    );
-  }
-
   void loginOnFirebase(String email, String password) async {
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
-    if (email == null || email.length == 0 || !emailValid) {
+    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
         errorText = "Please enter a valid email address.";
       });

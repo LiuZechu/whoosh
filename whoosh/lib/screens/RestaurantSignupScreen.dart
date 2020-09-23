@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../util/string_extensions.dart';
 
 
 class RestaurantSignupScreen extends StatefulWidget {
@@ -63,7 +65,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Color(0xFF2B3148),
+        backgroundColor: Commons.whooshDarkBlue,
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -77,7 +79,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                 generateSignupButton(context),
                 generateLoginButton(context),
                 SizedBox(height: 100),
-                generateBottomImage(),
+                Commons.bottomSea,
               ]
             )
           )
@@ -88,16 +90,14 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   Widget generateWhooshHeading() {
     return Column(
         children: [
-          new Image.asset(
-            'images/static/whoosh_heading.png',
-          ),
+          Commons.whooshHeading,
           Container(
               width: 350,
               margin: const EdgeInsets.all(20.0),
               child: Text(
                 'sign up',
                 style: TextStyle(
-                  color: Color(0xFFEDF6F6),
+                  color: Commons.whooshTextWhite,
                   fontSize: 40,
                   fontFamily: "VisbyCF",
                   fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                     style: TextStyle(
                       fontFamily: "VisbyCF",
                       fontSize: 20,
-                      color: Color(0xFFEDF6F6),
+                      color: Commons.whooshTextWhite,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.left,
@@ -138,13 +138,13 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                         ),
                       ),
                       contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                      fillColor: Color(0xFFEDF6F6),
+                      fillColor: Commons.whooshTextWhite,
                       filled: true,
                     ),
                     style: TextStyle(
                         fontFamily: "VisbyCF",
                         fontSize: 25,
-                        color: Color(0xFF2B3148)
+                        color: Commons.whooshDarkBlue,
                     ),
                     onChanged: onChanged,
                     obscureText: isObscureText,
@@ -173,8 +173,8 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           minWidth: 350,
           height: 40,
           child: FlatButton(
-            color: Color(0xFF376ADB),
-            textColor: Color(0xFFEDF6F6),
+            color: Commons.whooshLightBlue,
+            textColor: Commons.whooshTextWhite,
             onPressed: () async {
               await registerNewUserOnFirebase(email, password);
               if (_account_created) {
@@ -214,8 +214,8 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         minWidth: 350,
         height: 40,
         child: FlatButton(
-          color: Color(0xFFEDF6F6),
-          textColor: Color(0xFF2B3148),
+          color: Commons.whooshTextWhite,
+          textColor: Commons.whooshDarkBlue,
           onPressed: () => {
             Navigator.of(context).pushNamed('/restaurant/login')
           },
@@ -234,12 +234,6 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     );
   }
 
-  Widget generateBottomImage() {
-    return new Image.asset(
-      'images/static/bottom_sea.png',
-    );
-  }
-
   void registerNewUserOnFirebase(String email, String password) async {
     if (restaurantName == null || restaurantName.length == 0) {
       setState(() {
@@ -248,8 +242,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
       return;
     }
 
-    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
-    if (email == null || email.length == 0 || !emailValid) {
+    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
         errorText = "Please enter a valid email address.";
       });

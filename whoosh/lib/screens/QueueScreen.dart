@@ -4,6 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
+import 'package:whoosh/entity/Commons.dart';
 
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
@@ -23,7 +24,7 @@ class QueueScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFD1E6F2),
+      backgroundColor: Commons.whooshOffWhite,
       body: ListView(
         children: [
           generateHeader(),
@@ -39,9 +40,7 @@ class QueueScreen extends StatelessWidget {
        scale: 3,
        alignment: Alignment.centerLeft,
        child: IconButton(
-         icon: new Image.asset(
-           'images/static/logo.png',
-         ),
+         icon: Commons.whooshLogo,
          onPressed: () {},
        ),
      ),
@@ -51,7 +50,7 @@ class QueueScreen extends StatelessWidget {
          child: Icon(Icons.menu),
        ),
      ],
-     backgroundColor: Color(0xFF376ADB),
+     backgroundColor: Commons.whooshLightBlue,
    );
   }
 
@@ -195,7 +194,7 @@ class _QueueCardState extends State<QueueCard> {
                 artboard: 'poof',
                 animation: 'poof',
                 controller: poofController,
-                color: Color(0xFF376ADB),
+                color: Commons.whooshLightBlue,
               ),
             )
           )
@@ -213,7 +212,7 @@ class _QueueCardState extends State<QueueCard> {
       style: TextStyle(
         fontSize: 18,
         fontFamily: "VisbyCF",
-        color: Color(0xFF2B3148),
+        color: Commons.whooshDarkBlue,
       ),
     );
 
@@ -230,7 +229,7 @@ class _QueueCardState extends State<QueueCard> {
               fontSize: 64,
               fontFamily: "VisbyCF",
               fontWeight: FontWeight.w700,
-              color: Color(0xFF2B3148),
+              color: Commons.whooshDarkBlue,
             ),
           ),
         ),
@@ -255,7 +254,7 @@ class _QueueCardState extends State<QueueCard> {
               },
               child: Image(
                   alignment: Alignment.centerRight,
-                  image: AssetImage('images/static/refresh_button.png')
+                  image: Commons.refreshButton,
               ),
             ),
           )
@@ -306,7 +305,7 @@ class _QueueCardState extends State<QueueCard> {
             height: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Color(0xFFD1E6F2),
+              color: Commons.whooshOffWhite,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -315,7 +314,7 @@ class _QueueCardState extends State<QueueCard> {
                 fontSize: 24,
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF2B3148),
+                color: Commons.whooshDarkBlue,
               ),
             ),
           ),

@@ -10,8 +10,10 @@ import 'package:focused_menu/modals.dart';
 import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../util/string_extensions.dart';
 
 import 'CommonWidget.dart';
+import 'Commons.dart';
 import 'MonsterType.dart';
 
 class Group {
@@ -38,7 +40,7 @@ class Group {
       alignment: Alignment.bottomCenter,
       child: Image(
         alignment: Alignment.bottomCenter,
-        image: AssetImage('images/static/queue_line.png'),
+        image: Commons.queueLine,
         width: 13,
         height: 400,
       ),
@@ -47,7 +49,7 @@ class Group {
   Widget nameBubble = Align(
     alignment: Alignment.topRight,
     child: Image(
-        image: AssetImage('images/static/name_bubble.png')
+        image: Commons.nameBubble
     ),
   );
 
@@ -85,7 +87,7 @@ class Group {
         width: 350,
         height: 75,
         decoration: BoxDecoration( // with rounded corners
-            color: Color(0xFFEDF6F6),
+            color: Commons.whooshTextWhite,
             borderRadius: BorderRadius.all(Radius.circular(15.0))
         ),
         child: FocusedMenuHolder(
@@ -94,17 +96,17 @@ class Group {
           },
           menuWidth: 300,
           blurSize: 4,
-          blurBackgroundColor: Color(0xFF2B3148),
+          blurBackgroundColor: Commons.whooshDarkBlue,
           animateMenuItems: false,
           menuBoxDecoration: BoxDecoration(
-            color: Color(0xFFEDF6F6),
+            color: Commons.whooshTextWhite,
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
           ),
           menuItems: <FocusedMenuItem> [
             FocusedMenuItem(title: Text(
               'Alert',
               style: TextStyle(
-                color: Color(0xFF2B3148),
+                color: Commons.whooshDarkBlue,
                 fontSize: 20,
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
@@ -117,7 +119,7 @@ class Group {
             FocusedMenuItem(title: Text(
               'Confirm Arrival',
               style: TextStyle(
-                color: Color(0xFF2B3148),
+                color: Commons.whooshDarkBlue,
                 fontSize: 20,
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
@@ -128,7 +130,7 @@ class Group {
             FocusedMenuItem(title: Text(
               'Kick Out',
               style: TextStyle(
-                color: Color(0xFF2B3148),
+                color: Commons.whooshDarkBlue,
                 fontSize: 20,
                 fontFamily: "VisbyCF",
                 fontWeight: FontWeight.bold,
@@ -151,7 +153,7 @@ class Group {
                       timeOfArrival.hour.toString().padLeft(2, "0")
                           + ':' + timeOfArrival.minute.toString().padLeft(2, "0"),
                       style: TextStyle(
-                        color: Color(0xFF2B3148),
+                        color: Commons.whooshDarkBlue,
                         fontSize: 25,
                         fontFamily: "VisbyCF",
                         fontWeight: FontWeight.bold,
@@ -160,7 +162,7 @@ class Group {
                     Text(
                       phoneNumber ?? "no phone number",
                       style: TextStyle(
-                        color: Color(0xFF2B3148),
+                        color: Commons.whooshDarkBlue,
                         fontSize: 25,
                         fontFamily: "VisbyCF",
                       )
@@ -174,7 +176,7 @@ class Group {
                         Text(
                             name,
                             style: TextStyle(
-                              color: Color(0xFF2B3148),
+                              color: Commons.whooshDarkBlue,
                               fontSize: 25,
                               fontFamily: "VisbyCF",
                             )
@@ -183,7 +185,7 @@ class Group {
                         Text(
                             groupSize.toString(),
                             style: TextStyle(
-                              color: Color(0xFF2B3148),
+                              color: Commons.whooshDarkBlue,
                               fontSize: 25,
                               fontFamily: "VisbyCF",
                               fontWeight: FontWeight.bold,
@@ -335,7 +337,7 @@ class Group {
           child: Text(
             name,
             style: TextStyle(
-              color: Color(0xFFEDF6F6),
+              color: Commons.whooshTextWhite,
               fontSize: 30,
               fontFamily: "VisbyCF",
               fontWeight: FontWeight.w700,
@@ -353,7 +355,7 @@ class Group {
       child: Container(
         height: 25,
         child: generateButton(
-          AssetImage('images/static/randomize_button.png'),
+          Commons.randomizeButton,
           () async {
             await randomizeMonsterTypes(restaurantId);
             playPoof();
@@ -369,11 +371,9 @@ class Group {
       child: Container(
         height: 25,
         child: generateButton(
-          AssetImage('images/static/restaurant_menu_button.png'),
+          Commons.restaurantMenuButton,
             () async {
-              if (restaurantMenuUrl.substring(0, 4) != 'http') {
-                restaurantMenuUrl = 'http://' + restaurantMenuUrl;
-              }
+              restaurantMenuUrl = restaurantMenuUrl.prependHttpIfAbsent();
               if (await canLaunch(restaurantMenuUrl)) {
                 await launch(restaurantMenuUrl);
               } else {
@@ -391,7 +391,7 @@ class Group {
       child: Container(
         height: 25,
         child: generateButton(
-          AssetImage('images/static/share_queue_button.png'),
+          Commons.shareQueueButton,
           () async {
             FlutterClipboard.copy(queueUrl).then((value) => print('copied'));
             displayMessage();

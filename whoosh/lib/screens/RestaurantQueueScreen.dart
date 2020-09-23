@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'dart:convert' show json;
 
 import 'package:whoosh/entity/Group.dart';
@@ -41,7 +42,7 @@ class RestaurantQueueScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: Color(0xFF2B3148),
+      backgroundColor: Commons.whooshDarkBlue,
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context, (){}, _settingsCallBack, _qrCodeCallBack),
@@ -98,7 +99,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         child: Column(
             children: [
               SizedBox(height: 20),
-              CommonWidget.generateRestaurantIconAndName(restaurantName, iconUrl, Color(0xFFEDF6F6)),
+              CommonWidget.generateRestaurantIconAndName(restaurantName, iconUrl, Commons.whooshTextWhite),
               generateWaitListHeading(),
               generateQueue(),
             ]
@@ -113,7 +114,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         child: Text(
           'waitlist',
           style: TextStyle(
-            color: Color(0xFFEDF6F6),
+            color: Commons.whooshTextWhite,
             fontSize: 40,
             fontFamily: "VisbyCF",
           ),

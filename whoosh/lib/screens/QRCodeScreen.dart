@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import '../requests/PostRequestBuilder.dart';
 import 'package:http/http.dart';
@@ -35,7 +36,7 @@ class QRCodeScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: Color(0xFF2B3148),
+      backgroundColor: Commons.whooshDarkBlue,
       body: ListView(
         children: [
           RestaurantHeaderBuilder.generateHeader(context, _waitlistCallBack,
@@ -100,8 +101,8 @@ class _QRCodeCardState extends State<QRCodeCard> {
               minWidth: 350,
               height: 40,
               child: FlatButton(
-                color: Color(0xFF376ADB),
-                textColor: Color(0xFFEDF6F6),
+                color: Commons.whooshLightBlue,
+                textColor: Commons.whooshTextWhite,
                 onPressed: () {
                   Navigator.pushReplacement(
                       context,

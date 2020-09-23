@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 
 class RestaurantHeaderBuilder {
 
@@ -9,9 +10,7 @@ class RestaurantHeaderBuilder {
         scale: 3,
         alignment: Alignment.centerLeft,
         child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
+          icon: Commons.whooshLogo,
           tooltip: 'return to homepage',
           onPressed: () {},
         ),
@@ -22,7 +21,7 @@ class RestaurantHeaderBuilder {
           child: generateDropDownButton(context, waitlistCallBack, settingsCallBack, qrCodeCallBack),
         ),
       ],
-      backgroundColor: Color(0xFF376ADB),
+      backgroundColor: Commons.whooshLightBlue,
     );
   }
 
@@ -31,17 +30,17 @@ class RestaurantHeaderBuilder {
     return DropdownButton<String>(
         icon: Icon(Icons.menu),
         iconSize: 35,
-        iconEnabledColor: Color(0xFFEDF6F6),
+        iconEnabledColor: Commons.whooshTextWhite,
         style: TextStyle(
-          color: Color(0xFFEDF6F6),
+          color: Commons.whooshTextWhite,
           fontSize: 35,
           fontFamily: "VisbyCF",
           fontWeight: FontWeight.bold,
         ),
-        dropdownColor: Color(0xFF2B3148),
+        dropdownColor: Commons.whooshDarkBlue,
         underline: Container(
           height: 2,
-          color: Color(0xFF376ADB),
+          color: Commons.whooshLightBlue,
         ),
         onChanged: (String newValue) {},
         items: [
@@ -52,7 +51,7 @@ class RestaurantHeaderBuilder {
                 child: Text(
                   "waitlist",
                   style: TextStyle(
-                    color: Color(0xFFEDF6F6),
+                    color: Commons.whooshTextWhite,
                     fontSize: 35,
                     fontFamily: "VisbyCF",
                     fontWeight: FontWeight.bold,
@@ -67,7 +66,7 @@ class RestaurantHeaderBuilder {
                 child: Text(
                   "settings",
                   style: TextStyle(
-                    color: Color(0xFFEDF6F6),
+                    color: Commons.whooshTextWhite,
                     fontSize: 35,
                     fontFamily: "VisbyCF",
                     fontWeight: FontWeight.bold,
@@ -82,7 +81,7 @@ class RestaurantHeaderBuilder {
                 child: Text(
                   "QR code",
                   style: TextStyle(
-                    color: Color(0xFFEDF6F6),
+                    color: Commons.whooshTextWhite,
                     fontSize: 35,
                     fontFamily: "VisbyCF",
                     fontWeight: FontWeight.bold,

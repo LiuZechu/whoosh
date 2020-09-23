@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/Commons.dart';
 
 class RestaurantWelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2B3148),
+      backgroundColor: Commons.whooshDarkBlue,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -14,7 +15,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                     generateStartButton(context),
                     generateTopTextBox(),
                     generateBottomTextBox(),
-                    generateBottomImage(),
+                    Commons.bottomSea
                   ]
             )
         )
@@ -25,15 +26,13 @@ class RestaurantWelcomeScreen extends StatelessWidget {
   Widget generateWhooshHeading() {
     return Column(
       children: [
-        new Image.asset(
-          'images/static/whoosh_heading.png',
-        ),
+        Commons.whooshHeading,
         Container(
           margin: const EdgeInsets.all(50.0),
           child: Text(
             'queueing made serene.',
             style: TextStyle(
-                color: Color(0xFFEDF6F6),
+                color: Commons.whooshTextWhite,
                 fontSize: 30,
                 fontFamily: "VisbyCF",
             )
@@ -48,8 +47,8 @@ class RestaurantWelcomeScreen extends StatelessWidget {
       minWidth: 350,
       height: 40,
       child: FlatButton(
-        color: Color(0xFF376ADB),
-        textColor: Color(0xFFEDF6F6),
+        color: Commons.whooshLightBlue,
+        textColor: Commons.whooshTextWhite,
         onPressed: () => {
           Navigator.of(context).pushNamed('/restaurant/signup')
         },
@@ -80,9 +79,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 160,
               height: 218,
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: new Image.asset(
-                'images/static/restaurant_welcome_monster1.png',
-              ),
+              child: Commons.welcomeMonster1
             ),
             Column(
               children: [
@@ -90,14 +87,14 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                   width: 188,
                   child: Text(
                     title,
-                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Color(0xFFEDF6F6))
+                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite)
                   )
                 ),
                 Container(
                   width: 188,
                   child: Text(
                     mainText,
-                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Color(0xFFEDF6F6)),
+                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
                     softWrap: true)
                 )
               ]
@@ -123,7 +120,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                       width: 188,
                       child: Text(
                         title,
-                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Color(0xFFEDF6F6)),
+                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite),
                         textAlign: TextAlign.right,
                       )
                   ),
@@ -131,7 +128,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
                       width: 188,
                       child: Text(
                         mainText,
-                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Color(0xFFEDF6F6)),
+                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
                         textAlign: TextAlign.right,
                         softWrap: true
                       )
@@ -142,19 +139,11 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 160,
               height: 218,
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: new Image.asset(
-                "images/static/restaurant_welcome_monster2.png"
-              ),
+              child:  Commons.welcomeMonster2,
             ),
           ]
       ),
       margin: const EdgeInsets.symmetric(vertical: 30.0),
-    );
-  }
-
-  Widget generateBottomImage() {
-    return new Image.asset(
-      'images/static/bottom_sea.png',
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+
 class Commons {
   static List<Color> monsterColors = [
     Color(0xFF376ADB),
@@ -92,7 +94,36 @@ class Commons {
     Color(0xFFF3AF89),
     Color(0xFFF5C957),
     Color(0xFFFDEE69),
-
   ];
 
+  // Group assets
+  static final AssetImage queueLine = AssetImage('images/static/queue_line.png');
+  static final AssetImage nameBubble = AssetImage('images/static/name_bubble.png');
+  static final AssetImage randomizeButton = AssetImage('images/static/randomize_button.png');
+  static final AssetImage restaurantMenuButton = AssetImage('images/static/restaurant_menu_button.png');
+  static final AssetImage shareQueueButton = AssetImage('images/static/share_queue_button.png');
+
+  // Screen assets
+  static final Image whooshLogo = Image.asset('images/static/logo.png');
+  static final Image whooshHeading = Image.asset('images/static/whoosh_heading.png');
+  static final Image bottomSea = Image.asset('images/static/bottom_sea.png');
+  static final Image welcomeMonster1 = Image.asset('images/static/restaurant_welcome_monster1.png');
+  static final Image welcomeMonster2 = Image.asset("images/static/restaurant_welcome_monster2.png");
+  static final AssetImage enterQueueButton = AssetImage('images/static/enter_queue_button.png');
+  static final AssetImage refreshButton = AssetImage('images/static/refresh_button.png');
+
+  // Flare actor paths
+  static final String bodyFlareActorPath = 'images/actors/body.flr';
+  static final String eyesFlareActorPath = 'images/actors/eyes.flr';
+  static final String mouthsFlareActorPath = 'images/actors/mouths.flr';
+  static final String accessoriesFlareActorPath = 'images/actors/accessories.flr';
+  static final String waveFlareActorPath = 'images/actors/wave.flr';
+
+  // Colors
+  static final Color whooshDarkBlue = Color(0xFF2B3148);
+  static final Color whooshTextWhite = Color(0xFFEDF6F6);
+  static final Color whooshLightBlue = Color(0xFF376ADB);
+  static final Color whooshOffWhite = Color(0xFFD1E6F2);
+  static final Color whooshErrorPink = Color(0xFFF3C2C2);
+  static final Color whooshErrorRed = Color(0xFF9A0000);
 }
