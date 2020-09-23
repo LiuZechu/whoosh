@@ -25,4 +25,11 @@ class LoadingModal extends StatelessWidget {
   void dismiss() {
     Navigator.of(context).pop(true);
   }
+
+  void start() {
+    showDialog(
+        context: context,
+        builder: (_) => this
+    );
+  }
 }

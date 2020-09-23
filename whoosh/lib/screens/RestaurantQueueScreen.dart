@@ -110,7 +110,7 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
           style: TextStyle(
             color: Commons.whooshTextWhite,
             fontSize: 40,
-            fontFamily: "VisbyCF",
+            fontFamily: Commons.whooshFont,
           ),
           textAlign: TextAlign.left,
         )

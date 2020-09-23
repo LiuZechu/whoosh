@@ -128,7 +128,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         style: TextStyle(
           color: Commons.whooshTextWhite,
           fontSize: 40,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
         ),
         textAlign: TextAlign.left,
@@ -196,7 +196,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                 child: Text(
                     "submit",
                     style: TextStyle(
-                      fontFamily: "VisbyCF",
+                      fontFamily: Commons.whooshFont,
                       fontSize: 25,
                     )
                 ),

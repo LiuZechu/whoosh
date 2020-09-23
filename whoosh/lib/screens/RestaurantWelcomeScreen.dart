@@ -38,7 +38,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
           child: Text(
               'get started',
               style: TextStyle(
-                fontFamily: "VisbyCF",
+                fontFamily: Commons.whooshFont,
                 fontSize: 25,
               )
           )
@@ -97,7 +97,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 188,
               child: Text(
                 title,
-                style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite),
+                style: TextStyle(fontFamily: Commons.whooshFont, fontSize: 25, color: Commons.whooshTextWhite),
                 textAlign: TextAlign.right,
               )
           ),
@@ -105,7 +105,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
               width: 188,
               child: Text(
                   mainText,
-                  style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
+                  style: TextStyle(fontFamily: Commons.whooshFont, fontSize: 18, color: Commons.whooshTextWhite),
                   textAlign: TextAlign.right,
                   softWrap: true
               )

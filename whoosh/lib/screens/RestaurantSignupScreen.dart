@@ -92,7 +92,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     return Text(
       text,
       style: TextStyle(
-        fontFamily: "VisbyCF",
+        fontFamily: Commons.whooshFont,
         fontSize: 25,
         color: Colors.red,
       ),
@@ -113,7 +113,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
               child: Text(
                   "i'm ready",
                   style: TextStyle(
-                    fontFamily: "VisbyCF",
+                    fontFamily: Commons.whooshFont,
                     fontSize: 25,
                   )
               )
@@ -171,7 +171,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
             child: Text(
                 "i already have an account",
                 style: TextStyle(
-                  fontFamily: "VisbyCF",
+                  fontFamily: Commons.whooshFont,
                   fontSize: 25,
                 )
             )

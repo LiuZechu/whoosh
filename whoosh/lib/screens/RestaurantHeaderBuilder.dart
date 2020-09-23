@@ -34,7 +34,7 @@ class RestaurantHeaderBuilder {
         style: TextStyle(
           color: Commons.whooshTextWhite,
           fontSize: 35,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
         ),
         dropdownColor: Commons.whooshDarkBlue,
@@ -61,7 +61,7 @@ class RestaurantHeaderBuilder {
             style: TextStyle(
               color: Commons.whooshTextWhite,
               fontSize: 35,
-              fontFamily: "VisbyCF",
+              fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.bold,
             ),
           ),

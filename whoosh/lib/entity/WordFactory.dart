@@ -30,7 +30,24 @@ class WordFactory {
     'egg',
     'prata',
     'chicken',
-    'lemon'
+    'lemon',
+    'ramen',
+    'kimchi',
+    'samosa',
+    'beans',
+    'bacon',
+    'bagel',
+    'basil',
+    'crepe',
+    'donut',
+    'jelly',
+    'grape',
+    'oreo',
+    'onion',
+    'pasta',
+    'pizza',
+    'tapas',
+    'waffle',
   ];
 
   static String getRandomWord() {

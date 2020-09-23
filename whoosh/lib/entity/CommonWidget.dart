@@ -9,7 +9,7 @@ class CommonWidget {
       'you\'re queueing for',
       style: TextStyle(
           fontSize: 18,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           color: Commons.whooshDarkBlue,
       ),
     );
@@ -25,7 +25,7 @@ class CommonWidget {
             style: TextStyle(
               color: color,
               fontSize: 36,
-              fontFamily: "VisbyCF",
+              fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -108,7 +108,7 @@ class CommonWidget {
               child: Text(
                 fieldName,
                 style: TextStyle(
-                  fontFamily: "VisbyCF",
+                  fontFamily: Commons.whooshFont,
                   fontSize: 20,
                   color: Commons.whooshTextWhite,
                   fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class CommonWidget {
                   filled: true,
                 ),
                 style: TextStyle(
-                    fontFamily: "VisbyCF",
+                    fontFamily: Commons.whooshFont,
                     fontSize: 25,
                     color: Commons.whooshDarkBlue
                 ),
@@ -157,7 +157,7 @@ class CommonWidget {
                       style: TextStyle(
                         color: Commons.whooshTextWhite,
                         fontSize: 30,
-                        fontFamily: "VisbyCF",
+                        fontFamily: Commons.whooshFont,
                       )
                   )
                 )
@@ -170,7 +170,7 @@ class CommonWidget {
                   style: TextStyle(
                     color: Commons.whooshTextWhite,
                     fontSize: 40,
-                    fontFamily: "VisbyCF",
+                    fontFamily: Commons.whooshFont,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
