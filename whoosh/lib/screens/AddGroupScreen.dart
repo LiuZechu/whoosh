@@ -20,39 +20,15 @@ class AddGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Commons.whooshOffWhite,
+      backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          generateHeader(),
+          CommonWidget.generateHeader(),
           JoinQueueCard(restaurantId)
         ],
       ),
     );
   }
-
-  Widget generateHeader() {
-    return AppBar(
-      leading: Transform.scale(
-        scale: 3,
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-          icon: new Image.asset(
-            'images/static/logo.png',
-          ),
-          tooltip: 'return to homepage',
-          onPressed: () {},
-        ),
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.menu),
-        ),
-      ],
-      backgroundColor: Commons.whooshLightBlue,
-    );
-  }
-
 }
 
 class JoinQueueCard extends StatefulWidget {

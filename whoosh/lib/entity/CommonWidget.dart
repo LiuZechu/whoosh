@@ -4,6 +4,20 @@ import 'package:flutter/material.dart';
 import 'Commons.dart';
 
 class CommonWidget {
+  static Widget generateHeader() {
+    return AppBar(
+      leading: Transform.scale(
+        scale: 3,
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          icon: Commons.whooshLogo,
+          onPressed: () {},
+        ),
+      ),
+      backgroundColor: Commons.whooshLightBlue,
+    );
+  }
+
   static Widget generateQueuingForLabel() {
     return Text(
       'you\'re queueing for',

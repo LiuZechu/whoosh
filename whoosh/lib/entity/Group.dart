@@ -191,11 +191,8 @@ class Group {
     return Container(
         height: height,
         width: width,
-
         alignment: Alignment.center,
-        child: Stack(
-            children: stack
-        )
+        child: Stack(children: stack)
     );
   }
   
