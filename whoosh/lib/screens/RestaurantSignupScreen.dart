@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
@@ -16,17 +17,13 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   // Set default `_initialized` and `_error` state to false
   bool _initialized = false;
   bool _error = false;
-  bool _account_created = false;
+  bool _accountCreated = false;
 
-  // text field inputs
   var restaurantName;
   var email;
   var password;
-
   var errorText;
-
-  // for registering restaurant
-  var restaurantId;
+  var restaurantId; // for registering restaurant
 
   _RestaurantSignupScreenState(this.restaurantName, this.email, this.password, this.errorText);
 
@@ -70,10 +67,13 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                generateWhooshHeading(),
-                generateField("restaurant name", (text) { restaurantName = text; }, false),
-                generateField("email address", (text) { email = text; }, false),
-                generateField("password", (text) { password = text; }, true),
+                CommonWidget.generateWhooshHeading(),
+                CommonWidget.generateField("restaurant name",
+                        (text) { restaurantName = text; }, false, ""),
+                CommonWidget.generateField("email address",
+                        (text) { email = text; }, false, ""),
+                CommonWidget.generateField("password",
+                        (text) { password = text; }, true, ""),
                 generateErrorText(errorText),
                 SizedBox(height: 30),
                 generateSignupButton(context),
@@ -85,74 +85,6 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           )
         )
     );
-  }
-
-  Widget generateWhooshHeading() {
-    return Column(
-        children: [
-          Commons.whooshHeading,
-          Container(
-              width: 350,
-              margin: const EdgeInsets.all(20.0),
-              child: Text(
-                'sign up',
-                style: TextStyle(
-                  color: Commons.whooshTextWhite,
-                  fontSize: 40,
-                  fontFamily: "VisbyCF",
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              )
-          )
-        ]
-    );
-  }
-
-  Widget generateField(String fieldName, Function(String text) onChanged, bool isObscureText) {
-    return Container(
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10.0),
-                  width: 350,
-                  child: Text(
-                    fieldName,
-                    style: TextStyle(
-                      fontFamily: "VisbyCF",
-                      fontSize: 20,
-                      color: Commons.whooshTextWhite,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Container(
-                  width: 350,
-                  child: TextField(
-                    decoration: new InputDecoration(
-                      border: new OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                        ),
-                      ),
-                      contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                      fillColor: Commons.whooshTextWhite,
-                      filled: true,
-                    ),
-                    style: TextStyle(
-                        fontFamily: "VisbyCF",
-                        fontSize: 25,
-                        color: Commons.whooshDarkBlue,
-                    ),
-                    onChanged: onChanged,
-                    obscureText: isObscureText,
-                  ),
-                ),
-              ]
-            ),
-        );
   }
 
   Widget generateErrorText(String text) {
@@ -175,23 +107,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           child: FlatButton(
             color: Commons.whooshLightBlue,
             textColor: Commons.whooshTextWhite,
-            onPressed: () async {
-              await registerNewUserOnFirebase(email, password);
-              if (_account_created) {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                if (auth.currentUser != null) {
-                  var uid = auth.currentUser.uid;
-                  await registerRestaurant(restaurantName, uid);
-                }
-
-                Navigator.pushReplacement(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
-                    )
-                );
-              }
-            },
+            onPressed: signupUser(context),
             child: Text(
                 "i'm ready",
                 style: TextStyle(
@@ -205,6 +121,26 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
           )
         )
     );
+  }
+
+  Function() signupUser(BuildContext context) {
+    return () async {
+      await registerNewUserOnFirebase(email, password);
+      if (_accountCreated) {
+        FirebaseAuth auth = FirebaseAuth.instance;
+        if (auth.currentUser != null) {
+          var uid = auth.currentUser.uid;
+          await registerRestaurant(restaurantName, uid);
+        }
+
+        Navigator.pushReplacement(
+            context,
+            new MaterialPageRoute(
+                builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+            )
+        );
+      }
+    };
   }
 
   Widget generateLoginButton(BuildContext context) {
@@ -235,24 +171,8 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   }
 
   void registerNewUserOnFirebase(String email, String password) async {
-    if (restaurantName == null || restaurantName.length == 0) {
-      setState(() {
-        errorText = "Please enter your restaurant name.";
-      });
-      return;
-    }
-
-    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
-      setState(() {
-        errorText = "Please enter a valid email address.";
-      });
-      return;
-    }
-
-    if (password == null || password.length == 0) {
-      setState(() {
-        errorText = "Please enter your password.";
-      });
+    bool _isValid = _validateFields(restaurantName, email, password);
+    if (!_isValid) {
       return;
     }
 
@@ -263,7 +183,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
       );
       setState(() {
         errorText = "Account created.";
-        _account_created = true;
+        _accountCreated = true;
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -280,6 +200,30 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         errorText = e.toString();
       });
     }
+  }
+
+  bool _validateFields(String restaurantName, String email, String password) {
+    if (restaurantName == null || restaurantName.length == 0) {
+      setState(() {
+        errorText = "Please enter your restaurant name.";
+      });
+      return false;
+    }
+
+    if (email == null || email.length == 0 || !email.isValidEmailAddress) {
+      setState(() {
+        errorText = "Please enter a valid email address.";
+      });
+      return false;
+    }
+
+    if (password == null || password.length == 0) {
+      setState(() {
+        errorText = "Please enter your password.";
+      });
+      return false;
+    }
+    return true;
   }
 
   void registerRestaurant(String restaurantName, String uid) async {

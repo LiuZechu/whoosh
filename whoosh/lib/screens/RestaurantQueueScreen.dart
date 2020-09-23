@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:whoosh/entity/Commons.dart';
-import 'dart:convert' show json;
 
+import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/requests/WhooshService.dart';
-import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
-
 import '../entity/CommonWidget.dart';
-import '../requests/GetRequestBuilder.dart';
 
 
-// http://localhost:${port}/#/view-queue?restaurant_id=1 [OBSOLETE]
 class RestaurantQueueScreen extends StatelessWidget {
   final String restaurantName;
   final int restaurantId;
@@ -27,7 +21,8 @@ class RestaurantQueueScreen extends StatelessWidget {
       Navigator.pushReplacement(
           context,
           new MaterialPageRoute(
-              builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+              builder: (context) =>
+                  RestaurantSettingsScreen(restaurantName, restaurantId)
           )
       );
     };
@@ -45,7 +40,8 @@ class RestaurantQueueScreen extends StatelessWidget {
       backgroundColor: Commons.whooshDarkBlue,
       body: ListView(
         children: [
-          RestaurantHeaderBuilder.generateHeader(context, (){}, _settingsCallBack, _qrCodeCallBack),
+          RestaurantHeaderBuilder.generateHeader(context, (){},
+              _settingsCallBack, _qrCodeCallBack),
           RestaurantQueueCard(restaurantName, restaurantId),
         ],
       ),
@@ -61,7 +57,8 @@ class RestaurantQueueCard extends StatefulWidget {
   RestaurantQueueCard(this.restaurantName, this.restaurantId);
 
   @override
-  _RestaurantQueueCardState createState() => _RestaurantQueueCardState(restaurantName, restaurantId);
+  _RestaurantQueueCardState createState() =>
+      _RestaurantQueueCardState(restaurantName, restaurantId);
 }
 
 class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
@@ -78,13 +75,9 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   }
 
   void fetchRestaurantDetails() async {
-    Response response = await GetRequestBuilder()
-        .addPath('restaurants')
-        .addPath(restaurantId.toString())
-        .sendRequest();
-    List<dynamic> data = json.decode(response.body);
-    String currentRestaurantName = data.single['restaurant_name'];
-    String currentIconUrl = data.single['icon_url'];
+    dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+    String currentRestaurantName = data['restaurant_name'];
+    String currentIconUrl = data['icon_url'];
     if (this.mounted) {
       setState(() {
         restaurantName = currentRestaurantName;
@@ -99,7 +92,8 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         child: Column(
             children: [
               SizedBox(height: 20),
-              CommonWidget.generateRestaurantIconAndName(restaurantName, iconUrl, Commons.whooshTextWhite),
+              CommonWidget.generateRestaurantIconAndName(restaurantName,
+                  iconUrl, Commons.whooshTextWhite),
               generateWaitListHeading(),
               generateQueue(),
             ]
