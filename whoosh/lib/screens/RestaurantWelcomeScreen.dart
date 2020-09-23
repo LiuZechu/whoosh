@@ -55,15 +55,18 @@ class RestaurantWelcomeScreen extends StatelessWidget {
     String mainText = "whoosh makes queuing a breeze, both for you and your customers. "
         + "You never have to manage the queue again. Your customers will have "
         + "a great time and be automatically notified to return.";
-    return Container(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _generateMonsterImage(true),
-            _generateTextBox(title, mainText),
-          ]
-        ),
-        margin: const EdgeInsets.only(top: 50.0),
+    return FittedBox(
+        child: Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _generateMonsterImage(true),
+              _generateTextBox(title, mainText),
+              SizedBox(width: 8),
+            ]
+          ),
+          margin: const EdgeInsets.only(top: 50.0),
+      )
     );
   }
 
@@ -72,15 +75,18 @@ class RestaurantWelcomeScreen extends StatelessWidget {
     String mainText = "With whoosh, you’ll have real data about your waiting"
         + " times and customer footfall. And data is power. You’ll know exactly "
         + "what’s working well and what’s not working out.";
-    return Container(
-      child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _generateTextBox(title, mainText),
-            _generateMonsterImage(false),
-          ]
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 30.0),
+    return FittedBox(
+        child: Container(
+        child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: 8),
+              _generateTextBox(title, mainText),
+              _generateMonsterImage(false),
+            ]
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 30.0),
+      )
     );
   }
   
