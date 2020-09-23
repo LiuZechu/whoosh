@@ -169,8 +169,8 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
                 '*should have 8 digits',
                 style: TextStyle(
                     fontSize: 24,
-                    color: Commons.whooshErrorRed,
-                    fontFamily: "VisbyCF"
+                    color: Commons.whooshErrorDarkRed,
+                    fontFamily: Commons.whooshFont
                 ),
               ),
             )
@@ -191,7 +191,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           style: TextStyle(
               fontSize: 24,
               color: Commons.whooshDarkBlue,
-              fontFamily: "VisbyCF"
+              fontFamily: Commons.whooshFont
           ),
         ),
       ),
@@ -259,7 +259,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         style: TextStyle(
             fontSize: 24,
             color: Commons.whooshDarkBlue,
-            fontFamily: "VisbyCF"
+            fontFamily: Commons.whooshFont
         ),
       ),
     );
@@ -314,7 +314,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         style: TextStyle(
           fontSize: 36,
           color: Commons.whooshDarkBlue,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -362,7 +362,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       },
       child: Opacity(
         opacity: buttonOpacity,
-        child: Image(image: Commons.enterQueueButton),
+        child: Commons.enterQueueButton,
       )
     );
   }

@@ -111,7 +111,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
                   child: Text(
                       'view waitlist',
                       style: TextStyle(
-                        fontFamily: "VisbyCF",
+                        fontFamily: Commons.whooshFont,
                         fontSize: 25,
                       )
                   )

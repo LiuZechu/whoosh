@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Commons {
   static List<Color> monsterColors = [
@@ -97,11 +98,11 @@ class Commons {
   ];
 
   // Group assets
-  static final AssetImage queueLine = AssetImage('images/static/queue_line.png');
-  static final AssetImage nameBubble = AssetImage('images/static/name_bubble.png');
-  static final AssetImage randomizeButton = AssetImage('images/static/randomize_button.png');
-  static final AssetImage restaurantMenuButton = AssetImage('images/static/restaurant_menu_button.png');
-  static final AssetImage shareQueueButton = AssetImage('images/static/share_queue_button.png');
+  static final Image queueLine = Image.asset('images/static/queue_line.png');
+  static final Image nameBubble = Image.asset('images/static/name_bubble.png');
+  static final Image randomizeButton = Image.asset('images/static/randomize_button.png');
+  static final Image restaurantMenuButton = Image.asset('images/static/restaurant_menu_button.png');
+  static final Image shareQueueButton = Image.asset('images/static/share_queue_button.png');
 
   // Screen assets
   static final Image whooshLogo = Image.asset('images/static/logo.png');
@@ -109,9 +110,12 @@ class Commons {
   static final Image bottomSea = Image.asset('images/static/bottom_sea.png');
   static final Image welcomeMonster1 = Image.asset('images/static/restaurant_welcome_monster1.png');
   static final Image welcomeMonster2 = Image.asset("images/static/restaurant_welcome_monster2.png");
-  static final AssetImage enterQueueButton = AssetImage('images/static/enter_queue_button.png');
-  static final AssetImage refreshButton = AssetImage('images/static/refresh_button.png');
-  static final AssetImage counter = AssetImage('images/static/counter.png');
+  static final Image enterQueueButton = Image.asset('images/static/enter_queue_button.png');
+  static final Image refreshButton = Image.asset('images/static/refresh_button.png');
+  static final Image counter = Image.asset('images/static/counter.png');
+
+  static final AssetImage whooshIcon = AssetImage('images/static/whoosh_icon.png');
+  static final AssetImage queueLineMask = AssetImage('images/static/queue_line_mask.png');
 
   // Flare actor paths
   static final String bodyFlareActorPath = 'images/actors/body.flr';
@@ -119,6 +123,7 @@ class Commons {
   static final String mouthsFlareActorPath = 'images/actors/mouths.flr';
   static final String accessoriesFlareActorPath = 'images/actors/accessories.flr';
   static final String waveFlareActorPath = 'images/actors/wave.flr';
+  static final String effectFlareActorPath = 'images/actors/effect.flr';
 
   // Colors
   static final Color whooshDarkBlue = Color(0xFF2B3148);
@@ -126,5 +131,9 @@ class Commons {
   static final Color whooshLightBlue = Color(0xFF376ADB);
   static final Color whooshOffWhite = Color(0xFFD1E6F2);
   static final Color whooshErrorPink = Color(0xFFF3C2C2);
-  static final Color whooshErrorRed = Color(0xFF9A0000);
+  static final Color whooshErrorRed = Colors.red;
+  static final Color whooshErrorDarkRed = Color(0xFF9A0000);
+
+  // Fonts
+  static final String whooshFont = "VisbyCF";
 }

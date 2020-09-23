@@ -38,19 +38,12 @@ class Group {
   Widget queueLine =
     Align(
       alignment: Alignment.bottomCenter,
-      child: Image(
-        alignment: Alignment.bottomCenter,
-        image: Commons.queueLine,
-        width: 13,
-        height: 400,
-      ),
+      child: Commons.queueLine,
     );
 
   Widget nameBubble = Align(
     alignment: Alignment.topRight,
-    child: Image(
-        image: Commons.nameBubble
-    ),
+    child: Commons.nameBubble
   );
 
   Widget createJoinQueueGroupImage() {
@@ -128,7 +121,7 @@ class Group {
         style: TextStyle(
           color: Commons.whooshDarkBlue,
           fontSize: 20,
-          fontFamily: "VisbyCF",
+          fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -149,7 +142,7 @@ class Group {
                   style: TextStyle(
                     color: Commons.whooshDarkBlue,
                     fontSize: 25,
-                    fontFamily: "VisbyCF",
+                    fontFamily: Commons.whooshFont,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -158,7 +151,7 @@ class Group {
                     style: TextStyle(
                       color: Commons.whooshDarkBlue,
                       fontSize: 25,
-                      fontFamily: "VisbyCF",
+                      fontFamily: Commons.whooshFont,
                     )
                 )
               ]
@@ -172,7 +165,7 @@ class Group {
                           style: TextStyle(
                             color: Commons.whooshDarkBlue,
                             fontSize: 25,
-                            fontFamily: "VisbyCF",
+                            fontFamily: Commons.whooshFont,
                           )
                       ),
                       SizedBox(width: 5),
@@ -181,7 +174,7 @@ class Group {
                           style: TextStyle(
                             color: Commons.whooshDarkBlue,
                             fontSize: 25,
-                            fontFamily: "VisbyCF",
+                            fontFamily: Commons.whooshFont,
                             fontWeight: FontWeight.bold,
                           )
                       ),
@@ -329,7 +322,7 @@ class Group {
             style: TextStyle(
               color: Commons.whooshTextWhite,
               fontSize: 30,
-              fontFamily: "VisbyCF",
+              fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -391,13 +384,10 @@ class Group {
     );
   }
 
-  Widget generateButton(AssetImage image, void Function() onTap) {
+  Widget generateButton(Image image, void Function() onTap) {
     return GestureDetector(
       onTap: () async { onTap();},
-      child: Image(
-        alignment: Alignment.center,
-        image: image,
-      ),
+      child: image
     );
   }
 
@@ -416,7 +406,7 @@ class Group {
                         : noOfGroupsAhead.toString() + ' groups ahead',
                     style: TextStyle(
                       fontSize: 30,
-                      fontFamily: "VisbyCF",
+                      fontFamily: Commons.whooshFont,
                       fontWeight: FontWeight.w700,
                     ),
                     textAlign: TextAlign.center,
