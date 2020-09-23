@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
-import 'dart:convert';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
@@ -31,27 +30,19 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
   var iconUrl;
   var uid;
 
-  bool _user_found = false;
+  bool _userFound = false;
 
   _RestaurantSettingsState(this.restaurantId, this.restaurantName, this.estimatedWaitingTime, this.menuUrl, this.iconUrl);
 
   @override void initState() {
     super.initState();
-    // fetch uid
-    FirebaseAuth auth = FirebaseAuth.instance;
-    if (auth.currentUser != null) {
-      uid = auth.currentUser.uid;
-      _user_found = true;
-    } else {
-      _user_found = false;
-    }
-
+    fetchUid();
     fetchRestaurantDetails(); // for returning users
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_user_found) {
+    if (!_userFound) {
       return Text("user not found!");
     }
 
@@ -65,17 +56,17 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
             children: [
               generateSettingsHeading(),
               generateRestaurantPhotoCard(iconUrl),
-              generateField("restaurant name",
-                      (text) { restaurantName = text; }, restaurantName ?? ""),
-              generateField("waiting time per group",
+              CommonWidget.generateField("restaurant name",
+                      (text) { restaurantName = text; },
+                      false, restaurantName ?? ""),
+              CommonWidget.generateField("waiting time per group",
                       (text) { estimatedWaitingTime = int.parse(text); },
-                      estimatedWaitingTime.toString() ?? ""),
-              generateField("URL to icon",
+                      false, estimatedWaitingTime.toString() ?? ""),
+              CommonWidget.generateField("URL to icon",
                       (text) { iconUrl = text; setState(() { iconUrl = text; }); },
-                      iconUrl ?? ""),
-              generateField("URL to menu",
-                      (text) { menuUrl = text; },
-                      menuUrl ?? ""),
+                      false, iconUrl ?? ""),
+              CommonWidget.generateField("URL to menu", (text) { menuUrl = text; },
+                      false, menuUrl ?? ""),
               SizedBox(height: 100),
               generateSubmitButton(context),
             ]
@@ -101,6 +92,17 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
             builder: (context) => QRCodeScreen(restaurantName, restaurantId)
         )
     );
+  }
+
+  void fetchUid() {
+    // fetch uid
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      uid = auth.currentUser.uid;
+      _userFound = true;
+    } else {
+      _userFound = false;
+    }
   }
 
   void fetchRestaurantDetails() async {
@@ -136,77 +138,38 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
 
   Widget generateRestaurantPhotoCard(String iconUrl) {
     if (iconUrl == null || iconUrl == "") { // placeholder image
-      return Container(
+      return _generatePlaceholderImage();
+    } else {
+      return _generateRestaurantIcon(iconUrl);
+    }
+  }
+
+  Widget _generatePlaceholderImage() {
+    return Container(
+      height: 200,
+      width: 200,
+      margin: const EdgeInsets.all(50.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
+      child: Image.asset('images/static/whoosh_icon.png'),
+    );
+  }
+
+  Widget _generateRestaurantIcon(String iconUrl) {
+    return Container(
         height: 200,
         width: 200,
         margin: const EdgeInsets.all(50.0),
-        decoration: BoxDecoration(
-          color: Commons.whooshTextWhite,
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-      );
-    } else {
-      return Container(
-          height: 200,
-          width: 200,
-          margin: const EdgeInsets.all(50.0),
-          child: ClipRRect(
+        child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: Image.network(
               iconUrl,
             )
-          )
-      );
-    }
-  }
-
-  Widget generateField(String fieldName, Function(String text) onChanged, String prefillText) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 10.0),
-              width: 350,
-              child: Text(
-                fieldName,
-                style: TextStyle(
-                  fontFamily: "VisbyCF",
-                  fontSize: 20,
-                  color: Commons.whooshTextWhite,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              width: 350,
-              child: TextField(
-                decoration: new InputDecoration(
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                  ),
-                  contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                  fillColor: Commons.whooshTextWhite,
-                  filled: true,
-                ),
-                style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                    color: Commons.whooshDarkBlue
-                ),
-                onChanged: onChanged,
-                controller: TextEditingController()..text = prefillText,
-              ),
-            ),
-          ]
-      ),
+        )
     );
   }
-
-
+  
   Widget generateSubmitButton(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -217,7 +180,6 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               color: Commons.whooshLightBlue,
               textColor: Commons.whooshTextWhite,
               onPressed: () async {
-                //print(restaurantId);
                 await WhooshService.updateRestaurantDetails(restaurantId,
                     restaurantName, estimatedWaitingTime,
                     iconUrl, menuUrl);

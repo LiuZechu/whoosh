@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
-import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 
@@ -16,7 +16,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   // Set default `_initialized` and `_error` state to false
   bool _initialized = false;
   bool _error = false;
-  bool _is_logged_in = false;
+  bool _isLoggedIn = false;
 
   var email;
   var password;
@@ -66,9 +66,11 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      generateWhooshHeading(),
-                      generateField("email address", (text) { email = text; }, false),
-                      generateField("password", (text) { password = text; }, true),
+                      CommonWidget.generateWhooshHeading("log in"),
+                      CommonWidget.generateField("email address",
+                              (text) { email = text; }, false, ""),
+                      CommonWidget.generateField("password",
+                              (text) { password = text; }, true, ""),
                       generateErrorText(errorText),
                       SizedBox(height: 30),
                       generateLoginButton(context),
@@ -79,74 +81,6 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
                 )
             )
         )
-    );
-  }
-
-  Widget generateWhooshHeading() {
-    return Column(
-        children: [
-          Commons.whooshHeading,
-          Container(
-              width: 350,
-              margin: const EdgeInsets.all(20.0),
-              child: Text(
-                'log in',
-                style: TextStyle(
-                  color: Commons.whooshTextWhite,
-                  fontSize: 40,
-                  fontFamily: "VisbyCF",
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              )
-          )
-        ]
-    );
-  }
-
-  Widget generateField(String fieldName, Function(String text) onChanged, bool isObscureText) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 10.0),
-              width: 350,
-              child: Text(
-                fieldName,
-                style: TextStyle(
-                  fontFamily: "VisbyCF",
-                  fontSize: 20,
-                  color: Commons.whooshTextWhite,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Container(
-              width: 350,
-              child: TextField(
-                decoration: new InputDecoration(
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                  ),
-                  contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                  fillColor: Commons.whooshTextWhite,
-                  filled: true,
-                ),
-                style: TextStyle(
-                    fontFamily: "VisbyCF",
-                    fontSize: 25,
-                    color: Commons.whooshDarkBlue
-                ),
-                onChanged: onChanged,
-                obscureText: isObscureText,
-              ),
-            ),
-          ]
-      ),
     );
   }
 
@@ -170,26 +104,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             child: FlatButton(
               color: Commons.whooshLightBlue,
               textColor: Commons.whooshTextWhite,
-              onPressed: () async {
-                await loginOnFirebase(email, password);
-                if (_is_logged_in) {
-                  // get restaurant ID
-                  FirebaseAuth auth = FirebaseAuth.instance;
-                  if (auth.currentUser != null) {
-                    var uid = auth.currentUser.uid;
-                    dynamic data = await WhooshService.getRestaurantDetailsWithUid(uid);
-                    restaurantId = data["restaurant_id"];
-                    restaurantName = data["restaurant_name"];
-                  }
-                  // go to view queue screen
-                  Navigator.pushReplacement(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
-                      )
-                  );
-                }
-              },
+              onPressed: _loginUser(context),
               child: Text(
                   "enter",
                   style: TextStyle(
@@ -203,6 +118,29 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             )
         )
     );
+  }
+
+  Function() _loginUser(BuildContext context) {
+    return () async {
+      await loginOnFirebase(email, password);
+      if (_isLoggedIn) {
+        // get restaurant ID
+        FirebaseAuth auth = FirebaseAuth.instance;
+        if (auth.currentUser != null) {
+          var uid = auth.currentUser.uid;
+          dynamic data = await WhooshService.getRestaurantDetailsWithUid(uid);
+          restaurantId = data["restaurant_id"];
+          restaurantName = data["restaurant_name"];
+        }
+        // go to view queue screen
+        Navigator.pushReplacement(
+            context,
+            new MaterialPageRoute(
+                builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+            )
+        );
+      }
+    };
   }
 
   Widget generateSignupButton(BuildContext context) {
@@ -255,7 +193,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
       setState(() {
         errorText = 'Log in successful!';
       });
-      _is_logged_in = true;
+      _isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {
@@ -267,7 +205,6 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
         });
       }
     }
-
   }
 
 }

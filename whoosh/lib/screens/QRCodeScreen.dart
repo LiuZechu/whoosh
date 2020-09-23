@@ -1,17 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/requests/WhooshService.dart';
-import '../requests/PostRequestBuilder.dart';
-import 'package:http/http.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
 
 
 class QRCodeScreen extends StatelessWidget {
-  String restaurantName;
-  int restaurantId;
+  final String restaurantName;
+  final int restaurantId;
 
   QRCodeScreen(this.restaurantName, this.restaurantId);
 
@@ -83,12 +80,9 @@ class _QRCodeCardState extends State<QRCodeCard> {
   }
 
   Widget generateQrCode() {
-      String hostUrl = 'https%3A%2F%2Fhoholyin.github.io%2Fwhoosh%2F%23%2FjoinQueue%3Frestaurant_id%3D${restaurantId}';
-      String googleQrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
-      String qrCodeUrl = googleQrCodeUrl + hostUrl;
-      return Image.network(
-        qrCodeUrl,
-      );
+    return Image.network(
+        WhooshService.generateQrCodeUrl(restaurantId)
+    );
   }
 
   Widget generateViewQueueButton(BuildContext context) {

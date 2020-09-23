@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
 
 class RestaurantWelcomeScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
                   children: [
-                    generateWhooshHeading(),
+                    CommonWidget.generateWhooshHeading(""),
                     generateStartButton(context),
                     generateTopTextBox(),
                     generateBottomTextBox(),
@@ -20,25 +21,6 @@ class RestaurantWelcomeScreen extends StatelessWidget {
             )
         )
       )
-    );
-  }
-
-  Widget generateWhooshHeading() {
-    return Column(
-      children: [
-        Commons.whooshHeading,
-        Container(
-          margin: const EdgeInsets.all(50.0),
-          child: Text(
-            'queueing made serene.',
-            style: TextStyle(
-                color: Commons.whooshTextWhite,
-                fontSize: 30,
-                fontFamily: "VisbyCF",
-            )
-          )
-        )
-      ]
     );
   }
 
@@ -75,30 +57,8 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 160,
-              height: 218,
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Commons.welcomeMonster1
-            ),
-            Column(
-              children: [
-                Container(
-                  width: 188,
-                  child: Text(
-                    title,
-                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite)
-                  )
-                ),
-                Container(
-                  width: 188,
-                  child: Text(
-                    mainText,
-                    style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
-                    softWrap: true)
-                )
-              ]
-            )
+            _generateMonsterImage(true),
+            _generateTextBox(title, mainText),
           ]
         ),
         margin: const EdgeInsets.only(top: 50.0),
@@ -114,36 +74,45 @@ class RestaurantWelcomeScreen extends StatelessWidget {
       child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Column(
-                children: [
-                  Container(
-                      width: 188,
-                      child: Text(
-                        title,
-                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite),
-                        textAlign: TextAlign.right,
-                      )
-                  ),
-                  Container(
-                      width: 188,
-                      child: Text(
-                        mainText,
-                        style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
-                        textAlign: TextAlign.right,
-                        softWrap: true
-                      )
-                  )
-                ]
-            ),
-            Container(
-              width: 160,
-              height: 218,
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              child:  Commons.welcomeMonster2,
-            ),
+            _generateTextBox(title, mainText),
+            _generateMonsterImage(false),
           ]
       ),
       margin: const EdgeInsets.symmetric(vertical: 30.0),
     );
   }
+  
+  Widget _generateTextBox(String title, String mainText) {
+    return Column(
+        children: [
+          Container(
+              width: 188,
+              child: Text(
+                title,
+                style: TextStyle(fontFamily: "VisbyCF", fontSize: 25, color: Commons.whooshTextWhite),
+                textAlign: TextAlign.right,
+              )
+          ),
+          Container(
+              width: 188,
+              child: Text(
+                  mainText,
+                  style: TextStyle(fontFamily: "VisbyCF", fontSize: 18, color: Commons.whooshTextWhite),
+                  textAlign: TextAlign.right,
+                  softWrap: true
+              )
+          )
+        ]
+    );
+  }
+  
+  Widget _generateMonsterImage(bool isTop) {
+    return Container(
+      width: 160,
+      height: 218,
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      child:  isTop? Commons.welcomeMonster1 : Commons.welcomeMonster2,
+    );
+  }
+  
 }

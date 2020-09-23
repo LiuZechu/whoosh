@@ -18,14 +18,14 @@ class RestaurantHeaderBuilder {
       actions: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 35),
-          child: generateDropDownButton(context, waitlistCallBack, settingsCallBack, qrCodeCallBack),
+          child: _generateDropDownButton(context, waitlistCallBack, settingsCallBack, qrCodeCallBack),
         ),
       ],
       backgroundColor: Commons.whooshLightBlue,
     );
   }
 
-  static Widget generateDropDownButton(BuildContext context, Function() waitlistCallBack,
+  static Widget _generateDropDownButton(BuildContext context, Function() waitlistCallBack,
       Function() settingsCallBack, Function() qrCodeCallBack) {
     return DropdownButton<String>(
         icon: Icon(Icons.menu),
@@ -44,52 +44,28 @@ class RestaurantHeaderBuilder {
         ),
         onChanged: (String newValue) {},
         items: [
-          DropdownMenuItem<String>(
-              value: "waitlist",
-              child: FlatButton(
-                onPressed: waitlistCallBack,
-                child: Text(
-                  "waitlist",
-                  style: TextStyle(
-                    color: Commons.whooshTextWhite,
-                    fontSize: 35,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-          ),
-          DropdownMenuItem<String>(
-              value: "settings",
-              child: FlatButton(
-                onPressed: settingsCallBack,
-                child: Text(
-                  "settings",
-                  style: TextStyle(
-                    color: Commons.whooshTextWhite,
-                    fontSize: 35,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-          ),
-          DropdownMenuItem<String>(
-              value: "QR code",
-              child: FlatButton(
-                onPressed: qrCodeCallBack,
-                child: Text(
-                  "QR code",
-                  style: TextStyle(
-                    color: Commons.whooshTextWhite,
-                    fontSize: 35,
-                    fontFamily: "VisbyCF",
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-          ),
+          _generateMenuItem("waitlist", waitlistCallBack),
+          _generateMenuItem("settings", settingsCallBack),
+          _generateMenuItem("QR code", qrCodeCallBack),
         ]
+    );
+  }
+
+  static DropdownMenuItem<String> _generateMenuItem(String text, Function() callBack) {
+    return DropdownMenuItem<String>(
+        value: text,
+        child: FlatButton(
+          onPressed: callBack,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Commons.whooshTextWhite,
+              fontSize: 35,
+              fontFamily: "VisbyCF",
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
     );
   }
 

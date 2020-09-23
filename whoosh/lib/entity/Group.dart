@@ -79,21 +79,18 @@ class Group {
     return generateContainerWithStack(createOtherGroupStackElements(), 220, 220);
   }
 
-  // TODO: Should refactor (can use restaurant class)
   Widget createGroupRestaurantView(int restaurantId, String restaurantName) {
     return Container(
       margin: EdgeInsets.all(6.0),
       child: Container(
         width: 350,
         height: 75,
-        decoration: BoxDecoration( // with rounded corners
+        decoration: BoxDecoration(
             color: Commons.whooshTextWhite,
             borderRadius: BorderRadius.all(Radius.circular(15.0))
         ),
         child: FocusedMenuHolder(
-          onPressed: () {
-            // do something
-          },
+          onPressed: () {},
           menuWidth: 300,
           blurSize: 4,
           blurBackgroundColor: Commons.whooshDarkBlue,
@@ -103,104 +100,97 @@ class Group {
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
           ),
           menuItems: <FocusedMenuItem> [
-            FocusedMenuItem(title: Text(
-              'Alert',
-              style: TextStyle(
-                color: Commons.whooshDarkBlue,
-                fontSize: 20,
-                fontFamily: "VisbyCF",
-                fontWeight: FontWeight.bold,
-              ),
-            ), onPressed: () async {
+            _generateFocusedMenuItem('Alert', () async {
               String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
               // UNCOMMENT THIS TO TEST SMS
               // await smsGroup(phoneNumber, textToSent);
             }),
-            FocusedMenuItem(title: Text(
-              'Confirm Arrival',
-              style: TextStyle(
-                color: Commons.whooshDarkBlue,
-                fontSize: 20,
-                fontFamily: "VisbyCF",
-                fontWeight: FontWeight.bold,
-              ),
-            ), onPressed: () async {
+            _generateFocusedMenuItem('Confirm Arrival', () async {
               await changeGroupQueueStatus(1, restaurantId);
             }),
-            FocusedMenuItem(title: Text(
-              'Kick Out',
-              style: TextStyle(
-                color: Commons.whooshDarkBlue,
-                fontSize: 20,
-                fontFamily: "VisbyCF",
-                fontWeight: FontWeight.bold,
-              ),
-            ), onPressed: () async {
+            _generateFocusedMenuItem('Kick Out', () async {
               await changeGroupQueueStatus(2, restaurantId);
             }),
           ],
           child: FlatButton(
-            onPressed: () {
-              // do something
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      timeOfArrival.hour.toString().padLeft(2, "0")
-                          + ':' + timeOfArrival.minute.toString().padLeft(2, "0"),
-                      style: TextStyle(
-                        color: Commons.whooshDarkBlue,
-                        fontSize: 25,
-                        fontFamily: "VisbyCF",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      phoneNumber ?? "no phone number",
-                      style: TextStyle(
-                        color: Commons.whooshDarkBlue,
-                        fontSize: 25,
-                        fontFamily: "VisbyCF",
-                      )
-                    )
-                  ]
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                            name,
-                            style: TextStyle(
-                              color: Commons.whooshDarkBlue,
-                              fontSize: 25,
-                              fontFamily: "VisbyCF",
-                            )
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                            groupSize.toString(),
-                            style: TextStyle(
-                              color: Commons.whooshDarkBlue,
-                              fontSize: 25,
-                              fontFamily: "VisbyCF",
-                              fontWeight: FontWeight.bold,
-                            )
-                        ),
-                      ]
-                    ),
-                    SizedBox(height: 10)
-                  ]
-                )
-              ]
-            )
+            onPressed: () {},
+            child: _generateWaitListGroupInformation(),
           )
         ),
       )
+    );
+  }
+
+  FocusedMenuItem _generateFocusedMenuItem(String displayText, Function() onPressed) {
+    return FocusedMenuItem(
+      title: Text(
+        displayText,
+        style: TextStyle(
+          color: Commons.whooshDarkBlue,
+          fontSize: 20,
+          fontFamily: "VisbyCF",
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onPressed: onPressed,
+    );
+  }
+
+  Widget _generateWaitListGroupInformation() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  timeOfArrival.hour.toString().padLeft(2, "0")
+                      + ':' + timeOfArrival.minute.toString().padLeft(2, "0"),
+                  style: TextStyle(
+                    color: Commons.whooshDarkBlue,
+                    fontSize: 25,
+                    fontFamily: "VisbyCF",
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                    phoneNumber ?? "no phone number",
+                    style: TextStyle(
+                      color: Commons.whooshDarkBlue,
+                      fontSize: 25,
+                      fontFamily: "VisbyCF",
+                    )
+                )
+              ]
+          ),
+          Column(
+              children: [
+                Row(
+                    children: [
+                      Text(
+                          name,
+                          style: TextStyle(
+                            color: Commons.whooshDarkBlue,
+                            fontSize: 25,
+                            fontFamily: "VisbyCF",
+                          )
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                          groupSize.toString(),
+                          style: TextStyle(
+                            color: Commons.whooshDarkBlue,
+                            fontSize: 25,
+                            fontFamily: "VisbyCF",
+                            fontWeight: FontWeight.bold,
+                          )
+                      ),
+                    ]
+                ),
+                SizedBox(height: 10)
+              ]
+          )
+        ]
     );
   }
 
