@@ -50,7 +50,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: ListView(
         children: [
-          RestaurantHeaderBuilder.generateHeader(context,
+          RestaurantHeaderBuilder.generateRestaurantScreenHeader(context,
               _waitlistCallBack, (){}, _qrCodeCallBack),
           Column(
             children: [
@@ -80,17 +80,17 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     Navigator.pushReplacement(
       context,
       new MaterialPageRoute(
-          builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+        builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
       )
     );
   }
 
   void _qrCodeCallBack() {
     Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => QRCodeScreen(restaurantName, restaurantId)
-        )
+      context,
+      new MaterialPageRoute(
+        builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+      )
     );
   }
 
@@ -109,12 +109,11 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
     if (restaurantId > 0) {
       dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
       if (this.mounted) {
-        setState( () {
+        setState(() {
             estimatedWaitingTime = data["unit_queue_time"];
             menuUrl = data["menu_url"];
             iconUrl = data["icon_url"];
-          }
-        );
+        });
       }
     }
   }
@@ -135,21 +134,21 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
-      child: Image.asset('images/static/whoosh_icon.png'),
+      child: Commons.whooshLogo,
     );
   }
 
   Widget _generateRestaurantIcon(String iconUrl) {
     return Container(
-        height: 200,
-        width: 200,
-        margin: const EdgeInsets.all(50.0),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Image.network(
-              iconUrl,
-            )
+      height: 200,
+      width: 200,
+      margin: const EdgeInsets.all(50.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: Image.network(
+          iconUrl,
         )
+      )
     );
   }
 
@@ -160,10 +159,10 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
 
     // go to QR code screen
     Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => QRCodeScreen(restaurantName, restaurantId)
-        )
+      context,
+      new MaterialPageRoute(
+        builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+      )
     );
   }
 

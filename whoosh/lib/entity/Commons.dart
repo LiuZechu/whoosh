@@ -99,11 +99,15 @@ class Commons {
   
   // Themes
   static final queueingTheme = ThemeData(
-      backgroundColor: whooshOffWhite
+      backgroundColor: whooshOffWhite,
+      primaryColor: whooshDarkBlue,
+      errorColor: whooshErrorPink,
   );
 
   static final restaurantTheme = ThemeData(
-      backgroundColor: whooshDarkBlue
+      backgroundColor: whooshDarkBlue,
+      primaryColor: whooshDarkBlue,
+      errorColor: whooshErrorRed,
   );
 
   // Group assets
@@ -123,7 +127,8 @@ class Commons {
   static final Image refreshButton = Image.asset('images/static/refresh_button.png');
   static final Image counter = Image.asset('images/static/counter.png');
 
-  static final AssetImage whooshIcon = AssetImage('images/static/whoosh_icon.png');
+  static final Image whooshIcon = Image.asset('images/static/whoosh_icon.png');
+  static final AssetImage whooshIconAsset = AssetImage('images/static/whoosh_icon.png');
   static final AssetImage queueLineMask = AssetImage('images/static/queue_line_mask.png');
 
   // Restaurant button assets

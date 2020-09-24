@@ -19,20 +19,20 @@ class RestaurantQueueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var _settingsCallBack = () {
       Navigator.pushReplacement(
-          context,
-          new MaterialPageRoute(
-              builder: (context) =>
-                  RestaurantSettingsScreen(restaurantName, restaurantId)
-          )
+        context,
+        new MaterialPageRoute(
+          builder: (context) =>
+            RestaurantSettingsScreen(restaurantName, restaurantId)
+        )
       );
     };
 
     var _qrCodeCallBack = () {
       Navigator.pushReplacement(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => QRCodeScreen(restaurantName, restaurantId)
-          )
+        context,
+        new MaterialPageRoute(
+          builder: (context) => QRCodeScreen(restaurantName, restaurantId)
+        )
       );
     };
 
@@ -40,7 +40,7 @@ class RestaurantQueueScreen extends StatelessWidget {
       backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: ListView(
         children: [
-          RestaurantHeaderBuilder.generateHeader(context, (){},
+          RestaurantHeaderBuilder.generateRestaurantScreenHeader(context, (){},
               _settingsCallBack, _qrCodeCallBack),
           RestaurantQueueCard(restaurantName, restaurantId),
         ],
@@ -89,24 +89,24 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-            children: [
-              SizedBox(height: 20),
-              CommonWidget.generateRestaurantIconAndName(restaurantName,
-                  iconUrl, Commons.whooshTextWhite),
-              CommonWidget.generateRestaurantScreenHeading("waitlist"),
-              generateQueue(),
-            ]
-        )
+      child: Column(
+        children: [
+          SizedBox(height: 20),
+          CommonWidget.generateRestaurantIconAndName(restaurantName,
+            iconUrl, Commons.whooshTextWhite),
+          CommonWidget.generateRestaurantScreenHeading("waitlist"),
+          generateQueue(),
+        ]
+      )
     );
   }
 
   Widget generateQueue() {
     fetchQueue();
     return Column(
-        children: groups.map(
-                (e) => e.createGroupRestaurantView(restaurantId, restaurantName)
-        ).toList()
+      children: groups.map(
+        (e) => e.createGroupRestaurantView(restaurantId, restaurantName)
+      ).toList()
     );
   }
 

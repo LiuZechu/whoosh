@@ -34,10 +34,10 @@ class QRCodeScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: Commons.whooshDarkBlue,
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
       body: ListView(
         children: [
-          RestaurantHeaderBuilder.generateHeader(context, _waitlistCallBack,
+          RestaurantHeaderBuilder.generateRestaurantScreenHeader(context, _waitlistCallBack,
               _settingsCallBack, (){}),
           Column(
               children: [

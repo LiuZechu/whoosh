@@ -23,7 +23,7 @@ class AddGroupScreen extends StatelessWidget {
       backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          CommonWidget.generateHeader(),
+          CommonWidget.generateQueueScreenHeader(),
           JoinQueueCard(restaurantId)
         ],
       ),
@@ -130,7 +130,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Commons.whooshErrorPink,
+          color: Commons.queueingTheme.errorColor,
         ),
         width: 390,
         height: 160,
@@ -166,7 +166,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
           'phone number',
           style: TextStyle(
               fontSize: 24,
-              color: Commons.whooshDarkBlue,
+              color: Commons.queueingTheme.primaryColor,
               fontFamily: Commons.whooshFont
           ),
         ),
@@ -234,7 +234,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         'group size',
         style: TextStyle(
             fontSize: 24,
-            color: Commons.whooshDarkBlue,
+            color: Commons.queueingTheme.primaryColor,
             fontFamily: Commons.whooshFont
         ),
       ),
@@ -289,7 +289,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
         newGroupSize.round().toString(),
         style: TextStyle(
           fontSize: 36,
-          color: Commons.whooshDarkBlue,
+          color: Commons.queueingTheme.primaryColor,
           fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.w700,
         ),

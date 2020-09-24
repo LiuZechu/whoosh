@@ -3,7 +3,7 @@ import 'package:whoosh/entity/Commons.dart';
 
 class RestaurantHeaderBuilder {
 
-  static Widget generateHeader(BuildContext context, Function() waitlistCallBack,
+  static Widget generateRestaurantScreenHeader(BuildContext context, Function() waitlistCallBack,
       Function() settingsCallBack, Function() qrCodeCallBack) {
     return AppBar(
       leading: Transform.scale(
@@ -37,7 +37,7 @@ class RestaurantHeaderBuilder {
           fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
         ),
-        dropdownColor: Commons.whooshDarkBlue,
+        dropdownColor: Commons.restaurantTheme.backgroundColor,
         underline: Container(
           height: 2,
           color: Commons.whooshLightBlue,

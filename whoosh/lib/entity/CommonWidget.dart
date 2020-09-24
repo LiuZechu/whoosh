@@ -5,7 +5,7 @@ import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'Commons.dart';
 
 class CommonWidget {
-  static Widget generateHeader() {
+  static Widget generateQueueScreenHeader() {
     return AppBar(
       leading: Transform.scale(
         scale: 3,
@@ -25,7 +25,7 @@ class CommonWidget {
       style: TextStyle(
           fontSize: 18,
           fontFamily: Commons.whooshFont,
-          color: Commons.whooshDarkBlue,
+          color: Commons.queueingTheme.primaryColor,
       ),
     );
   }
@@ -63,7 +63,7 @@ class CommonWidget {
     var image;
     if (iconUrl == "") {
       image = Image(
-        image: Commons.whooshIcon,
+        image: Commons.whooshIconAsset,
         width: 50,
         height: 50,
         fit: BoxFit.cover,
@@ -104,14 +104,58 @@ class CommonWidget {
         children: [
           SizedBox(height: 10),
           generateQueuingForLabel(),
-          generateRestaurantIconAndName(restaurantName, iconUrl, Commons.whooshDarkBlue),
+          generateRestaurantIconAndName(restaurantName, iconUrl, Commons.queueingTheme.primaryColor),
           SizedBox(height: 10),
         ],
       ),
     );
   }
 
-  static generateField(String fieldName, Function(String text) onChanged,
+  static Widget generateFieldName(String fieldName) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10.0),
+      width: 350,
+      child: Text(
+        fieldName,
+        style: TextStyle(
+          fontFamily: "VisbyCF",
+          fontSize: 20,
+          color: Commons.whooshTextWhite,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.left,
+      ),
+    );
+  }
+
+  static Widget generateFieldInput(
+      Function(String text) onChanged, bool isObscureText, String prefillText) {
+    return Container(
+      width: 350,
+      child: TextField(
+        decoration: new InputDecoration(
+          border: new OutlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(10.0),
+            ),
+          ),
+          contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
+          fillColor: Commons.whooshTextWhite,
+          filled: true,
+        ),
+        style: TextStyle(
+            fontFamily: "VisbyCF",
+            fontSize: 25,
+            color: Commons.restaurantTheme.primaryColor
+        ),
+        onChanged: onChanged,
+        obscureText: isObscureText,
+        controller: TextEditingController()..text = prefillText,
+      ),
+    );
+  }
+
+  static Widget generateField(String fieldName, Function(String text) onChanged,
       bool isObscureText, String prefillText, [String trigger, String currentError]) {
     return Container(
       width: 390,
@@ -124,43 +168,8 @@ class CommonWidget {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10.0),
-                    width: 350,
-                    child: Text(
-                      fieldName,
-                      style: TextStyle(
-                        fontFamily: "VisbyCF",
-                        fontSize: 20,
-                        color: Commons.whooshTextWhite,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Container(
-                    width: 350,
-                    child: TextField(
-                      decoration: new InputDecoration(
-                        border: new OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(
-                            const Radius.circular(10.0),
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.only(bottom: 10, top: 10, left: 20),
-                        fillColor: Commons.whooshTextWhite,
-                        filled: true,
-                      ),
-                      style: TextStyle(
-                          fontFamily: "VisbyCF",
-                          fontSize: 25,
-                          color: Commons.whooshDarkBlue
-                      ),
-                      onChanged: onChanged,
-                      obscureText: isObscureText,
-                      controller: TextEditingController()..text = prefillText,
-                    ),
-                  ),
+                  generateFieldName(fieldName),
+                  generateFieldInput(onChanged, isObscureText, prefillText),
                 ]
               ),
             )
@@ -170,38 +179,28 @@ class CommonWidget {
     );
   }
 
-  static Widget generateWhooshHeading(String heading) {
+  static Widget generateWhooshHeading() {
+    return generateHeading('queueing made serene.');
+  }
+
+  static Widget generateHeading(String heading) {
     return Column(
         children: [
           Commons.whooshHeading,
-          heading == ""
-              ? Container(
-                margin: const EdgeInsets.all(50.0),
-                child: FittedBox(
-                  child: Text(
-                      'queueing made serene.',
-                      style: TextStyle(
-                        color: Commons.whooshTextWhite,
-                        fontSize: 30,
-                        fontFamily: Commons.whooshFont,
-                      )
-                  )
-                )
-              )
-              : Container(
-                width: 350,
-                margin: const EdgeInsets.all(20.0),
-                child: Text(
-                  heading,
-                  style: TextStyle(
-                    color: Commons.whooshTextWhite,
-                    fontSize: 40,
-                    fontFamily: Commons.whooshFont,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left,
-                )
-              )
+          Container(
+            width: 350,
+            margin: const EdgeInsets.all(20.0),
+            child: Text(
+              heading,
+              style: TextStyle(
+                color: Commons.whooshTextWhite,
+                fontSize: 40,
+                fontFamily: Commons.whooshFont,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            )
+          )
         ]
     );
   }
@@ -233,7 +232,7 @@ class CommonWidget {
               style: TextStyle(
                 fontFamily: Commons.whooshFont,
                 fontSize: 25,
-                color: Commons.whooshErrorRed,
+                color: Commons.restaurantTheme.errorColor,
               ),
             )
         )

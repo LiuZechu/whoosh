@@ -86,7 +86,7 @@ class Group {
           onPressed: () {},
           menuWidth: 300,
           blurSize: 4,
-          blurBackgroundColor: Commons.whooshDarkBlue,
+          blurBackgroundColor: Commons.restaurantTheme.backgroundColor,
           animateMenuItems: false,
           menuBoxDecoration: BoxDecoration(
             color: Commons.whooshTextWhite,
@@ -119,7 +119,7 @@ class Group {
       title: Text(
         displayText,
         style: TextStyle(
-          color: Commons.whooshDarkBlue,
+          color: Commons.restaurantTheme.backgroundColor,
           fontSize: 20,
           fontFamily: Commons.whooshFont,
           fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class Group {
                   timeOfArrival.hour.toString().padLeft(2, "0")
                       + ':' + timeOfArrival.minute.toString().padLeft(2, "0"),
                   style: TextStyle(
-                    color: Commons.whooshDarkBlue,
+                    color: Commons.restaurantTheme.primaryColor,
                     fontSize: 25,
                     fontFamily: Commons.whooshFont,
                     fontWeight: FontWeight.bold,
@@ -149,7 +149,7 @@ class Group {
                 Text(
                     phoneNumber ?? "no phone number",
                     style: TextStyle(
-                      color: Commons.whooshDarkBlue,
+                      color: Commons.restaurantTheme.primaryColor,
                       fontSize: 25,
                       fontFamily: Commons.whooshFont,
                     )

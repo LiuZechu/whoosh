@@ -28,7 +28,7 @@ class QueueScreen extends StatelessWidget {
       backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          CommonWidget.generateHeader(),
+          CommonWidget.generateQueueScreenHeader(),
           QueueCard(restaurantId, groupId, groupKey),
         ],
       ),
@@ -221,7 +221,7 @@ class _QueueCardState extends State<QueueCard> {
       style: TextStyle(
         fontSize: 18,
         fontFamily: Commons.whooshFont,
-        color: Commons.whooshDarkBlue,
+        color: Commons.queueingTheme.primaryColor,
       ),
     );
 
@@ -238,7 +238,7 @@ class _QueueCardState extends State<QueueCard> {
               fontSize: 64,
               fontFamily: Commons.whooshFont,
               fontWeight: FontWeight.w700,
-              color: Commons.whooshDarkBlue,
+              color: Commons.queueingTheme.primaryColor,
             ),
           ),
         ),
@@ -336,7 +336,7 @@ class _QueueCardState extends State<QueueCard> {
                 fontSize: 24,
                 fontFamily: Commons.whooshFont,
                 fontWeight: FontWeight.w700,
-                color: Commons.whooshDarkBlue,
+                color: Commons.queueingTheme.primaryColor,
               ),
             ),
           ),

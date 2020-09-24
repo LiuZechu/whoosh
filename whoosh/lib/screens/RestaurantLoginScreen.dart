@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
+import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
@@ -64,31 +65,31 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Commons.restaurantTheme.backgroundColor,
-        body: Center(
-            child: SingleChildScrollView(
-                child: Column(
-                    children: [
-                      CommonWidget.generateWhooshHeading("log in"),
-                      CommonWidget.generateField("email address",
-                          (text) { email = text; }, false, email,
-                          TextfieldErrorModalBuilder.invalidEmail, currentError),
-                      CommonWidget.generateField("password",
-                          (text) { password = text; }, true, password,
-                          TextfieldErrorModalBuilder.invalidPassword, currentError),
-                      CommonWidget.generateAuthenticationErrorText(errorText),
-                      SizedBox(height: 10),
-                      CommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
-                      CommonWidget.generateRestaurantScreenButton(Commons.noAccountButton,
-                        () => {
-                          Navigator.of(context).pushNamed('/restaurant/signup')
-                      }),
-                      SizedBox(height: 100),
-                      Commons.bottomSea
-                    ]
-                )
-            )
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CommonWidget.generateHeading("log in"),
+              CommonWidget.generateField("email address",
+                (text) { email = text; }, false, email,
+                TextfieldErrorModalBuilder.invalidEmail, currentError),
+              CommonWidget.generateField("password",
+                (text) { password = text; }, true, password,
+                TextfieldErrorModalBuilder.invalidPassword, currentError),
+              CommonWidget.generateAuthenticationErrorText(errorText),
+              SizedBox(height: 10),
+              CommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
+              CommonWidget.generateRestaurantScreenButton(Commons.noAccountButton,
+              () => {
+                Navigator.of(context).pushNamed(restaurantSignupRoute)
+              }),
+              SizedBox(height: 100),
+              Commons.bottomSea
+            ]
+          )
         )
+      )
     );
   }
 
@@ -96,8 +97,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
     return () async {
       LoadingModal waves = LoadingModal(context);
       showDialog(
-          context: context,
-          builder: (_) => waves
+        context: context,
+        builder: (_) => waves
       );
 
       await loginOnFirebase(email, password);
@@ -113,10 +114,10 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
         }
         // go to view queue screen
         Navigator.pushReplacement(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
-            )
+          context,
+          new MaterialPageRoute(
+            builder: (context) => RestaurantQueueScreen(restaurantName, restaurantId)
+          )
         );
       } else {
         waves.dismiss();
@@ -132,8 +133,8 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password
       );
       setState(() {
         currentError = null;

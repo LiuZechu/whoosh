@@ -43,17 +43,19 @@ class MonsterType {
     color = int.parse(pieces[4]);
   }
 
+  static String appendBodyTypes(
+      String body, String eyes, String mouth, String accessory, String color) {
+    return body + ',' + eyes + ',' + mouth + ',' + accessory + ',' + color;
+  }
+
   @override
   String toString() {
-    return body.toString()
-        + ','
-        + eyes.toString()
-        + ','
-        + mouth.toString()
-        + ','
-        + accessory.toString()
-        + ','
-        + color.toString();
+    return appendBodyTypes(
+        body.toString(),
+        eyes.toString(),
+        mouth.toString(),
+        accessory.toString(),
+        color.toString());
   }
 
   static MonsterType generateRandomType() {
@@ -65,7 +67,7 @@ class MonsterType {
     String accessory = accessoryIndices[_random.nextInt(accessoryIndices.length)];
     String color = colorIndices[_random.nextInt(colorIndices.length)];
 
-    return MonsterType(body + ',' + eyes + ',' + mouth + ',' + accessory + ',' + color);
+    return MonsterType(appendBodyTypes(body, eyes, mouth, accessory, color));
   }
 
   static List<MonsterType> generateMonsterTypes(String monsterTypes) {
@@ -78,7 +80,7 @@ class MonsterType {
       String accessory = monsterTypesArray[i + 3];
       String color = monsterTypesArray[i + 4];
 
-      MonsterType type = MonsterType(body + ',' + eyes + ',' + mouth + ',' + accessory + ',' + color);
+      MonsterType type = MonsterType(appendBodyTypes(body, eyes, mouth, accessory, color));
       types.add(type);
     }
     return types;

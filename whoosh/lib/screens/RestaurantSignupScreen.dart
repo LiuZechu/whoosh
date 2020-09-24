@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
 import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
+import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/requests/WhooshService.dart';
@@ -65,46 +66,42 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Commons.restaurantTheme.backgroundColor,
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CommonWidget.generateWhooshHeading("sign up"),
-                CommonWidget.generateField("restaurant name",
-                    (text) { restaurantName = text; }, false, restaurantName,
-                    TextfieldErrorModalBuilder.noRestaurantName, currentError),
-                CommonWidget.generateField("email address",
-                    (text) { email = text; }, false, email,
-                    TextfieldErrorModalBuilder.invalidEmail, currentError),
-                CommonWidget.generateField("password",
-                    (text) { password = text; }, true, password,
-                    TextfieldErrorModalBuilder.invalidPassword, currentError),
-                CommonWidget.generateAuthenticationErrorText(errorText),
-                SizedBox(height: 10),
-                CommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
-                    signupUser(context)),
-                CommonWidget.generateRestaurantScreenButton(Commons.alreadyHaveAccountButton,
-                  () => {
-                    Navigator.of(context).pushNamed('/restaurant/login')
+      backgroundColor: Commons.restaurantTheme.backgroundColor,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CommonWidget.generateHeading("sign up"),
+              CommonWidget.generateField("restaurant name",
+                  (text) { restaurantName = text; }, false, restaurantName,
+                  TextfieldErrorModalBuilder.noRestaurantName, currentError),
+              CommonWidget.generateField("email address",
+                  (text) { email = text; }, false, email,
+                  TextfieldErrorModalBuilder.invalidEmail, currentError),
+              CommonWidget.generateField("password",
+                  (text) { password = text; }, true, password,
+                  TextfieldErrorModalBuilder.invalidPassword, currentError),
+              CommonWidget.generateAuthenticationErrorText(errorText),
+              SizedBox(height: 10),
+              CommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
+                  signupUser(context)),
+              CommonWidget.generateRestaurantScreenButton(Commons.alreadyHaveAccountButton,
+                () => {
+                  Navigator.of(context).pushNamed(restaurantLoginRoute)
                 }),
-                SizedBox(height: 100),
-                Commons.bottomSea,
-              ]
-            )
+              SizedBox(height: 100),
+              Commons.bottomSea,
+            ]
           )
         )
+      )
     );
   }
 
   Function() signupUser(BuildContext context) {
     return () async {
       LoadingModal waves = LoadingModal(context);
-      showDialog(
-          context: context,
-          builder: (_) => waves
-      );
-
+      waves.start();
       await registerNewUserOnFirebase(email, password);
 
       if (_accountCreated) {
@@ -115,10 +112,10 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         }
 
         Navigator.pushReplacement(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
-            )
+          context,
+          new MaterialPageRoute(
+            builder: (context) => RestaurantSettingsScreen(restaurantName, restaurantId)
+          )
         );
       } else {
         waves.dismiss();
@@ -134,8 +131,8 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password
       );
       setState(() {
         errorText = "Account created!";
