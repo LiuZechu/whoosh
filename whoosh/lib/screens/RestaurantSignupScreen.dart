@@ -21,6 +21,8 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _initialized = false;
   bool _error = false;
   bool _accountCreated = false;
+  bool _shouldDisplayRestaurantNameError = false;
+  bool _shouldDisplayEmailError = false;
 
   var restaurantName;
   var email;
@@ -73,10 +75,10 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
             children: [
               CommonWidget.generateHeading("sign up"),
               CommonWidget.generateField("restaurant name",
-                  (text) { restaurantName = text; }, false, restaurantName,
+                  _restaurantNameOnChanged, false, restaurantName,
                   TextfieldErrorModalBuilder.noRestaurantName, currentError),
               CommonWidget.generateField("email address",
-                  (text) { email = text; }, false, email,
+                  _emailOnChanged, false, email,
                   TextfieldErrorModalBuilder.invalidEmail, currentError),
               CommonWidget.generateField("password",
                   (text) { password = text; }, true, password,
@@ -96,6 +98,28 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         )
       )
     );
+  }
+
+  void _restaurantNameOnChanged(String text) {
+    restaurantName = text;
+
+    bool isRestaurantNameValid = text != null && text != "";
+    if (_shouldDisplayRestaurantNameError) {
+      setState(() {
+        currentError = isRestaurantNameValid ? null : TextfieldErrorModalBuilder.noRestaurantName;
+      });
+    }
+  }
+
+  void _emailOnChanged(String text) {
+    email = text;
+
+    bool isEmailValid = text != null && text.isValidEmailAddress;
+    if (_shouldDisplayEmailError) {
+      setState(() {
+        currentError = isEmailValid ? null : TextfieldErrorModalBuilder.invalidEmail;
+      });
+    }
   }
 
   Function() signupUser(BuildContext context) {
@@ -160,6 +184,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _validateFields(String restaurantName, String email, String password) {
     if (restaurantName == null || restaurantName.length == 0) {
       setState(() {
+        _shouldDisplayRestaurantNameError = true;
         currentError = TextfieldErrorModalBuilder.noRestaurantName;
       });
       return false;
@@ -167,6 +192,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
 
     if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
+        _shouldDisplayEmailError = true;
         currentError = TextfieldErrorModalBuilder.invalidEmail;
       });
       return false;
