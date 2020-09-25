@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:whoosh/commons/Commons.dart';
@@ -74,6 +76,8 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   @override void initState() {
     super.initState();
     fetchRestaurantDetails();
+    fetchQueue();
+    new Timer.periodic(Duration(milliseconds: 500), (Timer t) => refresh());
   }
 
   void fetchRestaurantDetails() async {
@@ -96,17 +100,16 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
           QueueingCommonWidget.generateRestaurantIconAndName(restaurantName,
             iconUrl, Commons.whooshTextWhite),
           RestaurantCommonWidget.generateRestaurantScreenHeading("waitlist"),
-          generateQueue(),
+          generateQueue(context),
         ]
       )
     );
   }
 
-  Widget generateQueue() {
-    fetchQueue();
+  Widget generateQueue(BuildContext context) {
     return Column(
       children: groups.map(
-        (e) => e.createGroupRestaurantView(restaurantId, restaurantName)
+        (e) => e.createGroupRestaurantView(restaurantId, restaurantName, context)
       ).toList()
     );
   }
@@ -122,6 +125,10 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
         groups = allGroups;
       });
     }
+  }
+
+  Future<bool> refresh() async {
+    fetchQueue();
   }
 
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/AlertedGroup.dart';
 import 'package:whoosh/commons/QueueingCommonWidget.dart';
@@ -9,7 +8,6 @@ import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/EffectManager.dart';
 
 import 'package:whoosh/entity/Group.dart';
-import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/route/route_names.dart';

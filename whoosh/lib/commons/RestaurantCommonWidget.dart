@@ -164,4 +164,32 @@ class RestaurantCommonWidget {
     );
   }
 
+  static void displayMessage(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (_) => Dialog(
+          child: Container(
+            width: 350,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Commons.whooshOffWhite,
+            ),
+            alignment: Alignment.center,
+            child: FittedBox(
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: Commons.whooshFont,
+                  fontWeight: FontWeight.w700,
+                  color: Commons.queueingTheme.primaryColor,
+                ),
+              )
+            ),
+          ),
+        )
+    );
+  }
+
 }
