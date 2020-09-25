@@ -13,6 +13,7 @@ const RESOURCES = {
 "icons/bottom_sea.png": "93b295a993d7746ccd6ae0d2172426f5",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "8c0c2b6e324dfc7eb870950a8f9fc97b",
+"service-worker.js": "50ed51443654947d0b346c2731d90ac9",
 "assets/images/static/enter_button.png": "8222bdd274757d58998ee00529f47fbf",
 "assets/images/static/icon.png": "ce1be8ca0f787da96d94386cfcba6578",
 "assets/images/static/maskable_icon.png": "5ea15218366211f90e66e495d33abf3c",
