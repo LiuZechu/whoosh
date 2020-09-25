@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:whoosh/commons/QueueingCommonWidget.dart';
 import 'package:whoosh/commons/Commons.dart';
@@ -75,8 +77,9 @@ class _QRCodeCardState extends State<QRCodeCard> {
     return Container(
         child: Column(
             children: [
-              SizedBox(height: 50),
+              SizedBox(height: 30),
               generateQrCode(),
+              SizedBox(height: 30),
               generateViewQueueButton(context),
             ]
         )
@@ -84,7 +87,24 @@ class _QRCodeCardState extends State<QRCodeCard> {
   }
 
   Widget generateQrCode() {
-    return Image.network(UrlUtil.generateQrCodeUrl(restaurantId));
+    return Image.network(
+      UrlUtil.generateQrCodeUrl(restaurantId),
+      loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Center(
+          child: FittedBox(
+            child: Text(
+              "it's being generated.\njust give us a moment.\n How's your day?",
+              style: TextStyle(
+                color: Commons.whooshTextWhite,
+                fontSize: 30,
+                fontFamily: Commons.whooshFont,
+              )
+            )
+          )
+        );
+      }
+    );
   }
 
   Widget generateViewQueueButton(BuildContext context) {
