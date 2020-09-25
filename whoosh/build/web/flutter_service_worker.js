@@ -53,7 +53,8 @@ const RESOURCES = {
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
 "assets/fonts/VisbyCF-Light.ttf": "bb490cc7d137f74591d79d7dcace9723",
 "assets/fonts/VisbyCF-ExtraBold.ttf": "42383cc271b92c600512fa44b98df04a",
-"assets/fonts/MaterialIcons-Regular.otf": "a68d2a28c526b3b070aefca4bac93d25"
+"assets/fonts/MaterialIcons-Regular.otf": "a68d2a28c526b3b070aefca4bac93d25",
+"pwa.dart": "876b4595938328bc7eb0dbdf5a7ac4bd"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -71,7 +72,6 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       // Provide a 'reload' param to ensure the latest version is downloaded.
-      console.log('installing');
       return cache.addAll(CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
@@ -81,7 +81,6 @@ self.addEventListener("install", (event) => {
 // install. If this service worker is upgrading from one with a saved
 // MANIFEST, then use this to retain unchanged resource files.
 self.addEventListener("activate", function(event) {
-  console.log('cache management');
   return event.waitUntil(async function() {
     try {
       var contentCache = await caches.open(CACHE_NAME);
