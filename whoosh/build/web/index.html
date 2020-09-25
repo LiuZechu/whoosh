@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A restaurant queueing app.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="whoosh">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  -->
+  <link rel="icon" type="image/png" sizes="196x196" href="icons/maskable_icon.png">
+
+  <title>whoosh</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body style="background-color: #2B3148">
+  <noscript>Your browser does not support JavaScript!</noscript>
+  <div style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+  ">
+    <div style="height: 50px"></div>
+    <div>
+      <img width="350" src="icons/splash_screen_title.png" />
+    </div>
+    <div>
+      <img width="350" src="icons/bottom_sea.png" />
+    </div>
+  </div>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js')
+                .then(function(registration) {
+                    console.log('registered!', registration.scope)
+                });
+      });
+    }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+  <script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDQrfLifCjoNOdWQDyANmG0PsDP4Iwp_AQ",
+    authDomain: "whoosh-f52db.firebaseapp.com",
+    databaseURL: "https://whoosh-f52db.firebaseio.com",
+    projectId: "whoosh-f52db",
+    storageBucket: "whoosh-f52db.appspot.com",
+    messagingSenderId: "212473451746",
+    appId: "1:212473451746:web:9427ec598b10814be77abb",
+    measurementId: "G-C88DTXMMGK"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>

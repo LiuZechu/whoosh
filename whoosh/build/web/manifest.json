@@ -1,0 +1,19 @@
+{
+    "name": "whoosh",
+    "short_name": "whoosh",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#376ADB",
+    "theme_color": "#376ADB",
+    "description": "A restaurant queueing app.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/maskable_icon.png",
+            "sizes": "1024x1024",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
