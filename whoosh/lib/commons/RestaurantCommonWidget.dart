@@ -44,7 +44,9 @@ class RestaurantCommonWidget {
         ),
         onChanged: onChanged,
         obscureText: isObscureText,
-        controller: TextEditingController()..text = prefillText,
+        controller: TextEditingController()
+          ..text = prefillText
+          ..selection = TextSelection.fromPosition(TextPosition(offset: prefillText.length)),
       ),
     );
   }
