@@ -73,8 +73,9 @@ class _QRCodeCardState extends State<QRCodeCard> {
     return Container(
         child: Column(
             children: [
-              SizedBox(height: 50),
+              SizedBox(height: 30),
               generateQrCode(),
+              SizedBox(height: 30),
               generateViewQueueButton(context),
             ]
         )
@@ -83,7 +84,22 @@ class _QRCodeCardState extends State<QRCodeCard> {
 
   Widget generateQrCode() {
     return Image.network(
-        WhooshService.generateQrCodeUrl(restaurantId)
+      WhooshService.generateQrCodeUrl(restaurantId),
+      loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+        if (loadingProgress == null) return child;
+        return Center(
+          child: FittedBox(
+            child: Text(
+              "it's being generated.\njust give us a moment.\n How's your day?",
+              style: TextStyle(
+                color: Commons.whooshTextWhite,
+                fontSize: 30,
+                fontFamily: Commons.whooshFont,
+              )
+            )
+          )
+        );
+      }
     );
   }
 
