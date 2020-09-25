@@ -1,9 +1,13 @@
 # whoosh
+![whoosh header](img/header.png)
+
 *whoosh* is a virtual queueing app for restaurants. *whoosh* takes a group of diners into a queue upon their arrival, and maintains a digital representation of the queue. Diners enter the queue by scanning a unique QR code for the restaurant. Diners can then view the queue in real time and are notified when they should enter. Restaurant managers can manage the waitlist, alerting and removing queuers as necessary.
 
 Restaurants are able to sign up with *whoosh* to create virtual queues for their restaurants, and diners will
 scan a QR code to enter this queues. Restaurant managers can then virtually manage the queue.
 
+
+![monster with party hat and confetti](img/party.png)
 ## Accessing the web app
 
 ### As a restaurant manager
@@ -18,6 +22,7 @@ You may scan the QR code below using your phone camera, or access the website to
 
 
 
+![monster with data posters](img/data.png)
 ## Members
 Ho Hol Yin A0136217L
 
