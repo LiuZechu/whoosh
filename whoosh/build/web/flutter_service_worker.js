@@ -71,6 +71,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       // Provide a 'reload' param to ensure the latest version is downloaded.
+      console.log('installing');
       return cache.addAll(CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
@@ -80,6 +81,7 @@ self.addEventListener("install", (event) => {
 // install. If this service worker is upgrading from one with a saved
 // MANIFEST, then use this to retain unchanged resource files.
 self.addEventListener("activate", function(event) {
+  console.log('cache management');
   return event.waitUntil(async function() {
     try {
       var contentCache = await caches.open(CACHE_NAME);
