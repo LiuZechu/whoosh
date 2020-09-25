@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/commons/RestaurantCommonWidget.dart';
+import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
@@ -108,11 +109,12 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
   void fetchRestaurantDetails() async {
     if (restaurantId > 0) {
       dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
+      Restaurant currentRestaurant = Restaurant(data);
       if (this.mounted) {
         setState(() {
-            estimatedWaitingTime = data["unit_queue_time"];
-            menuUrl = data["menu_url"];
-            iconUrl = data["icon_url"];
+            estimatedWaitingTime = currentRestaurant.unitQueueTime;
+            menuUrl = currentRestaurant.menuUrl;
+            iconUrl = currentRestaurant.iconUrl;
         });
       }
     }
