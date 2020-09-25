@@ -65,7 +65,6 @@ class WhooshService {
         .addPath(restaurantId.toString())
         .addPath('groups')
         .sendRequest();
-    print(response.body.toString());
     dynamic data = jsonDecode(response.body);
     return data;
   }

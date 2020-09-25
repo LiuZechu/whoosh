@@ -1,9 +1,23 @@
 class Restaurant {
-  final int id;
-  final String name;
-  final int unitQueueTime;
-  final String menuUrl;
-  final String iconUrl;
+  int id;
+  String name;
+  int unitQueueTime;
+  String menuUrl;
+  String iconUrl;
 
-  Restaurant(this.id, this.name, this.unitQueueTime, this.menuUrl, this.iconUrl);
+  Restaurant(dynamic data) {
+    id = data['restaurant_id'];
+    name = data['restaurant_name'];
+    unitQueueTime = data['unit_queue_time'];
+    menuUrl = data['menu_url'];
+    iconUrl = data['icon_url'];
+  }
+
+  Restaurant.empty(int restaurantId) {
+    id = restaurantId;
+    name = "-";
+    unitQueueTime = 5;
+    menuUrl = "";
+    iconUrl = "";
+  }
 }
