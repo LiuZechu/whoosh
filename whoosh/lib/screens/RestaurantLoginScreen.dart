@@ -20,6 +20,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   bool _initialized = false;
   bool _error = false;
   bool _isLoggedIn = false;
+  bool _shouldDisplayEmailError = false;
 
   var email;
   var password;
@@ -72,7 +73,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
             children: [
               CommonWidget.generateHeading("log in"),
               CommonWidget.generateField("email address",
-                (text) { email = text; }, false, email,
+                _emailOnChanged, false, email,
                 TextfieldErrorModalBuilder.invalidEmail, currentError),
               CommonWidget.generateField("password",
                 (text) { password = text; }, true, password,
@@ -91,6 +92,17 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
         )
       )
     );
+  }
+
+  void _emailOnChanged(String text) {
+    email = text;
+
+    bool isEmailValid = text != null && text.isValidEmailAddress;
+    if (_shouldDisplayEmailError) {
+      setState(() {
+        currentError = isEmailValid ? null : TextfieldErrorModalBuilder.invalidEmail;
+      });
+    }
   }
 
   Function() _loginUser(BuildContext context) {
@@ -159,6 +171,7 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
   bool _validateFields(String email, String password) {
     if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
+        _shouldDisplayEmailError = true;
         currentError = TextfieldErrorModalBuilder.invalidEmail;
       });
       return false;

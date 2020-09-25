@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
@@ -21,6 +23,9 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _initialized = false;
   bool _error = false;
   bool _accountCreated = false;
+  bool _shouldDisplayRestaurantNameError = false;
+  bool _shouldDisplayEmailError = false;
+  bool _shouldDisplayPasswordError = false;
 
   var restaurantName;
   var email;
@@ -73,13 +78,13 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
             children: [
               CommonWidget.generateHeading("sign up"),
               CommonWidget.generateField("restaurant name",
-                  (text) { restaurantName = text; }, false, restaurantName,
+                  _restaurantNameOnChanged, false, restaurantName,
                   TextfieldErrorModalBuilder.noRestaurantName, currentError),
               CommonWidget.generateField("email address",
-                  (text) { email = text; }, false, email,
+                  _emailOnChanged, false, email,
                   TextfieldErrorModalBuilder.invalidEmail, currentError),
               CommonWidget.generateField("password",
-                  (text) { password = text; }, true, password,
+                  _passwordOnChanged, true, password,
                   TextfieldErrorModalBuilder.invalidPassword, currentError),
               CommonWidget.generateAuthenticationErrorText(errorText),
               SizedBox(height: 10),
@@ -96,6 +101,39 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         )
       )
     );
+  }
+
+  void _restaurantNameOnChanged(String text) {
+    restaurantName = text;
+
+    bool isRestaurantNameValid = text != null && text != "";
+    if (_shouldDisplayRestaurantNameError) {
+      setState(() {
+        currentError = isRestaurantNameValid ? null : TextfieldErrorModalBuilder.noRestaurantName;
+      });
+    }
+  }
+
+  void _emailOnChanged(String text) {
+    email = text;
+
+    bool isEmailValid = text != null && text.isValidEmailAddress;
+    if (_shouldDisplayEmailError) {
+      setState(() {
+        currentError = isEmailValid ? null : TextfieldErrorModalBuilder.invalidEmail;
+      });
+    }
+  }
+
+  void _passwordOnChanged(String text) {
+    password = text;
+
+    bool isPasswordValid = text != null && text.length > 5;
+    if (_shouldDisplayPasswordError) {
+      setState(() {
+        currentError = isPasswordValid ? null : TextfieldErrorModalBuilder.invalidPassword;
+      });
+    }
   }
 
   Function() signupUser(BuildContext context) {
@@ -141,8 +179,9 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setState(() {
+          _shouldDisplayPasswordError = true;
           currentError = TextfieldErrorModalBuilder.invalidPassword;
-          errorText = 'The password provided is too weak.';
+          errorText = 'Password should be at least 6 characters long.';
         });
       } else if (e.code == 'email-already-in-use') {
         setState(() {
@@ -160,6 +199,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _validateFields(String restaurantName, String email, String password) {
     if (restaurantName == null || restaurantName.length == 0) {
       setState(() {
+        _shouldDisplayRestaurantNameError = true;
         currentError = TextfieldErrorModalBuilder.noRestaurantName;
       });
       return false;
@@ -167,6 +207,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
 
     if (email == null || email.length == 0 || !email.isValidEmailAddress) {
       setState(() {
+        _shouldDisplayEmailError = true;
         currentError = TextfieldErrorModalBuilder.invalidEmail;
       });
       return false;
@@ -174,6 +215,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
 
     if (password == null || password.length == 0) {
       setState(() {
+        _shouldDisplayPasswordError = true;
         currentError = TextfieldErrorModalBuilder.invalidPassword;
       });
       return false;
