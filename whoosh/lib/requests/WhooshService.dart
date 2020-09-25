@@ -183,4 +183,18 @@ class WhooshService {
     }
   }
 
+  static Future<dynamic> alertGroup(int restaurantId, int groupId) async {
+    Response response = await PutRequestBuilder()
+      .addBody(<String, String>{
+        "alerted": "1"
+    })
+        .addPath('restaurants')
+        .addPath(restaurantId.toString())
+        .addPath('groups')
+        .addPath(groupId.toString())
+        .sendRequest();
+    dynamic data = jsonDecode(response.body);
+    return data;
+  }
+
 }
