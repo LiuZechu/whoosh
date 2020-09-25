@@ -118,9 +118,7 @@ class Group {
           ),
           menuItems: <FocusedMenuItem> [
             _generateFocusedMenuItem('Alert', () async {
-              String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
-              // UNCOMMENT THIS TO TEST SMS
-              // await smsGroup(phoneNumber, textToSent);
+              await alertGroup(restaurantId, restaurantName);
             }),
             _generateFocusedMenuItem('Confirm Arrival', () {
               changeGroupQueueStatus(1, restaurantId);
@@ -465,18 +463,23 @@ class Group {
     showToast("Queue status updated successfully!");
   }
 
-  void smsGroup(String phoneNumber, String text) async {
-    await WhooshService.sendSmsToGroup(phoneNumber, text); // use this later
-    showToast("SMS sent successfully!");
+  void alertGroup(int restaurantId, String restaurantName) async {
+    await WhooshService.alertGroup(restaurantId, id);
+
+    String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
+    // UNCOMMENT TO SEND SMS
+    // await WhooshService.sendSmsToGroup(phoneNumber, textToSent); // use this later
+    showToast("alerted successfully!");
   }
 
-  // TODO: beautify this.
   void showToast(String text) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Commons.restaurantTheme.backgroundColor,
+        textColor: Commons.whooshTextWhite,
         gravity: ToastGravity.BOTTOM,
-        fontSize: 16.0
+        fontSize: 30.0
     );
   }
 
