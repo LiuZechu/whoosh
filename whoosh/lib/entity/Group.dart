@@ -4,6 +4,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/entity/MonsterFactory.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
@@ -96,7 +97,7 @@ class Group {
     );
   }
 
-  Widget createGroupRestaurantView(int restaurantId, String restaurantName) {
+  Widget createGroupRestaurantView(int restaurantId, String restaurantName, BuildContext context) {
     return Container(
       margin: EdgeInsets.all(6.0),
       child: Container(
@@ -118,13 +119,13 @@ class Group {
           ),
           menuItems: <FocusedMenuItem> [
             _generateFocusedMenuItem('Alert', () async {
-              await alertGroup(restaurantId, restaurantName);
+              await alertGroup(restaurantId, restaurantName, context);
             }),
             _generateFocusedMenuItem('Confirm Arrival', () {
-              changeGroupQueueStatus(1, restaurantId);
+              changeGroupQueueStatus(1, restaurantId, context);
             }),
             _generateFocusedMenuItem('Kick Out', () {
-              changeGroupQueueStatus(2, restaurantId);
+              changeGroupQueueStatus(2, restaurantId, context);
             }),
           ],
           child: FlatButton(
@@ -455,32 +456,26 @@ class Group {
     return addMonsterStackTo(stackElements, 200, 200, false);
   }
 
-  void changeGroupQueueStatus(int statusCode, int restaurantId) async {
+  void changeGroupQueueStatus(int statusCode, int restaurantId, BuildContext context) async {
     if (statusCode < 0 || statusCode > 2) {
       return;
     }
     await WhooshService.updateQueueStatus(statusCode, id, restaurantId); // use this later
-    showToast("Queue status updated successfully!");
+
+    String message = statusCode == 1
+        ? "group has entered restaurant"
+        : "group has left the queue";
+    RestaurantCommonWidget.displayMessage(context, message);
   }
 
-  void alertGroup(int restaurantId, String restaurantName) async {
+  void alertGroup(int restaurantId, String restaurantName, BuildContext context) async {
     await WhooshService.alertGroup(restaurantId, id);
 
     String textToSent = "Hi! it's your turn! Please proceed to ${restaurantName}.";
     // UNCOMMENT TO SEND SMS
     // await WhooshService.sendSmsToGroup(phoneNumber, textToSent); // use this later
-    showToast("alerted successfully!");
-  }
-
-  void showToast(String text) {
-    Fluttertoast.showToast(
-        msg: text,
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Commons.restaurantTheme.backgroundColor,
-        textColor: Commons.whooshTextWhite,
-        gravity: ToastGravity.BOTTOM,
-        fontSize: 30.0
-    );
+    String message = "alerted successfully";
+    RestaurantCommonWidget.displayMessage(context, message);
   }
 
 }
