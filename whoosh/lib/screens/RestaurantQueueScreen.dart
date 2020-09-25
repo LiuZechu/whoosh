@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/Group.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
-import '../entity/CommonWidget.dart';
+import '../commons/QueueingCommonWidget.dart';
 
 
 class RestaurantQueueScreen extends StatelessWidget {
@@ -92,9 +93,9 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
       child: Column(
         children: [
           SizedBox(height: 20),
-          CommonWidget.generateRestaurantIconAndName(restaurantName,
+          QueueingCommonWidget.generateRestaurantIconAndName(restaurantName,
             iconUrl, Commons.whooshTextWhite),
-          CommonWidget.generateRestaurantScreenHeading("waitlist"),
+          RestaurantCommonWidget.generateRestaurantScreenHeading("waitlist"),
           generateQueue(),
         ]
       )
@@ -113,17 +114,8 @@ class _RestaurantQueueCardState extends State<RestaurantQueueCard> {
   void fetchQueue() async {
     List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
-        .where((group) => group['group_size'] <= 5)
-        .toList()
-        .map((group) => new Group(
-          group['group_id'],
-          group['group_key'],
-          group['group_name'],
-          group['group_size'],
-          DateTime.parse(group['arrival_time']).toLocal(),
-          [], // monster types are not needed on the restaurant side
-          group['phone_number'])
-        ).toList();
+        .map((data) => Group(data))
+        .toList();
     allGroups.sort((a, b) => a.timeOfArrival.compareTo(b.timeOfArrival));
     if (this.mounted) {
       setState(() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/screens/QRCodeScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
@@ -54,21 +54,21 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
               _waitlistCallBack, (){}, _qrCodeCallBack),
           Column(
             children: [
-              CommonWidget.generateRestaurantScreenHeading("settings"),
+              RestaurantCommonWidget.generateRestaurantScreenHeading("settings"),
               generateRestaurantPhotoCard(iconUrl),
-              CommonWidget.generateField("restaurant name",
+              RestaurantCommonWidget.generateField("restaurant name",
                       (text) { restaurantName = text; },
                       false, restaurantName ?? ""),
-              CommonWidget.generateField("waiting time per group",
+              RestaurantCommonWidget.generateField("waiting time per group",
                       (text) { estimatedWaitingTime = int.parse(text); },
                       false, estimatedWaitingTime.toString() ?? ""),
-              CommonWidget.generateField("URL to icon",
+              RestaurantCommonWidget.generateField("URL to icon",
                       (text) { iconUrl = text; setState(() { iconUrl = text; }); },
                       false, iconUrl ?? ""),
-              CommonWidget.generateField("URL to menu", (text) { menuUrl = text; },
+              RestaurantCommonWidget.generateField("URL to menu", (text) { menuUrl = text; },
                       false, menuUrl ?? ""),
               SizedBox(height: 100),
-              CommonWidget.generateRestaurantScreenButton(Commons.confirmButton, _submitSettings),
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.confirmButton, _submitSettings),
             ]
           )
         ],

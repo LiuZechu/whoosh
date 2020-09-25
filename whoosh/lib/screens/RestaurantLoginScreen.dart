@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
@@ -70,17 +70,17 @@ class _RestaurantLoginScreenState extends State<RestaurantLoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonWidget.generateHeading("log in"),
-              CommonWidget.generateField("email address",
+              RestaurantCommonWidget.generateHeading("log in"),
+              RestaurantCommonWidget.generateField("email address",
                 (text) { email = text; }, false, email,
                 TextfieldErrorModalBuilder.invalidEmail, currentError),
-              CommonWidget.generateField("password",
+              RestaurantCommonWidget.generateField("password",
                 (text) { password = text; }, true, password,
                 TextfieldErrorModalBuilder.invalidPassword, currentError),
-              CommonWidget.generateAuthenticationErrorText(errorText),
+              RestaurantCommonWidget.generateRestaurantAuthenticationErrorText(errorText),
               SizedBox(height: 10),
-              CommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
-              CommonWidget.generateRestaurantScreenButton(Commons.noAccountButton,
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.enterButton, _loginUser(context)),
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.noAccountButton,
               () => {
                 Navigator.of(context).pushNamed(restaurantSignupRoute)
               }),

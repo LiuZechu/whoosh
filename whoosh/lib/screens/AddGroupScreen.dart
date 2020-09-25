@@ -4,12 +4,13 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/QueueingCommonWidget.dart';
+import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
 import 'package:whoosh/entity/WordFactory.dart';
 import 'package:whoosh/requests/WhooshService.dart';
+import 'package:whoosh/util/UrlUtil.dart';
 
 // http://localhost:${port}/#/joinQueue?restaurant_id=1
 class AddGroupScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class AddGroupScreen extends StatelessWidget {
       backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          CommonWidget.generateQueueScreenHeader(),
+          QueueingCommonWidget.generateQueueScreenHeader(),
           JoinQueueCard(restaurantId)
         ],
       ),
@@ -61,7 +62,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     return Container(
       child: Column(
         children: [
-          CommonWidget.generateRestaurantName(restaurantName, restaurantIconUrl),
+          QueueingCommonWidget.generateRestaurantName(restaurantName, restaurantIconUrl),
           generateJoinQueueGroupImage(newGroup),
           generatePhoneNumberField(),
           SizedBox(height: 20),
@@ -381,7 +382,7 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
     String groupKey = data['group_key'];
     Navigator.pushNamed(
         context,
-        WhooshService.generateQueueUrl(restaurantId, groupId, groupKey)
+        UrlUtil.generateQueueUrl(restaurantId, groupId, groupKey)
     );
   }
 

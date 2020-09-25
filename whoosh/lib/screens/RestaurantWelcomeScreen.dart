@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/route/route_names.dart';
 
 class RestaurantWelcomeScreen extends StatelessWidget {
@@ -13,8 +13,8 @@ class RestaurantWelcomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonWidget.generateWhooshHeading(),
-              CommonWidget.generateRestaurantScreenButton(Commons.getStartedButton,
+              RestaurantCommonWidget.generateWhooshHeading(),
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.getStartedButton,
               () => {
                 Navigator.of(context).pushNamed(restaurantSignupRoute)
               }),

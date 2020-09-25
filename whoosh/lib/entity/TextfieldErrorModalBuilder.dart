@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
 
 class TextfieldErrorModalBuilder {
   static final String noRestaurantName = "  *please enter a restaurant name";
