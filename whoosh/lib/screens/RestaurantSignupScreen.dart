@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:whoosh/entity/CommonWidget.dart';
 import 'package:whoosh/entity/Commons.dart';
@@ -23,6 +25,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
   bool _accountCreated = false;
   bool _shouldDisplayRestaurantNameError = false;
   bool _shouldDisplayEmailError = false;
+  bool _shouldDisplayPasswordError = false;
 
   var restaurantName;
   var email;
@@ -81,7 +84,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
                   _emailOnChanged, false, email,
                   TextfieldErrorModalBuilder.invalidEmail, currentError),
               CommonWidget.generateField("password",
-                  (text) { password = text; }, true, password,
+                  _passwordOnChanged, true, password,
                   TextfieldErrorModalBuilder.invalidPassword, currentError),
               CommonWidget.generateAuthenticationErrorText(errorText),
               SizedBox(height: 10),
@@ -118,6 +121,17 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     if (_shouldDisplayEmailError) {
       setState(() {
         currentError = isEmailValid ? null : TextfieldErrorModalBuilder.invalidEmail;
+      });
+    }
+  }
+
+  void _passwordOnChanged(String text) {
+    password = text;
+
+    bool isPasswordValid = text != null && text.length > 5;
+    if (_shouldDisplayPasswordError) {
+      setState(() {
+        currentError = isPasswordValid ? null : TextfieldErrorModalBuilder.invalidPassword;
       });
     }
   }
@@ -165,8 +179,9 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         setState(() {
+          _shouldDisplayPasswordError = true;
           currentError = TextfieldErrorModalBuilder.invalidPassword;
-          errorText = 'The password provided is too weak.';
+          errorText = 'Password should be at least 6 characters long.';
         });
       } else if (e.code == 'email-already-in-use') {
         setState(() {
@@ -200,6 +215,7 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
 
     if (password == null || password.length == 0) {
       setState(() {
+        _shouldDisplayPasswordError = true;
         currentError = TextfieldErrorModalBuilder.invalidPassword;
       });
       return false;
