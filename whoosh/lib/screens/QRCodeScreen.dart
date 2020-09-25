@@ -1,10 +1,14 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/QueueingCommonWidget.dart';
+import 'package:whoosh/commons/Commons.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/screens/RestaurantSettingsScreen.dart';
 import 'package:whoosh/screens/RestaurantQueueScreen.dart';
 import 'package:whoosh/screens/RestaurantHeaderBuilder.dart';
+import 'package:whoosh/util/UrlUtil.dart';
 
 
 class QRCodeScreen extends StatelessWidget {
@@ -41,7 +45,7 @@ class QRCodeScreen extends StatelessWidget {
               _settingsCallBack, (){}),
           Column(
               children: [
-                CommonWidget.generateRestaurantScreenHeading("QR code"),
+                RestaurantCommonWidget.generateRestaurantScreenHeading("QR code"),
                 QRCodeCard(restaurantName, restaurantId),
               ]
           )
@@ -84,7 +88,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
 
   Widget generateQrCode() {
     return Image.network(
-      WhooshService.generateQrCodeUrl(restaurantId),
+      UrlUtil.generateQrCodeUrl(restaurantId),
       loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
         if (loadingProgress == null) return child;
         return Center(
@@ -107,7 +111,7 @@ class _QRCodeCardState extends State<QRCodeCard> {
     if (restaurantId == null) {
       return null;
     } else {
-      return CommonWidget.generateRestaurantScreenButton(Commons.viewWaitlistButton,
+      return RestaurantCommonWidget.generateRestaurantScreenButton(Commons.viewWaitlistButton,
         () {
           Navigator.pushReplacement(
               context,

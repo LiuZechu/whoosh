@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
+import 'package:whoosh/commons/RestaurantCommonWidget.dart';
 import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
 import 'package:whoosh/route/route_names.dart';
 import 'package:whoosh/screens/LoadingModal.dart';
@@ -74,21 +74,21 @@ class _RestaurantSignupScreenState extends State<RestaurantSignupScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CommonWidget.generateHeading("sign up"),
-              CommonWidget.generateField("restaurant name",
+              RestaurantCommonWidget.generateHeading("sign up"),
+              RestaurantCommonWidget.generateField("restaurant name",
                   _restaurantNameOnChanged, false, restaurantName,
                   TextfieldErrorModalBuilder.noRestaurantName, currentError),
-              CommonWidget.generateField("email address",
+              RestaurantCommonWidget.generateField("email address",
                   _emailOnChanged, false, email,
                   TextfieldErrorModalBuilder.invalidEmail, currentError),
-              CommonWidget.generateField("password",
+              RestaurantCommonWidget.generateField("password",
                   _passwordOnChanged, true, password,
                   TextfieldErrorModalBuilder.invalidPassword, currentError),
-              CommonWidget.generateAuthenticationErrorText(errorText),
+              RestaurantCommonWidget.generateRestaurantAuthenticationErrorText(errorText),
               SizedBox(height: 10),
-              CommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.imReadyButton,
                   signupUser(context)),
-              CommonWidget.generateRestaurantScreenButton(Commons.alreadyHaveAccountButton,
+              RestaurantCommonWidget.generateRestaurantScreenButton(Commons.alreadyHaveAccountButton,
                 () => {
                   Navigator.of(context).pushNamed(restaurantLoginRoute)
                 }),

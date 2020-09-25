@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/commons/Commons.dart';
 
 class MonsterType {
   int body;

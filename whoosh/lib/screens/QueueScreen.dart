@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
-import 'package:whoosh/entity/CommonWidget.dart';
-import 'package:whoosh/entity/Commons.dart';
+import 'package:whoosh/entity/AlertedGroup.dart';
+import 'package:whoosh/commons/QueueingCommonWidget.dart';
+import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/EffectManager.dart';
 
 import 'package:whoosh/entity/Group.dart';
@@ -28,7 +29,7 @@ class QueueScreen extends StatelessWidget {
       backgroundColor: Commons.queueingTheme.backgroundColor,
       body: ListView(
         children: [
-          CommonWidget.generateQueueScreenHeader(),
+          QueueingCommonWidget.generateQueueScreenHeader(),
           QueueCard(restaurantId, groupId, groupKey),
         ],
       ),
@@ -91,17 +92,8 @@ class _QueueCardState extends State<QueueCard> {
   Future<bool> fetchQueue() async {
     List<dynamic> data = await WhooshService.getAllGroupsInQueue(restaurantId);
     List<Group> allGroups = data
-        .where((group) => group['group_size'] <= 5)
-        .toList()
-        .map((group) => new Group(
-          group['group_id'],
-          group['group_key'],
-          group['group_name'],
-          group['group_size'],
-          DateTime.parse(group['arrival_time']).toLocal(),
-          MonsterType.generateMonsterTypes(group['monster_type']),
-          group['phone_number'])
-        ).toList();
+        .map((e) => e['alerted'] == 1 ? AlertedGroup(e) : Group(e))
+        .toList();
     bool currentGroupIsInside =
         allGroups.where((group) => group.id == currentGroupId).length == 1;
     if (!currentGroupIsInside && context != null) {
@@ -132,7 +124,7 @@ class _QueueCardState extends State<QueueCard> {
 
   // directs to home page if group key is invalid
   void checkConsistencyOfGroupKey() async {
-    dynamic group = await WhooshService.getOneQueueGroupDetails(restaurantId, currentGroupId);
+    dynamic group = await WhooshService.getSingleQueueGroupDetails(restaurantId, currentGroupId);
     if (group == null || group["group_key"] != groupKey) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(welcomeRoute, (Route<dynamic>route) => false);
@@ -293,7 +285,7 @@ class _QueueCardState extends State<QueueCard> {
             alignment: Alignment.center,
             child: Commons.queueLine,
           ),
-          CommonWidget.generateMask(300, 80, Alignment.bottomCenter),
+          QueueingCommonWidget.generateMask(300, 80, Alignment.bottomCenter),
           Commons.counter,
         ],
       ),
@@ -305,7 +297,7 @@ class _QueueCardState extends State<QueueCard> {
     return Container(
       child: Column(
         children: [
-          CommonWidget.generateRestaurantName(restaurant.name, restaurant.iconUrl),
+          QueueingCommonWidget.generateRestaurantName(restaurant.name, restaurant.iconUrl),
           generateWaitTime(),
           generateQueue(),
           generateCounter(),

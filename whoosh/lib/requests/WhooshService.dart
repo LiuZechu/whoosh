@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:whoosh/requests/PutRequestBuilder.dart';
 import 'package:whoosh/requests/QueueCache.dart';
@@ -64,6 +65,7 @@ class WhooshService {
         .addPath(restaurantId.toString())
         .addPath('groups')
         .sendRequest();
+    print(response.body.toString());
     dynamic data = jsonDecode(response.body);
     return data;
   }
@@ -97,10 +99,10 @@ class WhooshService {
     return data;
   }
 
-  static Future<dynamic> updateQueueStatus(int statusCode, int groupId, int restaurantId) async {
+  static Future<dynamic> updateQueueStatus(int newStatusCode, int groupId, int restaurantId) async {
     Response response = await PutRequestBuilder()
         .addBody(<String, String>{
-      "queue_status": statusCode.toString()
+      "queue_status": newStatusCode.toString()
     })
         .addPath('restaurants')
         .addPath(restaurantId.toString())
@@ -148,27 +150,7 @@ class WhooshService {
     return data;
   }
 
-  static String generateQueueUrl(int restaurantId, int groupId, String groupKey) {
-    return '/queue?restaurant_id='
-        + restaurantId.toString()
-        + '&group_id='
-        + groupId.toString()
-        + '&group_key='
-        + groupKey;
-  }
-
-  static String generateEntireQueueUrl(int restaurantId, int groupId, String groupKey) {
-    return 'https://hoholyin.github.io/whoosh/#' + generateQueueUrl(restaurantId, groupId, groupKey);
-  }
-
-  static String generateQrCodeUrl(int restaurantId) {
-    String googleQrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=';
-    String hostUrl = 'https%3A%2F%2Fhoholyin.github.io%2Fwhoosh%2F%23%2FjoinQueue%3Frestaurant_id%3D${restaurantId}';
-    String qrCodeUrl = googleQrCodeUrl + hostUrl;
-    return qrCodeUrl;
-  }
-
-  static Future<dynamic> getOneQueueGroupDetails(int restaurantId, int groupId) async {
+  static Future<dynamic> getSingleQueueGroupDetails(int restaurantId, int groupId) async {
     try {
       Response response = await GetRequestBuilder()
           .addPath('restaurants')

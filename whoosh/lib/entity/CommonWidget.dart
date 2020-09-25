@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/TextfieldErrorModalBuilder.dart';
-
-import 'Commons.dart';
 
 class CommonWidget {
   static Widget generateQueueScreenHeader() {
