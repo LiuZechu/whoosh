@@ -5,4 +5,5 @@ set_flutter_path.sh
 .DS_Store
 .flutter-plugins
 .flutter-plugins-dependencies
+flutter.dart.js
 lib/Key.dart

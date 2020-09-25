@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'route/Router.dart' as router;
+import 'package:pwa/client.dart' as pwa;
 
-void main() => runApp(WhooshApp());
+void main() {
+  new pwa.Client();
+  runApp(WhooshApp());
+}
 
 class WhooshApp extends StatelessWidget {
   @override
