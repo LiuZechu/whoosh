@@ -8,6 +8,7 @@ import 'package:whoosh/commons/QueueingCommonWidget.dart';
 import 'package:whoosh/commons/Commons.dart';
 import 'package:whoosh/entity/Group.dart';
 import 'package:whoosh/entity/MonsterType.dart';
+import 'package:whoosh/entity/Restaurant.dart';
 import 'package:whoosh/entity/WordFactory.dart';
 import 'package:whoosh/requests/WhooshService.dart';
 import 'package:whoosh/util/UrlUtil.dart';
@@ -91,11 +92,10 @@ class _JoinQueueCardState extends State<JoinQueueCard> {
 
   void fetchRestaurantDetails() async {
     dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
-    String currentRestaurantName = data['restaurant_name'];
-    String currentRestaurantIconUrl = data['icon_url'];
+    Restaurant currentRestaurant = Restaurant(data);
     setState(() {
-      restaurantName = currentRestaurantName;
-      restaurantIconUrl = currentRestaurantIconUrl;
+      restaurantName = currentRestaurant.name;
+      restaurantIconUrl = currentRestaurant.iconUrl;
     });
   }
 

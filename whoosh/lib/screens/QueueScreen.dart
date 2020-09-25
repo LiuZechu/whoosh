@@ -51,7 +51,7 @@ class _QueueCardState extends State<QueueCard> {
   final int currentGroupId;
   final String groupKey;
   List<Group> groups = [];
-  Restaurant restaurant = Restaurant(0, 'Loading...', 0, '', '');
+  Restaurant restaurant;
   String estimatedWait = "-";
   bool screenIsPresent = true;
   EffectManager effectManager;
@@ -64,23 +64,14 @@ class _QueueCardState extends State<QueueCard> {
     fetchRestaurantDetails();
     fetchQueue();
     effectManager = EffectManager();
+    restaurant = Restaurant.empty(this.restaurantId);
     new Timer.periodic(Duration(seconds: 10), (Timer t) => refresh());
   }
 
   void fetchRestaurantDetails() async {
     dynamic data = await WhooshService.getRestaurantDetails(restaurantId);
-    String currentRestaurantName = data['restaurant_name'];
-    int currentUnitQueueTime = data['unit_queue_time'];
-    String currentRestaurantMenuUrl = data['menu_url'];
-    String currentRestaurantIconUrl = data['icon_url'];
+    Restaurant currentRestaurant = Restaurant(data);
     if (this.mounted) {
-      Restaurant currentRestaurant = Restaurant(
-          restaurantId,
-          currentRestaurantName,
-          currentUnitQueueTime,
-          currentRestaurantMenuUrl,
-          currentRestaurantIconUrl
-      );
       setState(() {
         restaurant = currentRestaurant;
       });
