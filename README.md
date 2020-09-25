@@ -19,6 +19,8 @@ Test account password: dintaifung
 ### As a diner
 You may scan the QR code below using your phone camera, or access the website to join the queue via https://hoholyin.github.io/whoosh/#/joinQueue?restaurant_id=5
 
+## Test QR Code <img src="img/test_qr_code.png" alt="test QR code" width="100" />
+
 ## Members <img src="img/data.png" alt="Green monster with posters of data analytics" width="100" />
 Ho Hol Yin A0136217L
 
