@@ -60,7 +60,7 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
                       (text) { restaurantName = text; },
                       false, restaurantName ?? ""),
               RestaurantCommonWidget.generateField("waiting time per group",
-                      (text) { estimatedWaitingTime = int.parse(text); },
+                      _changeWaitingTime,
                       false, estimatedWaitingTime.toString() ?? ""),
               RestaurantCommonWidget.generateField("URL to icon",
                       (text) { iconUrl = text; setState(() { iconUrl = text; }); },
@@ -74,6 +74,15 @@ class _RestaurantSettingsState extends State<RestaurantSettingsScreen> {
         ],
       ),
     );
+  }
+
+  void _changeWaitingTime(String text) {
+    var value = int.tryParse(text);
+    if (value == null) {
+      return;
+    } else {
+      estimatedWaitingTime = int.parse(text);
+    }
   }
 
   void _waitlistCallBack() {
