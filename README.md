@@ -1,10 +1,13 @@
 # whoosh
+![whoosh header](img/header.png)
+
 *whoosh* is a virtual queueing app for restaurants. *whoosh* takes a group of diners into a queue upon their arrival, and maintains a digital representation of the queue. Diners enter the queue by scanning a unique QR code for the restaurant. Diners can then view the queue in real time and are notified when they should enter. Restaurant managers can manage the waitlist, alerting and removing queuers as necessary.
 
 Restaurants are able to sign up with *whoosh* to create virtual queues for their restaurants, and diners will
 scan a QR code to enter this queues. Restaurant managers can then virtually manage the queue.
 
-## Accessing the web app
+
+## Accessing the web app <img src="img/party.png" alt="Red monster in party hat with confetti" width="100" />
 
 ### As a restaurant manager
 You may access the restaurant-side website via https://hoholyin.github.io/whoosh/#/ and then click “get started”. Afterwards, you may register a new account or log in with an existing account. We have made an account populated with several queue groups for testing purposes.
@@ -16,9 +19,7 @@ Test account password: dintaifung
 ### As a diner
 You may scan the QR code below using your phone camera, or access the website to join the queue via https://hoholyin.github.io/whoosh/#/joinQueue?restaurant_id=5
 
-
-
-## Members
+## Members <img src="img/data.png" alt="Green monster with posters of data analytics" width="100" />
 Ho Hol Yin A0136217L
 
 In charge of initialising the Flutter project and creating common widgets to be used throughout the code. Also responsible for the frontend implementation of the queue screens, as well as organising code structure to ensure that code was clean and maintainable. Integrated Flare actors with controlled animations in the site. Added Firebase Analytics to the website.
