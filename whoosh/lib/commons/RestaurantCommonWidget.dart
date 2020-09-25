@@ -74,7 +74,24 @@ class RestaurantCommonWidget {
   }
 
   static Widget generateWhooshHeading() {
-    return generateHeading('queueing made serene.');
+    return Column(
+        children: [
+          Commons.whooshHeading,
+          Container(
+              margin: const EdgeInsets.all(50.0),
+              child: FittedBox(
+                  child: Text(
+                      'queueing made serene.',
+                      style: TextStyle(
+                        color: Commons.whooshTextWhite,
+                        fontSize: 30,
+                        fontFamily: Commons.whooshFont,
+                      )
+                  )
+              )
+          )
+        ]
+    );
   }
 
   static Widget generateHeading(String heading) {
