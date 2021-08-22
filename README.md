@@ -10,14 +10,14 @@ scan a QR code to enter this queues. Restaurant managers can then virtually mana
 ## Accessing the web app <img src="img/party.png" alt="Red monster in party hat with confetti" width="100" />
 
 ### As a restaurant manager
-You may access the restaurant-side website via https://hoholyin.github.io/whoosh/#/ and then click “get started”. Afterwards, you may register a new account or log in with an existing account. We have made an account populated with several queue groups for testing purposes.
+You may access the restaurant-side website via https://whoosh-frontend-deploy.pages.dev/#/ and then click “get started”. Afterwards, you may register a new account or log in with an existing account. We have made an account populated with several queue groups for testing purposes.
 
 Test account email: dintaifung@mail.com
 
 Test account password: dintaifung
 
 ### As a diner
-You may scan the QR code below using your phone camera, or access the website to join the queue via https://hoholyin.github.io/whoosh/#/joinQueue?restaurant_id=5
+You may scan the QR code below using your phone camera, or access the website to join the queue via https://whoosh-frontend-deploy.pages.dev/#/joinQueue?restaurant_id=5
 
 <img src="img/test_qr_code.png" alt="test QR code" width="300" />
 
