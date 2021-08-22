@@ -10,7 +10,7 @@ scan a QR code to enter this queues. Restaurant managers can then virtually mana
 ## Accessing the web app <img src="img/party.png" alt="Red monster in party hat with confetti" width="100" />
 
 ### As a restaurant manager
-You may access the restaurant-side website via https://whoosh-frontend-deploy.pages.dev/#/ and then click “get started”. Afterwards, you may register a new account or log in with an existing account. We have made an account populated with several queue groups for testing purposes.
+You may access the restaurant-side website via https://whoosh-frontend-deploy.pages.dev/#/ and then click “get started”. Afterwards, you may register a new account or log in with an existing account. We have made an account populated with several queue groups for testing purposes. (Note: due to server cold-start, you may need to wait around 10 seconds for initial log-in)
 
 Test account email: dintaifung@mail.com
 
